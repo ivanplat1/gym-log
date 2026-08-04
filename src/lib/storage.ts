@@ -48,17 +48,31 @@ export interface FoodEntry {
   createdAt: string
 }
 
-export interface NutritionGoals {
+import { calcMacroTargets, mergeProfile, type UserProfile } from './bodyMetrics'
+
+export interface TrainingBoost {
+  /** В дни с тренировкой добавлять бонус к базовым целям */
+  enabled: boolean
   kcal: number
   protein: number
   carbs: number
   fat: number
 }
 
+export interface NutritionGoals {
+  /** База (день отдыха) */
+  kcal: number
+  protein: number
+  carbs: number
+  fat: number
+  trainingBoost: TrainingBoost
+}
+
 export interface Store {
   sessions: WorkoutSession[]
   foods: FoodEntry[]
   goals: NutritionGoals
+  profile: UserProfile
   /** Незавершённая сессия — живёт при смене вкладок */
   activeSession: WorkoutSession | null
   health: HealthDay[]
@@ -66,18 +80,56 @@ export interface Store {
 
 const STORAGE_KEY = 'gym-log:v2'
 
-const DEFAULT_GOALS: NutritionGoals = {
-  kcal: 2500,
-  protein: 160,
-  carbs: 280,
-  fat: 70,
+const DEFAULT_TRAINING_BOOST: TrainingBoost = {
+  enabled: true,
+  kcal: 400,
+  protein: 20,
+  carbs: 50,
+  fat: 0,
+}
+
+function goalsFromProfile(profile: UserProfile, boost?: Partial<TrainingBoost>): NutritionGoals {
+  const t = calcMacroTargets(profile)
+  return {
+    kcal: t.kcal,
+    protein: t.protein,
+    carbs: t.carbs,
+    fat: t.fat,
+    trainingBoost: {
+      ...DEFAULT_TRAINING_BOOST,
+      ...(boost ?? {}),
+    },
+  }
+}
+
+function mergeGoals(
+  raw: Partial<NutritionGoals> | undefined,
+  profile: UserProfile,
+  opts?: { preferProfileMacros?: boolean },
+): NutritionGoals {
+  const fromBody = goalsFromProfile(profile, raw?.trainingBoost)
+  if (opts?.preferProfileMacros || !raw) {
+    return fromBody
+  }
+  return {
+    kcal: raw.kcal ?? fromBody.kcal,
+    protein: raw.protein ?? fromBody.protein,
+    carbs: raw.carbs ?? fromBody.carbs,
+    fat: raw.fat ?? fromBody.fat,
+    trainingBoost: {
+      ...DEFAULT_TRAINING_BOOST,
+      ...(raw.trainingBoost ?? {}),
+    },
+  }
 }
 
 function emptyStore(): Store {
+  const profile = mergeProfile(undefined)
   return {
     sessions: [],
     foods: [],
-    goals: { ...DEFAULT_GOALS },
+    profile,
+    goals: goalsFromProfile(profile),
     activeSession: null,
     health: [],
   }
@@ -87,17 +139,26 @@ export function loadStore(): Store {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) return emptyStore()
-    const parsed = JSON.parse(raw) as Partial<Store>
+    const parsed = JSON.parse(raw) as Partial<Store> & { profile?: Partial<UserProfile> }
+    const profile = mergeProfile(parsed.profile)
+    const firstTimeProfile = !parsed.profile
     return {
       sessions: Array.isArray(parsed.sessions) ? parsed.sessions : [],
       foods: Array.isArray(parsed.foods) ? parsed.foods : [],
-      goals: { ...DEFAULT_GOALS, ...(parsed.goals ?? {}) },
+      profile,
+      goals: mergeGoals(parsed.goals, profile, { preferProfileMacros: firstTimeProfile }),
       activeSession: parsed.activeSession ?? null,
       health: Array.isArray(parsed.health) ? parsed.health : [],
     }
   } catch {
     return emptyStore()
   }
+}
+
+/** Пересчитать базовые КБЖУ из профиля, сохранив бонус тренировки */
+export function applyProfileToGoals(store: Store): Store {
+  const next = goalsFromProfile(store.profile, store.goals.trainingBoost)
+  return { ...store, goals: next }
 }
 
 export function saveStore(store: Store): void {
