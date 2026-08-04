@@ -61,7 +61,8 @@ export function FoodScreen() {
   const [baseMacros, setBaseMacros] = useState<MacroSet | null>(null)
   const [baseAmount, setBaseAmount] = useState(100)
   const [scaleMode, setScaleMode] = useState<ScaleMode>('grams')
-  const [amount, setAmount] = useState(100)
+  /** Только цифры в поле — без «г» */
+  const [amountText, setAmountText] = useState('100')
 
   // ручной ввод макросов (если нет базы / правка)
   const [manualMacros, setManualMacros] = useState(false)
@@ -69,6 +70,8 @@ export function FoodScreen() {
   const [protein, setProtein] = useState('')
   const [carbs, setCarbs] = useState('')
   const [fat, setFat] = useState('')
+
+  const amount = Number(amountText.replace(',', '.')) || 0
 
   const presets = useMemo(() => {
     const query = q.trim().toLowerCase()
@@ -78,24 +81,24 @@ export function FoodScreen() {
     return list.slice(0, query ? 80 : 40)
   }, [q])
 
-  const scaled = useMemo(() => {
-    if (!baseMacros || manualMacros) return null
-    return scaleMacros(baseMacros, baseAmount, amount)
-  }, [baseMacros, baseAmount, amount, manualMacros])
-
-  const displayMacros: MacroSet = scaled ?? {
-    kcal: Number(kcal) || 0,
-    protein: Number(protein) || 0,
-    carbs: Number(carbs) || 0,
-    fat: Number(fat) || 0,
-  }
+  const displayMacros: MacroSet = useMemo(() => {
+    if (baseMacros && !manualMacros && amount > 0) {
+      return scaleMacros(baseMacros, baseAmount, amount)
+    }
+    return {
+      kcal: Number(kcal) || 0,
+      protein: Number(protein) || 0,
+      carbs: Number(carbs) || 0,
+      fat: Number(fat) || 0,
+    }
+  }, [baseMacros, baseAmount, amount, manualMacros, kcal, protein, carbs, fat])
 
   const resetForm = () => {
     setName('')
     setBaseMacros(null)
     setBaseAmount(100)
     setScaleMode('grams')
-    setAmount(100)
+    setAmountText('100')
     setManualMacros(false)
     setKcal('')
     setProtein('')
@@ -114,28 +117,51 @@ export function FoodScreen() {
       carbs: p.carbs,
       fat: p.fat,
     }
+    // Стартовое значение в поле — удобный шаг 10 г, база для формулы остаётся как в пресете
+    let start = base
+    if (mode === 'grams') {
+      start = Math.max(10, Math.round(base / 10) * 10)
+    }
     setName(p.name)
     setBaseMacros(macros)
     setBaseAmount(base)
     setScaleMode(mode)
-    setAmount(base)
+    setAmountText(String(start))
     setManualMacros(false)
-    setKcal(String(macros.kcal))
-    setProtein(String(macros.protein))
-    setCarbs(String(macros.carbs))
-    setFat(String(macros.fat))
+    const m = scaleMacros(macros, base, start)
+    setKcal(String(m.kcal))
+    setProtein(String(m.protein))
+    setCarbs(String(m.carbs))
+    setFat(String(m.fat))
   }
 
-  const onAmountChange = (next: number) => {
+  const applyScaled = (n: number) => {
+    if (!baseMacros || manualMacros || n < 0 || !Number.isFinite(n)) return
+    const m = scaleMacros(baseMacros, baseAmount, n)
+    setKcal(String(m.kcal))
+    setProtein(String(m.protein))
+    setCarbs(String(m.carbs))
+    setFat(String(m.fat))
+  }
+
+  const setAmountValue = (next: number) => {
     const safe = Math.max(0, next)
-    setAmount(safe)
-    if (baseMacros && !manualMacros) {
-      const m = scaleMacros(baseMacros, baseAmount, safe)
-      setKcal(String(m.kcal))
-      setProtein(String(m.protein))
-      setCarbs(String(m.carbs))
-      setFat(String(m.fat))
-    }
+    setAmountText(String(safe))
+    applyScaled(safe)
+  }
+
+  /** Ввод с клавиатуры: только цифры, КБЖУ сразу */
+  const onAmountTextChange = (raw: string) => {
+    const cleaned = raw.replace(/[^\d]/g, '')
+    setAmountText(cleaned)
+    if (!cleaned) return
+    applyScaled(Number(cleaned))
+  }
+
+  const bump = (delta: number) => {
+    const next = Math.max(0, amount + delta)
+    setAmountText(String(next))
+    applyScaled(next)
   }
 
   const enableManual = () => {
@@ -354,32 +380,36 @@ export function FoodScreen() {
               </div>
 
               <div className="field span2">
-                <label>{scaleMode === 'grams' ? 'Граммы' : 'Штуки / порции'}</label>
+                <label>{scaleMode === 'grams' ? 'Граммы' : 'Штуки'}</label>
                 <div className="stepper-controls" style={{ width: '100%', justifyContent: 'space-between' }}>
                   <button
                     type="button"
                     className="glass-btn"
+                    aria-label={scaleMode === 'grams' ? 'Минус 10 г' : 'Минус 1'}
                     style={{ width: 48, height: 48, borderRadius: 999, fontSize: '1.35rem' }}
-                    onClick={() =>
-                      onAmountChange(amount - (scaleMode === 'grams' ? 10 : 1))
-                    }
+                    onClick={() => bump(scaleMode === 'grams' ? -10 : -1)}
                   >
                     −
                   </button>
                   <input
                     className="tnum"
-                    type="number"
-                    inputMode="decimal"
-                    min={0}
-                    step={scaleMode === 'grams' ? 1 : 0.5}
-                    value={amount || ''}
-                    onChange={(e) => onAmountChange(Number(e.target.value) || 0)}
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    enterKeyHint="done"
+                    autoComplete="off"
+                    placeholder={scaleMode === 'grams' ? '100' : '1'}
+                    value={amountText}
+                    onChange={(e) => onAmountTextChange(e.target.value)}
+                    onBlur={() => {
+                      if (!amountText) setAmountText('0')
+                    }}
                     style={{
                       flex: 1,
                       minHeight: 48,
                       margin: '0 10px',
                       textAlign: 'center',
-                      fontSize: '1.35rem',
+                      fontSize: '1.45rem',
                       fontWeight: 750,
                       borderRadius: 12,
                       border: '1px solid var(--hairline)',
@@ -389,10 +419,9 @@ export function FoodScreen() {
                   <button
                     type="button"
                     className="glass-btn"
+                    aria-label={scaleMode === 'grams' ? 'Плюс 10 г' : 'Плюс 1'}
                     style={{ width: 48, height: 48, borderRadius: 999, fontSize: '1.35rem' }}
-                    onClick={() =>
-                      onAmountChange(amount + (scaleMode === 'grams' ? 10 : 1))
-                    }
+                    onClick={() => bump(scaleMode === 'grams' ? 10 : 1)}
                   >
                     +
                   </button>
@@ -404,16 +433,16 @@ export function FoodScreen() {
                         key={g}
                         type="button"
                         className={`chip${amount === g ? ' on' : ''}`}
-                        onClick={() => onAmountChange(g)}
+                        onClick={() => setAmountValue(g)}
                       >
-                        {g} г
+                        {g}
                       </button>
                     ))}
                   </div>
                 )}
                 {baseMacros && !manualMacros && (
                   <p style={{ margin: '8px 0 0', color: 'var(--muted)', fontSize: '0.78rem' }}>
-                    База пресета: {formatAmountLabel(scaleMode, baseAmount)} → пересчёт автоматом
+                    КБЖУ пересчитывается от {formatAmountLabel(scaleMode, baseAmount)}
                   </p>
                 )}
               </div>
