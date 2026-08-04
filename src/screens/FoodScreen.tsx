@@ -235,10 +235,21 @@ export function FoodScreen() {
           </svg>
           <div className="center">
             <b className="tnum">{Math.round(totals.kcal)}</b>
-            <span>ккал</span>
+            <span className="tnum" style={{ fontSize: '0.65rem', opacity: 0.75 }}>
+              / {goalsToday.kcal}
+            </span>
           </div>
         </div>
         <div className="macro-side">
+          <div className="macro-line">
+            <span>
+              <i className="dot" style={{ background: '#f0b429' }} />
+              Ккал
+            </span>
+            <strong className="tnum">
+              {Math.round(totals.kcal)} / {goalsToday.kcal}
+            </strong>
+          </div>
           <div className="macro-line">
             <span>
               <i className="dot" style={{ background: '#3dd68c' }} />
@@ -268,10 +279,10 @@ export function FoodScreen() {
           </div>
           <p style={{ margin: '6px 0 0', color: 'var(--muted)', fontSize: '0.75rem' }}>
             {goalsToday.boostApplied
-              ? `Тренировка · цель ${goalsToday.kcal} ккал`
+              ? `Тренировка · цель на сегодня ${goalsToday.kcal} (база ${store.goals.kcal} +${store.goals.trainingBoost.kcal})`
               : goalsToday.trainingDay
-                ? 'Тренировка · бонус выкл.'
-                : 'День отдыха'}
+                ? 'Тренировка есть, бонус выключен'
+                : 'День отдыха · без бонуса к цели'}
           </p>
         </div>
       </div>

@@ -102,13 +102,19 @@ function goalsFromProfile(profile: UserProfile, boost?: Partial<TrainingBoost>):
   }
 }
 
+/** Старый хардкод до расчёта по профилю */
+function isLegacyDefaultGoals(raw: Partial<NutritionGoals> | undefined): boolean {
+  if (!raw) return false
+  return raw.kcal === 2500 && raw.protein === 160 && raw.carbs === 280 && raw.fat === 70
+}
+
 function mergeGoals(
   raw: Partial<NutritionGoals> | undefined,
   profile: UserProfile,
   opts?: { preferProfileMacros?: boolean },
 ): NutritionGoals {
   const fromBody = goalsFromProfile(profile, raw?.trainingBoost)
-  if (opts?.preferProfileMacros || !raw) {
+  if (opts?.preferProfileMacros || !raw || isLegacyDefaultGoals(raw)) {
     return fromBody
   }
   return {
@@ -142,11 +148,12 @@ export function loadStore(): Store {
     const parsed = JSON.parse(raw) as Partial<Store> & { profile?: Partial<UserProfile> }
     const profile = mergeProfile(parsed.profile)
     const firstTimeProfile = !parsed.profile
+    const preferBody = firstTimeProfile || isLegacyDefaultGoals(parsed.goals)
     return {
       sessions: Array.isArray(parsed.sessions) ? parsed.sessions : [],
       foods: Array.isArray(parsed.foods) ? parsed.foods : [],
       profile,
-      goals: mergeGoals(parsed.goals, profile, { preferProfileMacros: firstTimeProfile }),
+      goals: mergeGoals(parsed.goals, profile, { preferProfileMacros: preferBody }),
       activeSession: parsed.activeSession ?? null,
       health: Array.isArray(parsed.health) ? parsed.health : [],
     }
