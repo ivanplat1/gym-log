@@ -160,6 +160,10 @@ select {
   border-radius: 999px;
 }
 
+.dock.dock-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
 .dock a {
   display: flex;
   flex-direction: column;
@@ -170,7 +174,7 @@ select {
   border-radius: 999px;
   text-decoration: none;
   color: var(--muted);
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 650;
   letter-spacing: 0.01em;
   transition: color 0.15s ease, background 0.15s ease;
@@ -357,6 +361,18 @@ select {
   text-align: center;
   color: var(--muted);
   line-height: 1.45;
+}
+
+.section {
+  margin-top: 22px;
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
 }
 
 /* rest timer */

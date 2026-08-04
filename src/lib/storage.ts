@@ -1,3 +1,17 @@
+export interface HealthDay {
+  date: string // YYYY-MM-DD
+  /** Общая длительность сна, минуты */
+  sleepMin: number | null
+  steps: number | null
+  /** Активные ккал (Apple Active Energy / тренировки) */
+  activeKcal: number | null
+  /** Пульс в покое, уд/мин */
+  restingHr: number | null
+  /** Откуда пришло: apple-health | shortcut | manual | import */
+  source: string
+  updatedAt: string
+}
+
 export interface LoggedSet {
   weight: number | null
   reps: number | null
@@ -47,6 +61,7 @@ export interface Store {
   goals: NutritionGoals
   /** Незавершённая сессия — живёт при смене вкладок */
   activeSession: WorkoutSession | null
+  health: HealthDay[]
 }
 
 const STORAGE_KEY = 'gym-log:v2'
@@ -59,7 +74,13 @@ const DEFAULT_GOALS: NutritionGoals = {
 }
 
 function emptyStore(): Store {
-  return { sessions: [], foods: [], goals: { ...DEFAULT_GOALS }, activeSession: null }
+  return {
+    sessions: [],
+    foods: [],
+    goals: { ...DEFAULT_GOALS },
+    activeSession: null,
+    health: [],
+  }
 }
 
 export function loadStore(): Store {
@@ -72,6 +93,7 @@ export function loadStore(): Store {
       foods: Array.isArray(parsed.foods) ? parsed.foods : [],
       goals: { ...DEFAULT_GOALS, ...(parsed.goals ?? {}) },
       activeSession: parsed.activeSession ?? null,
+      health: Array.isArray(parsed.health) ? parsed.health : [],
     }
   } catch {
     return emptyStore()
@@ -136,4 +158,34 @@ export function macrosForDay(foods: FoodEntry[], date: string) {
       }),
       { kcal: 0, protein: 0, carbs: 0, fat: 0 },
     )
+}
+
+/** Upsert по дате: новые поля перекрывают старые, если не null */
+export function upsertHealthDays(existing: HealthDay[], incoming: HealthDay[]): HealthDay[] {
+  const map = new Map(existing.map((d) => [d.date, d]))
+  for (const row of incoming) {
+    if (!row.date) continue
+    const prev = map.get(row.date)
+    map.set(row.date, {
+      date: row.date,
+      sleepMin: row.sleepMin ?? prev?.sleepMin ?? null,
+      steps: row.steps ?? prev?.steps ?? null,
+      activeKcal: row.activeKcal ?? prev?.activeKcal ?? null,
+      restingHr: row.restingHr ?? prev?.restingHr ?? null,
+      source: row.source || prev?.source || 'import',
+      updatedAt: row.updatedAt || new Date().toISOString(),
+    })
+  }
+  return [...map.values()].sort((a, b) => b.date.localeCompare(a.date))
+}
+
+export function healthForDate(health: HealthDay[], date: string): HealthDay | null {
+  return health.find((h) => h.date === date) ?? null
+}
+
+export function formatSleep(min: number | null): string {
+  if (min == null || min <= 0) return '—'
+  const h = Math.floor(min / 60)
+  const m = Math.round(min % 60)
+  return `${h}ч ${m}м`
 }
