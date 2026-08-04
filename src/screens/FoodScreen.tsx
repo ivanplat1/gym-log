@@ -1,6 +1,13 @@
 import { useMemo, useState } from 'react'
 import { FOOD_PRESETS, MEAL_LABELS, type MealSlot } from '../data/foods'
 import { useStore } from '../lib/store'
+import {
+  formatAmountLabel,
+  resolveScaleMode,
+  scaleMacros,
+  type MacroSet,
+  type ScaleMode,
+} from '../lib/foodPortion'
 import { macrosForDay, todayKey, type FoodEntry } from '../lib/storage'
 
 function Ring({
@@ -37,6 +44,8 @@ function Ring({
   )
 }
 
+const GRAM_QUICK = [50, 100, 150, 200, 250]
+
 export function FoodScreen() {
   const { store, setStore } = useStore()
   const date = todayKey()
@@ -46,12 +55,20 @@ export function FoodScreen() {
   const [open, setOpen] = useState(false)
   const [meal, setMeal] = useState<MealSlot>('lunch')
   const [name, setName] = useState('')
-  const [portion, setPortion] = useState('')
+  const [q, setQ] = useState('')
+
+  // база пресета (макросы на baseAmount)
+  const [baseMacros, setBaseMacros] = useState<MacroSet | null>(null)
+  const [baseAmount, setBaseAmount] = useState(100)
+  const [scaleMode, setScaleMode] = useState<ScaleMode>('grams')
+  const [amount, setAmount] = useState(100)
+
+  // ручной ввод макросов (если нет базы / правка)
+  const [manualMacros, setManualMacros] = useState(false)
   const [kcal, setKcal] = useState('')
   const [protein, setProtein] = useState('')
   const [carbs, setCarbs] = useState('')
   const [fat, setFat] = useState('')
-  const [q, setQ] = useState('')
 
   const presets = useMemo(() => {
     const query = q.trim().toLowerCase()
@@ -61,38 +78,94 @@ export function FoodScreen() {
     return list.slice(0, query ? 80 : 40)
   }, [q])
 
+  const scaled = useMemo(() => {
+    if (!baseMacros || manualMacros) return null
+    return scaleMacros(baseMacros, baseAmount, amount)
+  }, [baseMacros, baseAmount, amount, manualMacros])
+
+  const displayMacros: MacroSet = scaled ?? {
+    kcal: Number(kcal) || 0,
+    protein: Number(protein) || 0,
+    carbs: Number(carbs) || 0,
+    fat: Number(fat) || 0,
+  }
+
+  const resetForm = () => {
+    setName('')
+    setBaseMacros(null)
+    setBaseAmount(100)
+    setScaleMode('grams')
+    setAmount(100)
+    setManualMacros(false)
+    setKcal('')
+    setProtein('')
+    setCarbs('')
+    setFat('')
+    setQ('')
+  }
+
   const apply = (id: string) => {
     const p = FOOD_PRESETS.find((x) => x.id === id)
     if (!p) return
+    const { mode, baseAmount: base } = resolveScaleMode(p.portion)
+    const macros: MacroSet = {
+      kcal: p.kcal,
+      protein: p.protein,
+      carbs: p.carbs,
+      fat: p.fat,
+    }
     setName(p.name)
-    setPortion(p.portion)
-    setKcal(String(p.kcal))
-    setProtein(String(p.protein))
-    setCarbs(String(p.carbs))
-    setFat(String(p.fat))
+    setBaseMacros(macros)
+    setBaseAmount(base)
+    setScaleMode(mode)
+    setAmount(base)
+    setManualMacros(false)
+    setKcal(String(macros.kcal))
+    setProtein(String(macros.protein))
+    setCarbs(String(macros.carbs))
+    setFat(String(macros.fat))
+  }
+
+  const onAmountChange = (next: number) => {
+    const safe = Math.max(0, next)
+    setAmount(safe)
+    if (baseMacros && !manualMacros) {
+      const m = scaleMacros(baseMacros, baseAmount, safe)
+      setKcal(String(m.kcal))
+      setProtein(String(m.protein))
+      setCarbs(String(m.carbs))
+      setFat(String(m.fat))
+    }
+  }
+
+  const enableManual = () => {
+    setManualMacros(true)
+    setKcal(String(displayMacros.kcal))
+    setProtein(String(displayMacros.protein))
+    setCarbs(String(displayMacros.carbs))
+    setFat(String(displayMacros.fat))
   }
 
   const add = () => {
     if (!name.trim()) return
+    const portion =
+      scaleMode === 'grams'
+        ? formatAmountLabel('grams', amount)
+        : formatAmountLabel('servings', amount)
     const entry: FoodEntry = {
       id: crypto.randomUUID(),
       date,
       meal,
       name: name.trim(),
-      portion: portion.trim(),
-      kcal: Number(kcal) || 0,
-      protein: Number(protein) || 0,
-      carbs: Number(carbs) || 0,
-      fat: Number(fat) || 0,
+      portion,
+      kcal: displayMacros.kcal,
+      protein: displayMacros.protein,
+      carbs: displayMacros.carbs,
+      fat: displayMacros.fat,
       createdAt: new Date().toISOString(),
     }
     setStore((s) => ({ ...s, foods: [entry, ...s.foods] }))
-    setName('')
-    setPortion('')
-    setKcal('')
-    setProtein('')
-    setCarbs('')
-    setFat('')
+    resetForm()
     setOpen(false)
   }
 
@@ -107,7 +180,7 @@ export function FoodScreen() {
           <i>G</i> gym-log
         </div>
         <h1>Питание</h1>
-        <p>Дневник на сегодня — пресеты или своё блюдо.</p>
+        <p>Дневник на сегодня — пресет + граммовка, ккал пересчитаются.</p>
       </header>
 
       <div className="macro-card glass">
@@ -264,8 +337,8 @@ export function FoodScreen() {
               ))}
             </div>
             {!q.trim() && (
-              <p className="hint" style={{ marginTop: 8, color: 'var(--muted)', fontSize: '0.82rem' }}>
-                Показаны первые 40 — начни вводить название, чтобы найти нужное
+              <p style={{ marginTop: 8, color: 'var(--muted)', fontSize: '0.82rem' }}>
+                Показаны первые 40 — начни вводить название
               </p>
             )}
             {q.trim() && !presets.length && (
@@ -274,36 +347,141 @@ export function FoodScreen() {
               </p>
             )}
 
-            <div className="form-grid">
+            <div className="form-grid" style={{ marginTop: 14 }}>
               <div className="field span2">
                 <label>Название</label>
-                <input value={name} onChange={(e) => setName(e.target.value)} />
+                <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Блюдо" />
               </div>
+
               <div className="field span2">
-                <label>Порция</label>
-                <input value={portion} onChange={(e) => setPortion(e.target.value)} />
+                <label>{scaleMode === 'grams' ? 'Граммы' : 'Штуки / порции'}</label>
+                <div className="stepper-controls" style={{ width: '100%', justifyContent: 'space-between' }}>
+                  <button
+                    type="button"
+                    className="glass-btn"
+                    style={{ width: 48, height: 48, borderRadius: 999, fontSize: '1.35rem' }}
+                    onClick={() =>
+                      onAmountChange(amount - (scaleMode === 'grams' ? 10 : 1))
+                    }
+                  >
+                    −
+                  </button>
+                  <input
+                    className="tnum"
+                    type="number"
+                    inputMode="decimal"
+                    min={0}
+                    step={scaleMode === 'grams' ? 1 : 0.5}
+                    value={amount || ''}
+                    onChange={(e) => onAmountChange(Number(e.target.value) || 0)}
+                    style={{
+                      flex: 1,
+                      minHeight: 48,
+                      margin: '0 10px',
+                      textAlign: 'center',
+                      fontSize: '1.35rem',
+                      fontWeight: 750,
+                      borderRadius: 12,
+                      border: '1px solid var(--hairline)',
+                      background: 'var(--surface)',
+                    }}
+                  />
+                  <button
+                    type="button"
+                    className="glass-btn"
+                    style={{ width: 48, height: 48, borderRadius: 999, fontSize: '1.35rem' }}
+                    onClick={() =>
+                      onAmountChange(amount + (scaleMode === 'grams' ? 10 : 1))
+                    }
+                  >
+                    +
+                  </button>
+                </div>
+                {scaleMode === 'grams' && (
+                  <div className="chips" style={{ marginTop: 8 }}>
+                    {GRAM_QUICK.map((g) => (
+                      <button
+                        key={g}
+                        type="button"
+                        className={`chip${amount === g ? ' on' : ''}`}
+                        onClick={() => onAmountChange(g)}
+                      >
+                        {g} г
+                      </button>
+                    ))}
+                  </div>
+                )}
+                {baseMacros && !manualMacros && (
+                  <p style={{ margin: '8px 0 0', color: 'var(--muted)', fontSize: '0.78rem' }}>
+                    База пресета: {formatAmountLabel(scaleMode, baseAmount)} → пересчёт автоматом
+                  </p>
+                )}
               </div>
-              <div className="field">
-                <label>Ккал</label>
-                <input type="number" value={kcal} onChange={(e) => setKcal(e.target.value)} />
+
+              <div
+                className="span2 glass"
+                style={{
+                  gridColumn: '1 / -1',
+                  padding: '12px 14px',
+                  borderRadius: 14,
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(4, 1fr)',
+                  gap: 8,
+                  textAlign: 'center',
+                }}
+              >
+                <div>
+                  <div style={{ fontSize: '0.68rem', color: 'var(--muted)' }}>ККАЛ</div>
+                  <strong className="tnum">{displayMacros.kcal}</strong>
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.68rem', color: 'var(--muted)' }}>Б</div>
+                  <strong className="tnum">{displayMacros.protein}</strong>
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.68rem', color: 'var(--muted)' }}>У</div>
+                  <strong className="tnum">{displayMacros.carbs}</strong>
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.68rem', color: 'var(--muted)' }}>Ж</div>
+                  <strong className="tnum">{displayMacros.fat}</strong>
+                </div>
               </div>
-              <div className="field">
-                <label>Белок</label>
-                <input type="number" value={protein} onChange={(e) => setProtein(e.target.value)} />
-              </div>
-              <div className="field">
-                <label>Углеводы</label>
-                <input type="number" value={carbs} onChange={(e) => setCarbs(e.target.value)} />
-              </div>
-              <div className="field">
-                <label>Жиры</label>
-                <input type="number" value={fat} onChange={(e) => setFat(e.target.value)} />
-              </div>
+
+              {!manualMacros ? (
+                <button
+                  type="button"
+                  className="secondary span2"
+                  style={{ gridColumn: '1 / -1' }}
+                  onClick={enableManual}
+                >
+                  Править ккал / БЖУ вручную
+                </button>
+              ) : (
+                <>
+                  <div className="field">
+                    <label>Ккал</label>
+                    <input type="number" value={kcal} onChange={(e) => setKcal(e.target.value)} />
+                  </div>
+                  <div className="field">
+                    <label>Белок</label>
+                    <input type="number" value={protein} onChange={(e) => setProtein(e.target.value)} />
+                  </div>
+                  <div className="field">
+                    <label>Углеводы</label>
+                    <input type="number" value={carbs} onChange={(e) => setCarbs(e.target.value)} />
+                  </div>
+                  <div className="field">
+                    <label>Жиры</label>
+                    <input type="number" value={fat} onChange={(e) => setFat(e.target.value)} />
+                  </div>
+                </>
+              )}
             </div>
 
             <div className="btn-row">
               <button type="button" className="primary" style={{ width: '100%' }} onClick={add}>
-                Сохранить
+                Сохранить · {formatAmountLabel(scaleMode, amount)} · {displayMacros.kcal} ккал
               </button>
             </div>
           </div>
