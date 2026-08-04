@@ -48,11 +48,22 @@ export interface FoodEntry {
   createdAt: string
 }
 
-export interface NutritionGoals {
+export interface TrainingBoost {
+  /** В дни с тренировкой добавлять бонус к базовым целям */
+  enabled: boolean
   kcal: number
   protein: number
   carbs: number
   fat: number
+}
+
+export interface NutritionGoals {
+  /** База (день отдыха) */
+  kcal: number
+  protein: number
+  carbs: number
+  fat: number
+  trainingBoost: TrainingBoost
 }
 
 export interface Store {
@@ -66,18 +77,40 @@ export interface Store {
 
 const STORAGE_KEY = 'gym-log:v2'
 
+const DEFAULT_TRAINING_BOOST: TrainingBoost = {
+  enabled: true,
+  kcal: 400,
+  protein: 20,
+  carbs: 50,
+  fat: 0,
+}
+
 const DEFAULT_GOALS: NutritionGoals = {
   kcal: 2500,
   protein: 160,
   carbs: 280,
   fat: 70,
+  trainingBoost: { ...DEFAULT_TRAINING_BOOST },
+}
+
+function mergeGoals(raw: Partial<NutritionGoals> | undefined): NutritionGoals {
+  return {
+    kcal: raw?.kcal ?? DEFAULT_GOALS.kcal,
+    protein: raw?.protein ?? DEFAULT_GOALS.protein,
+    carbs: raw?.carbs ?? DEFAULT_GOALS.carbs,
+    fat: raw?.fat ?? DEFAULT_GOALS.fat,
+    trainingBoost: {
+      ...DEFAULT_TRAINING_BOOST,
+      ...(raw?.trainingBoost ?? {}),
+    },
+  }
 }
 
 function emptyStore(): Store {
   return {
     sessions: [],
     foods: [],
-    goals: { ...DEFAULT_GOALS },
+    goals: mergeGoals(undefined),
     activeSession: null,
     health: [],
   }
@@ -91,7 +124,7 @@ export function loadStore(): Store {
     return {
       sessions: Array.isArray(parsed.sessions) ? parsed.sessions : [],
       foods: Array.isArray(parsed.foods) ? parsed.foods : [],
-      goals: { ...DEFAULT_GOALS, ...(parsed.goals ?? {}) },
+      goals: mergeGoals(parsed.goals),
       activeSession: parsed.activeSession ?? null,
       health: Array.isArray(parsed.health) ? parsed.health : [],
     }

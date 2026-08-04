@@ -8,6 +8,7 @@ import {
   type MacroSet,
   type ScaleMode,
 } from '../lib/foodPortion'
+import { effectiveGoals } from '../lib/nutritionGoals'
 import { macrosForDay, todayKey, type FoodEntry } from '../lib/storage'
 
 function Ring({
@@ -51,6 +52,7 @@ export function FoodScreen() {
   const date = todayKey()
   const totals = macrosForDay(store.foods, date)
   const today = store.foods.filter((f) => f.date === date)
+  const goalsToday = effectiveGoals(store, date)
 
   const [open, setOpen] = useState(false)
   const [meal, setMeal] = useState<MealSlot>('lunch')
@@ -213,9 +215,9 @@ export function FoodScreen() {
         <div className="rings">
           <svg viewBox="0 0 88 88" aria-hidden>
             <circle cx="44" cy="44" r="36" fill="none" stroke="#2a2a2a" strokeWidth="7" />
-            <Ring value={totals.kcal} max={store.goals.kcal} color="#f0b429" cx={44} cy={44} r={36} stroke={7} />
+            <Ring value={totals.kcal} max={goalsToday.kcal} color="#f0b429" cx={44} cy={44} r={36} stroke={7} />
             <circle cx="44" cy="44" r="26" fill="none" stroke="#2a2a2a" strokeWidth="6" />
-            <Ring value={totals.protein} max={store.goals.protein} color="#3dd68c" cx={44} cy={44} r={26} stroke={6} />
+            <Ring value={totals.protein} max={goalsToday.protein} color="#3dd68c" cx={44} cy={44} r={26} stroke={6} />
           </svg>
           <div className="center">
             <b className="tnum">{Math.round(totals.kcal)}</b>
@@ -229,7 +231,7 @@ export function FoodScreen() {
               Белок
             </span>
             <strong className="tnum">
-              {Math.round(totals.protein)} / {store.goals.protein}г
+              {Math.round(totals.protein)} / {goalsToday.protein}г
             </strong>
           </div>
           <div className="macro-line">
@@ -238,7 +240,7 @@ export function FoodScreen() {
               Углев.
             </span>
             <strong className="tnum">
-              {Math.round(totals.carbs)} / {store.goals.carbs}г
+              {Math.round(totals.carbs)} / {goalsToday.carbs}г
             </strong>
           </div>
           <div className="macro-line">
@@ -247,9 +249,16 @@ export function FoodScreen() {
               Жиры
             </span>
             <strong className="tnum">
-              {Math.round(totals.fat)} / {store.goals.fat}г
+              {Math.round(totals.fat)} / {goalsToday.fat}г
             </strong>
           </div>
+          <p style={{ margin: '6px 0 0', color: 'var(--muted)', fontSize: '0.75rem' }}>
+            {goalsToday.boostApplied
+              ? `Тренировка · цель ${goalsToday.kcal} ккал`
+              : goalsToday.trainingDay
+                ? 'Тренировка · бонус выкл.'
+                : 'День отдыха'}
+          </p>
         </div>
       </div>
 
@@ -296,6 +305,11 @@ export function FoodScreen() {
       <section className="goals">
         <h2>Цели дня</h2>
         <div className="form-grid glass" style={{ padding: 14, borderRadius: 18 }}>
+          <p className="span2" style={{ margin: 0, color: 'var(--muted)', fontSize: '0.82rem' }}>
+            База — день отдыха. В день тренировки (есть сессия в зале) добавляется бонус.
+            Сегодня: <strong style={{ color: 'var(--text)' }}>{goalsToday.kcal}</strong> ккал
+            {goalsToday.boostApplied ? ' с бонусом' : ''}.
+          </p>
           {(
             [
               ['kcal', 'Ккал'],
@@ -305,7 +319,7 @@ export function FoodScreen() {
             ] as const
           ).map(([key, label]) => (
             <div key={key} className="field">
-              <label>{label}</label>
+              <label>{label} (база)</label>
               <input
                 type="number"
                 min={0}
@@ -319,6 +333,64 @@ export function FoodScreen() {
               />
             </div>
           ))}
+
+          <label
+            className="span2"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 10,
+              marginTop: 4,
+              fontSize: '0.9rem',
+              cursor: 'pointer',
+            }}
+          >
+            <input
+              type="checkbox"
+              checked={store.goals.trainingBoost.enabled}
+              onChange={(e) =>
+                setStore((s) => ({
+                  ...s,
+                  goals: {
+                    ...s.goals,
+                    trainingBoost: { ...s.goals.trainingBoost, enabled: e.target.checked },
+                  },
+                }))
+              }
+            />
+            Подстраивать под тренировки
+          </label>
+
+          {store.goals.trainingBoost.enabled &&
+            (
+              [
+                ['kcal', '+ ккал'],
+                ['protein', '+ белок'],
+                ['carbs', '+ углев.'],
+                ['fat', '+ жиры'],
+              ] as const
+            ).map(([key, label]) => (
+              <div key={`boost-${key}`} className="field">
+                <label>{label}</label>
+                <input
+                  type="number"
+                  min={0}
+                  value={store.goals.trainingBoost[key]}
+                  onChange={(e) =>
+                    setStore((s) => ({
+                      ...s,
+                      goals: {
+                        ...s.goals,
+                        trainingBoost: {
+                          ...s.goals.trainingBoost,
+                          [key]: Number(e.target.value) || 0,
+                        },
+                      },
+                    }))
+                  }
+                />
+              </div>
+            ))}
         </div>
       </section>
 
