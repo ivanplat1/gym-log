@@ -53,10 +53,13 @@ export function FoodScreen() {
   const [fat, setFat] = useState('')
   const [q, setQ] = useState('')
 
-  const presets = useMemo(
-    () => FOOD_PRESETS.filter((p) => p.name.toLowerCase().includes(q.trim().toLowerCase())),
-    [q],
-  )
+  const presets = useMemo(() => {
+    const query = q.trim().toLowerCase()
+    const list = query
+      ? FOOD_PRESETS.filter((p) => p.name.toLowerCase().includes(query))
+      : FOOD_PRESETS
+    return list.slice(0, query ? 80 : 40)
+  }, [q])
 
   const apply = (id: string) => {
     const p = FOOD_PRESETS.find((x) => x.id === id)
@@ -245,9 +248,10 @@ export function FoodScreen() {
 
             <input
               className="search"
-              placeholder="Пресет: курица, творог…"
+              placeholder={`Поиск среди ${FOOD_PRESETS.length} продуктов…`}
               value={q}
               onChange={(e) => setQ(e.target.value)}
+              autoFocus
             />
             <div className="preset-grid">
               {presets.map((p) => (
@@ -259,6 +263,16 @@ export function FoodScreen() {
                 </button>
               ))}
             </div>
+            {!q.trim() && (
+              <p className="hint" style={{ marginTop: 8, color: 'var(--muted)', fontSize: '0.82rem' }}>
+                Показаны первые 40 — начни вводить название, чтобы найти нужное
+              </p>
+            )}
+            {q.trim() && !presets.length && (
+              <p className="empty" style={{ padding: 12 }}>
+                Ничего не найдено
+              </p>
+            )}
 
             <div className="form-grid">
               <div className="field span2">
