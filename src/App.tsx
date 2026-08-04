@@ -121,8 +121,8 @@ function Home({
                       ? ` · прошлый раз ${new Date(last.finishedAt).toLocaleDateString('ru-RU')}`
                       : ''}
                   </span>
+                  <div className="day-place">{day.short}</div>
                 </div>
-                <div className="day-place">{day.short}</div>
               </button>
             )
           })}
@@ -621,6 +621,7 @@ export default function App() {
   }
 
   const abortWorkout = () => {
+    if (!window.confirm('Выйти из тренировки? Несохранённые подходы пропадут.')) return
     setActive(null)
     setView('home')
   }

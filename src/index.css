@@ -156,7 +156,7 @@ a {
 
 .day-btn {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr;
   gap: 14px;
   align-items: center;
   width: 100%;
@@ -215,12 +215,13 @@ a {
 }
 
 .day-place {
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--ink-soft);
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
+  color: var(--forest);
+  font-weight: 700;
 }
 
 .rule-stack {
