@@ -29,6 +29,19 @@ function IconFood(props: SVGProps<SVGSVGElement>) {
   )
 }
 
+function IconHealth(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" {...props}>
+      <path
+        d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 11c0 5.6-7 10-7 10Z"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
 function IconHistory(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" {...props}>
@@ -44,14 +57,18 @@ export function Shell() {
       <div className="app-main">
         <Outlet />
       </div>
-      <nav className="dock glass" aria-label="Навигация">
+      <nav className="dock glass dock-4" aria-label="Навигация">
         <NavLink to="/" end>
           <IconTrain />
-          Тренировка
+          Зал
         </NavLink>
         <NavLink to="/food">
           <IconFood />
-          Питание
+          Еда
+        </NavLink>
+        <NavLink to="/health">
+          <IconHealth />
+          Сон
         </NavLink>
         <NavLink to="/history">
           <IconHistory />
