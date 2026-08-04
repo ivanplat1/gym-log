@@ -9,7 +9,6 @@ import {
   lastSetsForExercise,
   type LoggedSet,
   type SessionExercise,
-  type WorkoutSession,
 } from '../lib/storage'
 
 const REST_KEY = 'gym-log:rest-sec'
@@ -30,7 +29,7 @@ function suggestFromLast(last: LoggedSet[] | null, timed: boolean) {
 
 export function WorkoutScreen() {
   const { store, setStore } = useStore()
-  const [session, setSession] = useState<WorkoutSession | null>(null)
+  const session = store.activeSession
   const [activeKey, setActiveKey] = useState<string | null>(null)
   const [picker, setPicker] = useState(false)
   const [weight, setWeight] = useState(20)
@@ -43,12 +42,24 @@ export function WorkoutScreen() {
   const [timerOn, setTimerOn] = useState(false)
   const [elapsed, setElapsed] = useState(0)
 
+  const setSession = (
+    next:
+      | typeof session
+      | null
+      | ((prev: typeof session) => typeof session | null),
+  ) => {
+    setStore((s) => {
+      const value = typeof next === 'function' ? next(s.activeSession) : next
+      return { ...s, activeSession: value }
+    })
+  }
+
   useEffect(() => {
     if (!session || session.finishedAt) return
     const started = new Date(session.startedAt).getTime()
-    const id = window.setInterval(() => {
-      setElapsed(Math.floor((Date.now() - started) / 1000))
-    }, 1000)
+    const tick = () => setElapsed(Math.floor((Date.now() - started) / 1000))
+    tick()
+    const id = window.setInterval(tick, 1000)
     return () => window.clearInterval(id)
   }, [session])
 
@@ -60,7 +71,6 @@ export function WorkoutScreen() {
     const s = suggestFromLast(last, active.timed)
     setWeight(s.weight)
     setReps(s.reps)
-    // only when switching exercise
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeKey])
 
@@ -122,12 +132,12 @@ export function WorkoutScreen() {
     if (!session.exercises.some((e) => e.sets.length)) {
       if (!window.confirm('Нет подходов. Всё равно завершить?')) return
     }
-    const finished: WorkoutSession = {
-      ...session,
-      finishedAt: new Date().toISOString(),
-    }
-    setStore((prev) => ({ ...prev, sessions: [finished, ...prev.sessions] }))
-    setSession(null)
+    const finished = { ...session, finishedAt: new Date().toISOString() }
+    setStore((prev) => ({
+      ...prev,
+      sessions: [finished, ...prev.sessions],
+      activeSession: null,
+    }))
     setTimerOn(false)
   }
 
@@ -169,11 +179,22 @@ export function WorkoutScreen() {
             [total, 'всего'],
             [EXERCISES.length, 'упр.'],
           ].map(([n, label]) => (
-            <div key={String(label)} className="glass" style={{ padding: '14px 10px', textAlign: 'center', borderRadius: 16 }}>
+            <div
+              key={String(label)}
+              className="glass"
+              style={{ padding: '14px 10px', textAlign: 'center', borderRadius: 16 }}
+            >
               <div className="tnum" style={{ fontSize: '1.4rem', fontWeight: 800 }}>
                 {n}
               </div>
-              <div style={{ fontSize: '0.68rem', color: 'var(--muted)', marginTop: 4, textTransform: 'uppercase' }}>
+              <div
+                style={{
+                  fontSize: '0.68rem',
+                  color: 'var(--muted)',
+                  marginTop: 4,
+                  textTransform: 'uppercase',
+                }}
+              >
                 {label}
               </div>
             </div>

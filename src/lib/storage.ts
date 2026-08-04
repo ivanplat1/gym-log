@@ -45,6 +45,8 @@ export interface Store {
   sessions: WorkoutSession[]
   foods: FoodEntry[]
   goals: NutritionGoals
+  /** Незавершённая сессия — живёт при смене вкладок */
+  activeSession: WorkoutSession | null
 }
 
 const STORAGE_KEY = 'gym-log:v2'
@@ -57,7 +59,7 @@ const DEFAULT_GOALS: NutritionGoals = {
 }
 
 function emptyStore(): Store {
-  return { sessions: [], foods: [], goals: { ...DEFAULT_GOALS } }
+  return { sessions: [], foods: [], goals: { ...DEFAULT_GOALS }, activeSession: null }
 }
 
 export function loadStore(): Store {
@@ -69,6 +71,7 @@ export function loadStore(): Store {
       sessions: Array.isArray(parsed.sessions) ? parsed.sessions : [],
       foods: Array.isArray(parsed.foods) ? parsed.foods : [],
       goals: { ...DEFAULT_GOALS, ...(parsed.goals ?? {}) },
+      activeSession: parsed.activeSession ?? null,
     }
   } catch {
     return emptyStore()
