@@ -9,7 +9,7 @@ export interface FoodPreset {
   fat: number
 }
 
-/** Пресеты продуктов и блюд — быстрый ввод (~1000) */
+/** Пресеты продуктов и блюд — быстрый ввод (~2000) */
 export const FOOD_PRESETS: FoodPreset[] = [
   {
     "id": "egg",
@@ -6717,6 +6717,3867 @@ export const FOOD_PRESETS: FoodPreset[] = [
     "fat": 6
   },
   {
+    "id": "toast-butter",
+    "name": "Тост с маслом",
+    "portion": "1 шт",
+    "kcal": 180,
+    "protein": 4,
+    "carbs": 20,
+    "fat": 9
+  },
+  {
+    "id": "toast-jam",
+    "name": "Тост с вареньем",
+    "portion": "1 шт",
+    "kcal": 190,
+    "protein": 3,
+    "carbs": 32,
+    "fat": 5
+  },
+  {
+    "id": "toast-cheese",
+    "name": "Тост с сыром",
+    "portion": "1 шт",
+    "kcal": 220,
+    "protein": 10,
+    "carbs": 20,
+    "fat": 11
+  },
+  {
+    "id": "toast-avocado-egg",
+    "name": "Тост авокадо яйцо",
+    "portion": "1 шт",
+    "kcal": 320,
+    "protein": 14,
+    "carbs": 24,
+    "fat": 18
+  },
+  {
+    "id": "granola-yogurt-bowl",
+    "name": "Гранола с йогуртом",
+    "portion": "250 г",
+    "kcal": 320,
+    "protein": 12,
+    "carbs": 40,
+    "fat": 12
+  },
+  {
+    "id": "chia-pudding-berry",
+    "name": "Чиа-пудинг ягодный",
+    "portion": "200 г",
+    "kcal": 240,
+    "protein": 8,
+    "carbs": 22,
+    "fat": 12
+  },
+  {
+    "id": "overnight-oats",
+    "name": "Овсянка overnight",
+    "portion": "250 г",
+    "kcal": 280,
+    "protein": 10,
+    "carbs": 42,
+    "fat": 7
+  },
+  {
+    "id": "protein-oats",
+    "name": "Протеиновая овсянка",
+    "portion": "300 г",
+    "kcal": 350,
+    "protein": 30,
+    "carbs": 40,
+    "fat": 8
+  },
+  {
+    "id": "cottage-cocoa",
+    "name": "Творог с какао",
+    "portion": "150 г",
+    "kcal": 180,
+    "protein": 17,
+    "carbs": 12,
+    "fat": 6
+  },
+  {
+    "id": "skyr-berry",
+    "name": "Скир с ягодами",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 18,
+    "carbs": 14,
+    "fat": 1
+  },
+  {
+    "id": "omelette-cheese-3",
+    "name": "Омлет 3 яйца с сыром",
+    "portion": "1 порция",
+    "kcal": 320,
+    "protein": 24,
+    "carbs": 2,
+    "fat": 24
+  },
+  {
+    "id": "omelette-mushroom",
+    "name": "Омлет с грибами",
+    "portion": "1 порция",
+    "kcal": 240,
+    "protein": 16,
+    "carbs": 4,
+    "fat": 18
+  },
+  {
+    "id": "omelette-spinach",
+    "name": "Омлет со шпинатом",
+    "portion": "1 порция",
+    "kcal": 220,
+    "protein": 16,
+    "carbs": 3,
+    "fat": 16
+  },
+  {
+    "id": "shakshuka-feta",
+    "name": "Шакшука с фетой",
+    "portion": "1 порция",
+    "kcal": 300,
+    "protein": 16,
+    "carbs": 14,
+    "fat": 20
+  },
+  {
+    "id": "porridge-apple",
+    "name": "Каша с яблоком",
+    "portion": "250 г",
+    "kcal": 220,
+    "protein": 6,
+    "carbs": 40,
+    "fat": 4
+  },
+  {
+    "id": "porridge-chocolate",
+    "name": "Шоколадная каша",
+    "portion": "250 г",
+    "kcal": 260,
+    "protein": 8,
+    "carbs": 42,
+    "fat": 7
+  },
+  {
+    "id": "soup-borsch-lean",
+    "name": "Борщ постный",
+    "portion": "300 мл",
+    "kcal": 110,
+    "protein": 3,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "soup-chicken-noodle",
+    "name": "Куриный с лапшой",
+    "portion": "300 мл",
+    "kcal": 160,
+    "protein": 12,
+    "carbs": 16,
+    "fat": 5
+  },
+  {
+    "id": "soup-cream-mushroom",
+    "name": "Крем-суп грибной",
+    "portion": "300 мл",
+    "kcal": 180,
+    "protein": 5,
+    "carbs": 14,
+    "fat": 12
+  },
+  {
+    "id": "soup-cream-broccoli",
+    "name": "Крем-суп брокколи",
+    "portion": "300 мл",
+    "kcal": 150,
+    "protein": 5,
+    "carbs": 12,
+    "fat": 9
+  },
+  {
+    "id": "soup-lentil",
+    "name": "Чечевичный суп",
+    "portion": "300 мл",
+    "kcal": 190,
+    "protein": 12,
+    "carbs": 26,
+    "fat": 4
+  },
+  {
+    "id": "soup-minestrone",
+    "name": "Минестроне",
+    "portion": "300 мл",
+    "kcal": 140,
+    "protein": 5,
+    "carbs": 20,
+    "fat": 4
+  },
+  {
+    "id": "soup-gazpacho",
+    "name": "Гаспачо",
+    "portion": "300 мл",
+    "kcal": 90,
+    "protein": 2,
+    "carbs": 14,
+    "fat": 3
+  },
+  {
+    "id": "soup-pho-chicken",
+    "name": "Фо с курицей",
+    "portion": "400 мл",
+    "kcal": 320,
+    "protein": 22,
+    "carbs": 38,
+    "fat": 8
+  },
+  {
+    "id": "soup-tom-kha",
+    "name": "Том кха",
+    "portion": "300 мл",
+    "kcal": 200,
+    "protein": 10,
+    "carbs": 10,
+    "fat": 14
+  },
+  {
+    "id": "soup-ear",
+    "name": "Уха домашняя",
+    "portion": "300 мл",
+    "kcal": 100,
+    "protein": 12,
+    "carbs": 4,
+    "fat": 3
+  },
+  {
+    "id": "beef-goulash",
+    "name": "Гуляш говяжий",
+    "portion": "250 г",
+    "kcal": 280,
+    "protein": 22,
+    "carbs": 12,
+    "fat": 16
+  },
+  {
+    "id": "pork-goulash",
+    "name": "Гуляш свиной",
+    "portion": "250 г",
+    "kcal": 320,
+    "protein": 20,
+    "carbs": 12,
+    "fat": 20
+  },
+  {
+    "id": "chicken-paprikash",
+    "name": "Паприкаш куриный",
+    "portion": "250 г",
+    "kcal": 260,
+    "protein": 22,
+    "carbs": 10,
+    "fat": 14
+  },
+  {
+    "id": "beef-az",
+    "name": "Азу по-татарски",
+    "portion": "250 г",
+    "kcal": 300,
+    "protein": 20,
+    "carbs": 16,
+    "fat": 16
+  },
+  {
+    "id": "pilaf-veg",
+    "name": "Плов овощной",
+    "portion": "250 г",
+    "kcal": 280,
+    "protein": 6,
+    "carbs": 42,
+    "fat": 10
+  },
+  {
+    "id": "pilaf-lamb",
+    "name": "Плов с бараниной",
+    "portion": "250 г",
+    "kcal": 380,
+    "protein": 16,
+    "carbs": 40,
+    "fat": 16
+  },
+  {
+    "id": "cabbage-stew-meat",
+    "name": "Тушёная капуста с мясом",
+    "portion": "250 г",
+    "kcal": 220,
+    "protein": 14,
+    "carbs": 14,
+    "fat": 12
+  },
+  {
+    "id": "potato-stew-meat",
+    "name": "Жаркое по-домашнему",
+    "portion": "300 г",
+    "kcal": 340,
+    "protein": 18,
+    "carbs": 28,
+    "fat": 16
+  },
+  {
+    "id": "chicken-rice-bowl",
+    "name": "Боул курица рис",
+    "portion": "350 г",
+    "kcal": 420,
+    "protein": 32,
+    "carbs": 45,
+    "fat": 10
+  },
+  {
+    "id": "salmon-rice-bowl",
+    "name": "Боул лосось рис",
+    "portion": "350 г",
+    "kcal": 480,
+    "protein": 30,
+    "carbs": 42,
+    "fat": 18
+  },
+  {
+    "id": "tuna-rice-bowl",
+    "name": "Боул тунец рис",
+    "portion": "350 г",
+    "kcal": 400,
+    "protein": 32,
+    "carbs": 42,
+    "fat": 10
+  },
+  {
+    "id": "falafel-bowl",
+    "name": "Боул фалафель",
+    "portion": "350 г",
+    "kcal": 450,
+    "protein": 16,
+    "carbs": 50,
+    "fat": 18
+  },
+  {
+    "id": "gyro-plate",
+    "name": "Гирос на тарелке",
+    "portion": "350 г",
+    "kcal": 520,
+    "protein": 28,
+    "carbs": 40,
+    "fat": 26
+  },
+  {
+    "id": "steak-fries",
+    "name": "Стейк с картофелем",
+    "portion": "350 г",
+    "kcal": 550,
+    "protein": 40,
+    "carbs": 35,
+    "fat": 26
+  },
+  {
+    "id": "fish-chips",
+    "name": "Рыба с картофелем фри",
+    "portion": "350 г",
+    "kcal": 520,
+    "protein": 28,
+    "carbs": 45,
+    "fat": 24
+  },
+  {
+    "id": "chicken-teriyaki",
+    "name": "Курица терияки",
+    "portion": "250 г",
+    "kcal": 320,
+    "protein": 28,
+    "carbs": 24,
+    "fat": 10
+  },
+  {
+    "id": "beef-teriyaki",
+    "name": "Говядина терияки",
+    "portion": "250 г",
+    "kcal": 340,
+    "protein": 30,
+    "carbs": 22,
+    "fat": 12
+  },
+  {
+    "id": "pork-bulgogi",
+    "name": "Бульгоги свинина",
+    "portion": "250 г",
+    "kcal": 360,
+    "protein": 26,
+    "carbs": 18,
+    "fat": 18
+  },
+  {
+    "id": "kimchi-fried-rice",
+    "name": "Рис с кимчи",
+    "portion": "300 г",
+    "kcal": 380,
+    "protein": 12,
+    "carbs": 48,
+    "fat": 14
+  },
+  {
+    "id": "egg-fried-rice",
+    "name": "Рис с яйцом жареный",
+    "portion": "300 г",
+    "kcal": 400,
+    "protein": 14,
+    "carbs": 50,
+    "fat": 14
+  },
+  {
+    "id": "noodles-veg",
+    "name": "Лапша с овощами",
+    "portion": "300 г",
+    "kcal": 320,
+    "protein": 10,
+    "carbs": 48,
+    "fat": 10
+  },
+  {
+    "id": "noodles-beef",
+    "name": "Лапша с говядиной",
+    "portion": "350 г",
+    "kcal": 420,
+    "protein": 24,
+    "carbs": 48,
+    "fat": 14
+  },
+  {
+    "id": "pasta-bolognese",
+    "name": "Паста болоньезе",
+    "portion": "350 г",
+    "kcal": 450,
+    "protein": 24,
+    "carbs": 48,
+    "fat": 16
+  },
+  {
+    "id": "pasta-carbonara",
+    "name": "Паста карбонара",
+    "portion": "350 г",
+    "kcal": 520,
+    "protein": 22,
+    "carbs": 48,
+    "fat": 24
+  },
+  {
+    "id": "pasta-pesto",
+    "name": "Паста с песто",
+    "portion": "300 г",
+    "kcal": 420,
+    "protein": 14,
+    "carbs": 48,
+    "fat": 18
+  },
+  {
+    "id": "pasta-alfredo",
+    "name": "Паста Альфредо",
+    "portion": "350 г",
+    "kcal": 480,
+    "protein": 16,
+    "carbs": 45,
+    "fat": 26
+  },
+  {
+    "id": "pasta-seafood",
+    "name": "Паста с морепродуктами",
+    "portion": "350 г",
+    "kcal": 400,
+    "protein": 26,
+    "carbs": 45,
+    "fat": 12
+  },
+  {
+    "id": "lasagna-veg",
+    "name": "Лазанья овощная",
+    "portion": "250 г",
+    "kcal": 320,
+    "protein": 14,
+    "carbs": 32,
+    "fat": 14
+  },
+  {
+    "id": "pizza-hawaii",
+    "name": "Пицца гавайская",
+    "portion": "1 кусок",
+    "kcal": 260,
+    "protein": 12,
+    "carbs": 28,
+    "fat": 11
+  },
+  {
+    "id": "pizza-four-cheese",
+    "name": "Пицца 4 сыра",
+    "portion": "1 кусок",
+    "kcal": 300,
+    "protein": 14,
+    "carbs": 26,
+    "fat": 16
+  },
+  {
+    "id": "pizza-veg",
+    "name": "Пицца овощная",
+    "portion": "1 кусок",
+    "kcal": 210,
+    "protein": 8,
+    "carbs": 28,
+    "fat": 8
+  },
+  {
+    "id": "burger-chicken",
+    "name": "Бургер куриный",
+    "portion": "1 шт",
+    "kcal": 420,
+    "protein": 26,
+    "carbs": 35,
+    "fat": 18
+  },
+  {
+    "id": "burger-veggie",
+    "name": "Бургер овощной",
+    "portion": "1 шт",
+    "kcal": 380,
+    "protein": 14,
+    "carbs": 42,
+    "fat": 16
+  },
+  {
+    "id": "wrap-falafel",
+    "name": "Врап фалафель",
+    "portion": "1 шт",
+    "kcal": 390,
+    "protein": 14,
+    "carbs": 45,
+    "fat": 14
+  },
+  {
+    "id": "wrap-tuna",
+    "name": "Врап тунец",
+    "portion": "1 шт",
+    "kcal": 360,
+    "protein": 24,
+    "carbs": 32,
+    "fat": 14
+  },
+  {
+    "id": "sandwich-ham-cheese",
+    "name": "Сэндвич ветчина сыр",
+    "portion": "1 шт",
+    "kcal": 380,
+    "protein": 20,
+    "carbs": 32,
+    "fat": 18
+  },
+  {
+    "id": "sandwich-club",
+    "name": "Клаб-сэндвич",
+    "portion": "1 шт",
+    "kcal": 450,
+    "protein": 26,
+    "carbs": 36,
+    "fat": 20
+  },
+  {
+    "id": "croissant-ham-cheese",
+    "name": "Круассан ветчина сыр",
+    "portion": "1 шт",
+    "kcal": 340,
+    "protein": 14,
+    "carbs": 28,
+    "fat": 20
+  },
+  {
+    "id": "salad-caesar-shrimp",
+    "name": "Цезарь с креветками",
+    "portion": "250 г",
+    "kcal": 300,
+    "protein": 22,
+    "carbs": 10,
+    "fat": 18
+  },
+  {
+    "id": "salad-greek-chicken",
+    "name": "Греческий с курицей",
+    "portion": "250 г",
+    "kcal": 260,
+    "protein": 22,
+    "carbs": 10,
+    "fat": 14
+  },
+  {
+    "id": "salad-tuna",
+    "name": "Салат с тунцом",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 20,
+    "carbs": 8,
+    "fat": 12
+  },
+  {
+    "id": "salad-egg",
+    "name": "Салат яичный",
+    "portion": "150 г",
+    "kcal": 200,
+    "protein": 10,
+    "carbs": 6,
+    "fat": 16
+  },
+  {
+    "id": "salad-beet-feta",
+    "name": "Свёкла с фетой",
+    "portion": "150 г",
+    "kcal": 160,
+    "protein": 6,
+    "carbs": 12,
+    "fat": 10
+  },
+  {
+    "id": "salad-coleslaw",
+    "name": "Коулслоу",
+    "portion": "150 г",
+    "kcal": 180,
+    "protein": 2,
+    "carbs": 14,
+    "fat": 14
+  },
+  {
+    "id": "salad-potato",
+    "name": "Картофельный салат",
+    "portion": "150 г",
+    "kcal": 190,
+    "protein": 3,
+    "carbs": 18,
+    "fat": 12
+  },
+  {
+    "id": "salad-tabbouleh",
+    "name": "Табуле",
+    "portion": "150 г",
+    "kcal": 140,
+    "protein": 4,
+    "carbs": 18,
+    "fat": 6
+  },
+  {
+    "id": "salad-waldorf",
+    "name": "Уолдорф",
+    "portion": "150 г",
+    "kcal": 200,
+    "protein": 4,
+    "carbs": 16,
+    "fat": 14
+  },
+  {
+    "id": "salad-shrimp",
+    "name": "Салат с креветками",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 18,
+    "carbs": 6,
+    "fat": 8
+  },
+  {
+    "id": "rice-butter",
+    "name": "Рис с маслом",
+    "portion": "150 г",
+    "kcal": 230,
+    "protein": 4,
+    "carbs": 40,
+    "fat": 6
+  },
+  {
+    "id": "buckwheat-butter",
+    "name": "Гречка с маслом",
+    "portion": "150 г",
+    "kcal": 210,
+    "protein": 6,
+    "carbs": 30,
+    "fat": 7
+  },
+  {
+    "id": "mashed-butter",
+    "name": "Пюре с маслом",
+    "portion": "150 г",
+    "kcal": 180,
+    "protein": 3,
+    "carbs": 22,
+    "fat": 9
+  },
+  {
+    "id": "fries-small",
+    "name": "Картофель фри малый",
+    "portion": "100 г",
+    "kcal": 310,
+    "protein": 3.5,
+    "carbs": 38,
+    "fat": 15
+  },
+  {
+    "id": "fries-large",
+    "name": "Картофель фри большой",
+    "portion": "150 г",
+    "kcal": 465,
+    "protein": 5,
+    "carbs": 57,
+    "fat": 22
+  },
+  {
+    "id": "wedges-oven",
+    "name": "Дольки в духовке",
+    "portion": "150 г",
+    "kcal": 180,
+    "protein": 3,
+    "carbs": 28,
+    "fat": 6
+  },
+  {
+    "id": "onion-rings",
+    "name": "Луковые кольца",
+    "portion": "100 г",
+    "kcal": 280,
+    "protein": 4,
+    "carbs": 30,
+    "fat": 16
+  },
+  {
+    "id": "garlic-bread",
+    "name": "Чесночный хлеб",
+    "portion": "1 кусок",
+    "kcal": 180,
+    "protein": 4,
+    "carbs": 22,
+    "fat": 8
+  },
+  {
+    "id": "corn-cob",
+    "name": "Кукуруза в початках",
+    "portion": "1 шт",
+    "kcal": 120,
+    "protein": 4,
+    "carbs": 26,
+    "fat": 2
+  },
+  {
+    "id": "yogurt-peach",
+    "name": "Йогурт персик",
+    "portion": "150 г",
+    "kcal": 130,
+    "protein": 5,
+    "carbs": 20,
+    "fat": 3
+  },
+  {
+    "id": "yogurt-strawberry",
+    "name": "Йогурт клубника",
+    "portion": "150 г",
+    "kcal": 130,
+    "protein": 5,
+    "carbs": 20,
+    "fat": 3
+  },
+  {
+    "id": "yogurt-blueberry",
+    "name": "Йогурт черника",
+    "portion": "150 г",
+    "kcal": 125,
+    "protein": 5,
+    "carbs": 19,
+    "fat": 3
+  },
+  {
+    "id": "yogurt-vanilla",
+    "name": "Йогурт ваниль",
+    "portion": "150 г",
+    "kcal": 140,
+    "protein": 5,
+    "carbs": 22,
+    "fat": 3.5
+  },
+  {
+    "id": "kefir-berry",
+    "name": "Кефир ягодный",
+    "portion": "250 мл",
+    "kcal": 140,
+    "protein": 7,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "ryazhenka-honey",
+    "name": "Ряженка с мёдом",
+    "portion": "250 мл",
+    "kcal": 220,
+    "protein": 7,
+    "carbs": 26,
+    "fat": 8
+  },
+  {
+    "id": "cottage-raisin",
+    "name": "Творог с изюмом",
+    "portion": "150 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 5
+  },
+  {
+    "id": "cottage-jam",
+    "name": "Творог с вареньем",
+    "portion": "150 г",
+    "kcal": 210,
+    "protein": 16,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "cheese-toast",
+    "name": "Сыр на тосте",
+    "portion": "1 шт",
+    "kcal": 200,
+    "protein": 10,
+    "carbs": 16,
+    "fat": 10
+  },
+  {
+    "id": "mozzarella-sticks",
+    "name": "Моцарелла стикс",
+    "portion": "4 шт",
+    "kcal": 320,
+    "protein": 16,
+    "carbs": 24,
+    "fat": 18
+  },
+  {
+    "id": "salmon-teriyaki",
+    "name": "Лосось терияки",
+    "portion": "150 г",
+    "kcal": 320,
+    "protein": 28,
+    "carbs": 12,
+    "fat": 16
+  },
+  {
+    "id": "salmon-grill-lemon",
+    "name": "Лосось гриль лимон",
+    "portion": "150 г",
+    "kcal": 280,
+    "protein": 30,
+    "carbs": 1,
+    "fat": 17
+  },
+  {
+    "id": "cod-bake-veg",
+    "name": "Треска с овощами",
+    "portion": "250 г",
+    "kcal": 220,
+    "protein": 28,
+    "carbs": 10,
+    "fat": 6
+  },
+  {
+    "id": "pollock-fry",
+    "name": "Минтай жареный",
+    "portion": "150 г",
+    "kcal": 220,
+    "protein": 22,
+    "carbs": 8,
+    "fat": 10
+  },
+  {
+    "id": "shrimp-garlic",
+    "name": "Креветки с чесноком",
+    "portion": "150 г",
+    "kcal": 180,
+    "protein": 28,
+    "carbs": 2,
+    "fat": 6
+  },
+  {
+    "id": "mussels-wine",
+    "name": "Мидии в вине",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 18,
+    "carbs": 6,
+    "fat": 6
+  },
+  {
+    "id": "sushi-set-12",
+    "name": "Сет роллов",
+    "portion": "12 шт",
+    "kcal": 520,
+    "protein": 22,
+    "carbs": 70,
+    "fat": 14
+  },
+  {
+    "id": "poke-salmon",
+    "name": "Поке с лососем",
+    "portion": "350 г",
+    "kcal": 450,
+    "protein": 28,
+    "carbs": 45,
+    "fat": 14
+  },
+  {
+    "id": "poke-tuna",
+    "name": "Поке с тунцом",
+    "portion": "350 г",
+    "kcal": 420,
+    "protein": 32,
+    "carbs": 42,
+    "fat": 10
+  },
+  {
+    "id": "chicken-curry-mild",
+    "name": "Курица карри мягкое",
+    "portion": "300 г",
+    "kcal": 380,
+    "protein": 28,
+    "carbs": 24,
+    "fat": 18
+  },
+  {
+    "id": "chicken-tikka",
+    "name": "Курица тикка",
+    "portion": "200 г",
+    "kcal": 280,
+    "protein": 30,
+    "carbs": 8,
+    "fat": 14
+  },
+  {
+    "id": "lamb-curry",
+    "name": "Баранина карри",
+    "portion": "300 г",
+    "kcal": 420,
+    "protein": 26,
+    "carbs": 18,
+    "fat": 26
+  },
+  {
+    "id": "beef-burger-patty",
+    "name": "Котлета для бургера",
+    "portion": "120 г",
+    "kcal": 280,
+    "protein": 22,
+    "carbs": 1,
+    "fat": 21
+  },
+  {
+    "id": "chicken-burger-patty",
+    "name": "Котлета куриная",
+    "portion": "120 г",
+    "kcal": 200,
+    "protein": 24,
+    "carbs": 4,
+    "fat": 10
+  },
+  {
+    "id": "meatloaf",
+    "name": "Мясной рулет",
+    "portion": "150 г",
+    "kcal": 260,
+    "protein": 20,
+    "carbs": 10,
+    "fat": 16
+  },
+  {
+    "id": "ribs-bbq",
+    "name": "Рёбра BBQ",
+    "portion": "200 г",
+    "kcal": 420,
+    "protein": 28,
+    "carbs": 12,
+    "fat": 28
+  },
+  {
+    "id": "pulled-pork",
+    "name": "Рваная свинина",
+    "portion": "150 г",
+    "kcal": 300,
+    "protein": 26,
+    "carbs": 8,
+    "fat": 18
+  },
+  {
+    "id": "chicken-nuggets-10",
+    "name": "Наггетсы",
+    "portion": "10 шт",
+    "kcal": 420,
+    "protein": 22,
+    "carbs": 28,
+    "fat": 24
+  },
+  {
+    "id": "wings-bbq",
+    "name": "Крылья BBQ",
+    "portion": "6 шт",
+    "kcal": 380,
+    "protein": 28,
+    "carbs": 12,
+    "fat": 24
+  },
+  {
+    "id": "wings-buffalo",
+    "name": "Крылья баффало",
+    "portion": "6 шт",
+    "kcal": 360,
+    "protein": 28,
+    "carbs": 6,
+    "fat": 24
+  },
+  {
+    "id": "protein-yogurt",
+    "name": "Протеиновый йогурт",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 20,
+    "carbs": 12,
+    "fat": 2
+  },
+  {
+    "id": "protein-pudding",
+    "name": "Протеиновый пудинг",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 20,
+    "carbs": 14,
+    "fat": 4
+  },
+  {
+    "id": "rice-cake",
+    "name": "Хлебец рисовый",
+    "portion": "1 шт",
+    "kcal": 35,
+    "protein": 0.7,
+    "carbs": 7,
+    "fat": 0.3
+  },
+  {
+    "id": "rice-cake-pb",
+    "name": "Хлебец с арахисовой пастой",
+    "portion": "1 шт",
+    "kcal": 120,
+    "protein": 4,
+    "carbs": 10,
+    "fat": 7
+  },
+  {
+    "id": "corn-cake",
+    "name": "Хлебец кукурузный",
+    "portion": "1 шт",
+    "kcal": 30,
+    "protein": 0.6,
+    "carbs": 6,
+    "fat": 0.2
+  },
+  {
+    "id": "cracker-cheese",
+    "name": "Крекер с сыром",
+    "portion": "4 шт + сыр",
+    "kcal": 180,
+    "protein": 7,
+    "carbs": 14,
+    "fat": 10
+  },
+  {
+    "id": "trail-mix",
+    "name": "Смесь орехов и сухофруктов",
+    "portion": "40 г",
+    "kcal": 190,
+    "protein": 5,
+    "carbs": 18,
+    "fat": 12
+  },
+  {
+    "id": "dried-mango",
+    "name": "Манго сушёное",
+    "portion": "30 г",
+    "kcal": 100,
+    "protein": 0.5,
+    "carbs": 25,
+    "fat": 0.2
+  },
+  {
+    "id": "dried-banana",
+    "name": "Банановые чипсы",
+    "portion": "30 г",
+    "kcal": 155,
+    "protein": 0.6,
+    "carbs": 18,
+    "fat": 9
+  },
+  {
+    "id": "chocolate-protein",
+    "name": "Шоколад протеиновый",
+    "portion": "40 г",
+    "kcal": 160,
+    "protein": 15,
+    "carbs": 12,
+    "fat": 6
+  },
+  {
+    "id": "ice-cream-protein",
+    "name": "Мороженое протеиновое",
+    "portion": "100 г",
+    "kcal": 150,
+    "protein": 15,
+    "carbs": 14,
+    "fat": 4
+  },
+  {
+    "id": "gelato",
+    "name": "Джелато",
+    "portion": "100 г",
+    "kcal": 200,
+    "protein": 4,
+    "carbs": 28,
+    "fat": 8
+  },
+  {
+    "id": "brownie",
+    "name": "Брауни",
+    "portion": "60 г",
+    "kcal": 250,
+    "protein": 3,
+    "carbs": 28,
+    "fat": 14
+  },
+  {
+    "id": "cookie-dough",
+    "name": "Печенье шоколадное",
+    "portion": "1 шт",
+    "kcal": 160,
+    "protein": 2,
+    "carbs": 22,
+    "fat": 8
+  },
+  {
+    "id": "muffin-berry",
+    "name": "Маффин ягодный",
+    "portion": "1 шт",
+    "kcal": 280,
+    "protein": 4,
+    "carbs": 38,
+    "fat": 12
+  },
+  {
+    "id": "muffin-chocolate",
+    "name": "Маффин шоколадный",
+    "portion": "1 шт",
+    "kcal": 320,
+    "protein": 5,
+    "carbs": 40,
+    "fat": 15
+  },
+  {
+    "id": "pancake-syrup",
+    "name": "Панкейки с сиропом",
+    "portion": "3 шт",
+    "kcal": 420,
+    "protein": 12,
+    "carbs": 60,
+    "fat": 14
+  },
+  {
+    "id": "waffle-syrup",
+    "name": "Вафли с сиропом",
+    "portion": "2 шт",
+    "kcal": 380,
+    "protein": 8,
+    "carbs": 55,
+    "fat": 14
+  },
+  {
+    "id": "smoothie-banana",
+    "name": "Смузи банан",
+    "portion": "300 мл",
+    "kcal": 220,
+    "protein": 5,
+    "carbs": 42,
+    "fat": 3
+  },
+  {
+    "id": "smoothie-green",
+    "name": "Смузи зелёный",
+    "portion": "300 мл",
+    "kcal": 160,
+    "protein": 4,
+    "carbs": 28,
+    "fat": 4
+  },
+  {
+    "id": "smoothie-peanut",
+    "name": "Смузи арахис банан",
+    "portion": "300 мл",
+    "kcal": 320,
+    "protein": 14,
+    "carbs": 35,
+    "fat": 14
+  },
+  {
+    "id": "protein-shake-water",
+    "name": "Протеин на воде",
+    "portion": "300 мл",
+    "kcal": 120,
+    "protein": 24,
+    "carbs": 3,
+    "fat": 1.5
+  },
+  {
+    "id": "protein-shake-milk",
+    "name": "Протеин на молоке",
+    "portion": "300 мл",
+    "kcal": 220,
+    "protein": 30,
+    "carbs": 12,
+    "fat": 6
+  },
+  {
+    "id": "gainer-shake",
+    "name": "Гейнер шейк",
+    "portion": "400 мл",
+    "kcal": 450,
+    "protein": 30,
+    "carbs": 70,
+    "fat": 5
+  },
+  {
+    "id": "latte-oat",
+    "name": "Латте на овсяном",
+    "portion": "250 мл",
+    "kcal": 140,
+    "protein": 2,
+    "carbs": 22,
+    "fat": 5
+  },
+  {
+    "id": "cappuccino-soy",
+    "name": "Капучино на соевом",
+    "portion": "200 мл",
+    "kcal": 90,
+    "protein": 5,
+    "carbs": 8,
+    "fat": 3.5
+  },
+  {
+    "id": "matcha-milk",
+    "name": "Матча на молоке",
+    "portion": "250 мл",
+    "kcal": 130,
+    "protein": 6,
+    "carbs": 14,
+    "fat": 4
+  },
+  {
+    "id": "fresh-orange",
+    "name": "Фреш апельсин",
+    "portion": "250 мл",
+    "kcal": 110,
+    "protein": 2,
+    "carbs": 26,
+    "fat": 0.3
+  },
+  {
+    "id": "fresh-apple",
+    "name": "Фреш яблоко",
+    "portion": "250 мл",
+    "kcal": 120,
+    "protein": 0.5,
+    "carbs": 30,
+    "fat": 0.3
+  },
+  {
+    "id": "fresh-carrot",
+    "name": "Фреш морковь",
+    "portion": "250 мл",
+    "kcal": 80,
+    "protein": 2,
+    "carbs": 18,
+    "fat": 0.3
+  },
+  {
+    "id": "kombucha-ginger",
+    "name": "Комбуча имбирь",
+    "portion": "250 мл",
+    "kcal": 45,
+    "protein": 0,
+    "carbs": 11,
+    "fat": 0
+  },
+  {
+    "id": "isotonic-lemon",
+    "name": "Изотоник лимон",
+    "portion": "500 мл",
+    "kcal": 80,
+    "protein": 0,
+    "carbs": 20,
+    "fat": 0
+  },
+  {
+    "id": "sauce-cesar",
+    "name": "Соус цезарь",
+    "portion": "30 г",
+    "kcal": 120,
+    "protein": 1,
+    "carbs": 2,
+    "fat": 12
+  },
+  {
+    "id": "sauce-ranch",
+    "name": "Соус ранч",
+    "portion": "30 г",
+    "kcal": 110,
+    "protein": 0.5,
+    "carbs": 2,
+    "fat": 11
+  },
+  {
+    "id": "sauce-sweet-chili",
+    "name": "Сладкий чили",
+    "portion": "30 г",
+    "kcal": 60,
+    "protein": 0.2,
+    "carbs": 14,
+    "fat": 0
+  },
+  {
+    "id": "sauce-garlic",
+    "name": "Соус чесночный",
+    "portion": "30 г",
+    "kcal": 100,
+    "protein": 0.5,
+    "carbs": 3,
+    "fat": 10
+  },
+  {
+    "id": "hummus-spicy",
+    "name": "Хумус острый",
+    "portion": "50 г",
+    "kcal": 125,
+    "protein": 4,
+    "carbs": 8,
+    "fat": 8
+  },
+  {
+    "id": "guacamole-50",
+    "name": "Гуакамоле",
+    "portion": "50 г",
+    "kcal": 80,
+    "protein": 1,
+    "carbs": 4,
+    "fat": 7
+  },
+  {
+    "id": "salsa-50",
+    "name": "Сальса",
+    "portion": "50 г",
+    "kcal": 25,
+    "protein": 1,
+    "carbs": 5,
+    "fat": 0.5
+  },
+  {
+    "id": "pelmeni-chicken",
+    "name": "Пельмени куриные",
+    "portion": "200 г",
+    "kcal": 300,
+    "protein": 18,
+    "carbs": 34,
+    "fat": 10
+  },
+  {
+    "id": "pelmeni-beef",
+    "name": "Пельмени говяжьи",
+    "portion": "200 г",
+    "kcal": 340,
+    "protein": 16,
+    "carbs": 36,
+    "fat": 14
+  },
+  {
+    "id": "vareniki-potato-onion",
+    "name": "Вареники картошка лук",
+    "portion": "200 г",
+    "kcal": 290,
+    "protein": 8,
+    "carbs": 48,
+    "fat": 7
+  },
+  {
+    "id": "dumpling-shrimp",
+    "name": "Гедза с креветкой",
+    "portion": "6 шт",
+    "kcal": 220,
+    "protein": 12,
+    "carbs": 24,
+    "fat": 8
+  },
+  {
+    "id": "spring-roll-veg",
+    "name": "Спринг-ролл овощной",
+    "portion": "2 шт",
+    "kcal": 160,
+    "protein": 4,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "spring-roll-shrimp",
+    "name": "Спринг-ролл креветка",
+    "portion": "2 шт",
+    "kcal": 180,
+    "protein": 8,
+    "carbs": 22,
+    "fat": 6
+  },
+  {
+    "id": "pizza-frozen-slice",
+    "name": "Пицца замороженная",
+    "portion": "1 кусок",
+    "kcal": 240,
+    "protein": 10,
+    "carbs": 28,
+    "fat": 10
+  },
+  {
+    "id": "khachapuri-megrel",
+    "name": "Хачапури по-мегрельски",
+    "portion": "1 кусок",
+    "kcal": 320,
+    "protein": 14,
+    "carbs": 28,
+    "fat": 18
+  },
+  {
+    "id": "lobio-walnut",
+    "name": "Лобио с орехами",
+    "portion": "200 г",
+    "kcal": 240,
+    "protein": 10,
+    "carbs": 22,
+    "fat": 12
+  },
+  {
+    "id": "ajapsandali",
+    "name": "Аджапсандали",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 3,
+    "carbs": 14,
+    "fat": 8
+  },
+  {
+    "id": "chakhokhbili-chicken",
+    "name": "Чахохбили",
+    "portion": "250 г",
+    "kcal": 240,
+    "protein": 22,
+    "carbs": 8,
+    "fat": 12
+  },
+  {
+    "id": "dolma-grape",
+    "name": "Долма",
+    "portion": "4 шт",
+    "kcal": 280,
+    "protein": 14,
+    "carbs": 18,
+    "fat": 16
+  },
+  {
+    "id": "manty-beef",
+    "name": "Манты с говядиной",
+    "portion": "3 шт",
+    "kcal": 360,
+    "protein": 18,
+    "carbs": 36,
+    "fat": 14
+  },
+  {
+    "id": "samsa-pumpkin",
+    "name": "Самса с тыквой",
+    "portion": "1 шт",
+    "kcal": 260,
+    "protein": 6,
+    "carbs": 32,
+    "fat": 12
+  },
+  {
+    "id": "lagman-beef",
+    "name": "Лагман",
+    "portion": "400 г",
+    "kcal": 420,
+    "protein": 20,
+    "carbs": 48,
+    "fat": 14
+  },
+  {
+    "id": "plov-uzbek",
+    "name": "Плов узбекский",
+    "portion": "300 г",
+    "kcal": 450,
+    "protein": 16,
+    "carbs": 48,
+    "fat": 20
+  },
+  {
+    "id": "broccoli-cheese",
+    "name": "Брокколи с сыром",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 12,
+    "carbs": 10,
+    "fat": 10
+  },
+  {
+    "id": "cauli-cheese",
+    "name": "Цветная капуста с сыром",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 11,
+    "carbs": 10,
+    "fat": 12
+  },
+  {
+    "id": "spinach-cream",
+    "name": "Шпинат в сливках",
+    "portion": "150 г",
+    "kcal": 160,
+    "protein": 5,
+    "carbs": 6,
+    "fat": 14
+  },
+  {
+    "id": "mushroom-cream",
+    "name": "Грибы в сливках",
+    "portion": "150 г",
+    "kcal": 180,
+    "protein": 6,
+    "carbs": 6,
+    "fat": 15
+  },
+  {
+    "id": "ratatouille-plate",
+    "name": "Рататуй порция",
+    "portion": "250 г",
+    "kcal": 140,
+    "protein": 3,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "veg-grill-mix",
+    "name": "Овощи гриль микс",
+    "portion": "200 г",
+    "kcal": 100,
+    "protein": 3,
+    "carbs": 12,
+    "fat": 4
+  },
+  {
+    "id": "smoothie-bowl",
+    "name": "Смузи-боул",
+    "portion": "300 г",
+    "kcal": 280,
+    "protein": 8,
+    "carbs": 48,
+    "fat": 6
+  },
+  {
+    "id": "acai-bowl",
+    "name": "Асаи-боул",
+    "portion": "300 г",
+    "kcal": 320,
+    "protein": 6,
+    "carbs": 50,
+    "fat": 10
+  },
+  {
+    "id": "fruit-cup",
+    "name": "Фруктовая нарезка",
+    "portion": "200 г",
+    "kcal": 100,
+    "protein": 1.5,
+    "carbs": 24,
+    "fat": 0.5
+  },
+  {
+    "id": "berries-mix",
+    "name": "Ягодный микс",
+    "portion": "150 г",
+    "kcal": 70,
+    "protein": 1.2,
+    "carbs": 15,
+    "fat": 0.5
+  },
+  {
+    "id": "coconut-yogurt",
+    "name": "Кокосовый йогурт",
+    "portion": "150 г",
+    "kcal": 180,
+    "protein": 2,
+    "carbs": 12,
+    "fat": 14
+  },
+  {
+    "id": "protein-bar-cookie",
+    "name": "Протеин-бар cookie",
+    "portion": "1 шт",
+    "kcal": 200,
+    "protein": 20,
+    "carbs": 18,
+    "fat": 7
+  },
+  {
+    "id": "protein-bar-caramel",
+    "name": "Протеин-бар caramel",
+    "portion": "1 шт",
+    "kcal": 210,
+    "protein": 20,
+    "carbs": 20,
+    "fat": 7
+  },
+  {
+    "id": "protein-cookie",
+    "name": "Протеиновое печенье",
+    "portion": "1 шт",
+    "kcal": 180,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 6
+  },
+  {
+    "id": "zero-jelly",
+    "name": "Желе без сахара",
+    "portion": "100 г",
+    "kcal": 20,
+    "protein": 2,
+    "carbs": 2,
+    "fat": 0
+  },
+  {
+    "id": "konjac-noodles",
+    "name": "Лапша ширатаки",
+    "portion": "200 г",
+    "kcal": 20,
+    "protein": 0,
+    "carbs": 4,
+    "fat": 0
+  },
+  {
+    "id": "konjac-rice",
+    "name": "Рис ширатаки",
+    "portion": "200 г",
+    "kcal": 20,
+    "protein": 0,
+    "carbs": 4,
+    "fat": 0
+  },
+  {
+    "id": "tempeh",
+    "name": "Темпе",
+    "portion": "100 г",
+    "kcal": 193,
+    "protein": 19,
+    "carbs": 9,
+    "fat": 11
+  },
+  {
+    "id": "seitan",
+    "name": "Сейтан",
+    "portion": "100 г",
+    "kcal": 140,
+    "protein": 25,
+    "carbs": 6,
+    "fat": 2
+  },
+  {
+    "id": "jackfruit",
+    "name": "Джекфрут",
+    "portion": "100 г",
+    "kcal": 95,
+    "protein": 1.5,
+    "carbs": 23,
+    "fat": 0.6
+  },
+  {
+    "id": "hearts-palm",
+    "name": "Пальмовые сердечки",
+    "portion": "100 г",
+    "kcal": 28,
+    "protein": 2.5,
+    "carbs": 4,
+    "fat": 0.5
+  },
+  {
+    "id": "artichoke-heart",
+    "name": "Артишоки консерв.",
+    "portion": "100 г",
+    "kcal": 50,
+    "protein": 2,
+    "carbs": 8,
+    "fat": 0.5
+  },
+  {
+    "id": "sun-dried-tomato",
+    "name": "Вяленые томаты",
+    "portion": "100 г",
+    "kcal": 215,
+    "protein": 5,
+    "carbs": 23,
+    "fat": 14
+  },
+  {
+    "id": "capers",
+    "name": "Каперсы",
+    "portion": "100 г",
+    "kcal": 23,
+    "protein": 2.4,
+    "carbs": 5,
+    "fat": 0.9
+  },
+  {
+    "id": "jalapeno",
+    "name": "Халапеньо",
+    "portion": "100 г",
+    "kcal": 28,
+    "protein": 0.9,
+    "carbs": 6,
+    "fat": 0.4
+  },
+  {
+    "id": "pickled-cucumber",
+    "name": "Маринованные огурцы",
+    "portion": "100 г",
+    "kcal": 12,
+    "protein": 0.5,
+    "carbs": 2,
+    "fat": 0.1
+  },
+  {
+    "id": "sauerkraut-oil",
+    "name": "Квашеная капуста с маслом",
+    "portion": "100 г",
+    "kcal": 45,
+    "protein": 1,
+    "carbs": 4,
+    "fat": 3
+  },
+  {
+    "id": "nori",
+    "name": "Нори",
+    "portion": "100 г",
+    "kcal": 35,
+    "protein": 6,
+    "carbs": 5,
+    "fat": 0.3
+  },
+  {
+    "id": "wakame",
+    "name": "Вакаме",
+    "portion": "100 г",
+    "kcal": 45,
+    "protein": 3,
+    "carbs": 9,
+    "fat": 0.6
+  },
+  {
+    "id": "edamame-pod",
+    "name": "Эдамаме в стручках",
+    "portion": "100 г",
+    "kcal": 120,
+    "protein": 11,
+    "carbs": 9,
+    "fat": 5
+  },
+  {
+    "id": "green-beans-fry",
+    "name": "Стручковая фасоль жареная",
+    "portion": "100 г",
+    "kcal": 60,
+    "protein": 2,
+    "carbs": 8,
+    "fat": 2
+  },
+  {
+    "id": "sweet-corn-can",
+    "name": "Кукуруза консерв.",
+    "portion": "100 г",
+    "kcal": 80,
+    "protein": 2.5,
+    "carbs": 15,
+    "fat": 1
+  },
+  {
+    "id": "peas-can",
+    "name": "Горошек консерв.",
+    "portion": "100 г",
+    "kcal": 70,
+    "protein": 5,
+    "carbs": 10,
+    "fat": 0.5
+  },
+  {
+    "id": "beans-can",
+    "name": "Фасоль консерв.",
+    "portion": "100 г",
+    "kcal": 90,
+    "protein": 6,
+    "carbs": 14,
+    "fat": 0.5
+  },
+  {
+    "id": "chickpea-can",
+    "name": "Нут консерв.",
+    "portion": "100 г",
+    "kcal": 120,
+    "protein": 7,
+    "carbs": 17,
+    "fat": 2
+  },
+  {
+    "id": "lentil-can",
+    "name": "Чечевица консерв.",
+    "portion": "100 г",
+    "kcal": 100,
+    "protein": 7,
+    "carbs": 15,
+    "fat": 0.5
+  },
+  {
+    "id": "tomato-paste",
+    "name": "Томатная паста",
+    "portion": "100 г",
+    "kcal": 80,
+    "protein": 4,
+    "carbs": 16,
+    "fat": 0.5
+  },
+  {
+    "id": "passata",
+    "name": "Томаты протёртые",
+    "portion": "100 г",
+    "kcal": 30,
+    "protein": 1.5,
+    "carbs": 5,
+    "fat": 0.2
+  },
+  {
+    "id": "coconut-milk-can",
+    "name": "Кокосовое молоко",
+    "portion": "100 г",
+    "kcal": 180,
+    "protein": 2,
+    "carbs": 3,
+    "fat": 18
+  },
+  {
+    "id": "coconut-cream",
+    "name": "Кокосовые сливки",
+    "portion": "100 г",
+    "kcal": 230,
+    "protein": 2,
+    "carbs": 4,
+    "fat": 24
+  },
+  {
+    "id": "tahini",
+    "name": "Тахини",
+    "portion": "100 г",
+    "kcal": 590,
+    "protein": 17,
+    "carbs": 20,
+    "fat": 54
+  },
+  {
+    "id": "peanut-butter-crunchy",
+    "name": "Арахисовая паста хрустящая",
+    "portion": "100 г",
+    "kcal": 590,
+    "protein": 25,
+    "carbs": 16,
+    "fat": 50
+  },
+  {
+    "id": "almond-butter",
+    "name": "Миндальная паста",
+    "portion": "100 г",
+    "kcal": 645,
+    "protein": 21,
+    "carbs": 20,
+    "fat": 56
+  },
+  {
+    "id": "cashew-butter",
+    "name": "Паста кешью",
+    "portion": "100 г",
+    "kcal": 587,
+    "protein": 18,
+    "carbs": 28,
+    "fat": 50
+  },
+  {
+    "id": "nutella-like",
+    "name": "Шоколадно-ореховая паста",
+    "portion": "100 г",
+    "kcal": 540,
+    "protein": 6,
+    "carbs": 55,
+    "fat": 32
+  },
+  {
+    "id": "chicken-breast-x30",
+    "name": "Куриная грудка",
+    "portion": "30 г",
+    "kcal": 49.5,
+    "protein": 9.3,
+    "carbs": 0,
+    "fat": 1.1
+  },
+  {
+    "id": "chicken-breast-x40",
+    "name": "Куриная грудка",
+    "portion": "40 г",
+    "kcal": 66,
+    "protein": 12.4,
+    "carbs": 0,
+    "fat": 1.4
+  },
+  {
+    "id": "chicken-breast-x60",
+    "name": "Куриная грудка",
+    "portion": "60 г",
+    "kcal": 99,
+    "protein": 18.6,
+    "carbs": 0,
+    "fat": 2.2
+  },
+  {
+    "id": "chicken-breast-x80",
+    "name": "Куриная грудка",
+    "portion": "80 г",
+    "kcal": 132,
+    "protein": 24.8,
+    "carbs": 0,
+    "fat": 2.9
+  },
+  {
+    "id": "chicken-breast-x90",
+    "name": "Куриная грудка",
+    "portion": "90 г",
+    "kcal": 148.5,
+    "protein": 27.9,
+    "carbs": 0,
+    "fat": 3.2
+  },
+  {
+    "id": "chicken-breast-x110",
+    "name": "Куриная грудка",
+    "portion": "110 г",
+    "kcal": 181.5,
+    "protein": 34.1,
+    "carbs": 0,
+    "fat": 4
+  },
+  {
+    "id": "chicken-breast-x125",
+    "name": "Куриная грудка",
+    "portion": "125 г",
+    "kcal": 206.3,
+    "protein": 38.8,
+    "carbs": 0,
+    "fat": 4.5
+  },
+  {
+    "id": "chicken-breast-x175",
+    "name": "Куриная грудка",
+    "portion": "175 г",
+    "kcal": 288.8,
+    "protein": 54.3,
+    "carbs": 0,
+    "fat": 6.3
+  },
+  {
+    "id": "chicken-breast-x225",
+    "name": "Куриная грудка",
+    "portion": "225 г",
+    "kcal": 371.3,
+    "protein": 69.8,
+    "carbs": 0,
+    "fat": 8.1
+  },
+  {
+    "id": "chicken-breast-x275",
+    "name": "Куриная грудка",
+    "portion": "275 г",
+    "kcal": 453.8,
+    "protein": 85.3,
+    "carbs": 0,
+    "fat": 9.9
+  },
+  {
+    "id": "chicken-breast-x350",
+    "name": "Куриная грудка",
+    "portion": "350 г",
+    "kcal": 577.5,
+    "protein": 108.5,
+    "carbs": 0,
+    "fat": 12.6
+  },
+  {
+    "id": "chicken-breast-x400",
+    "name": "Куриная грудка",
+    "portion": "400 г",
+    "kcal": 660,
+    "protein": 124,
+    "carbs": 0,
+    "fat": 14.4
+  },
+  {
+    "id": "turkey-breast-x30",
+    "name": "Индейка грудка",
+    "portion": "30 г",
+    "kcal": 40.5,
+    "protein": 8.7,
+    "carbs": 0,
+    "fat": 0.6
+  },
+  {
+    "id": "turkey-breast-x40",
+    "name": "Индейка грудка",
+    "portion": "40 г",
+    "kcal": 54,
+    "protein": 11.6,
+    "carbs": 0,
+    "fat": 0.8
+  },
+  {
+    "id": "turkey-breast-x60",
+    "name": "Индейка грудка",
+    "portion": "60 г",
+    "kcal": 81,
+    "protein": 17.4,
+    "carbs": 0,
+    "fat": 1.2
+  },
+  {
+    "id": "turkey-breast-x80",
+    "name": "Индейка грудка",
+    "portion": "80 г",
+    "kcal": 108,
+    "protein": 23.2,
+    "carbs": 0,
+    "fat": 1.6
+  },
+  {
+    "id": "turkey-breast-x90",
+    "name": "Индейка грудка",
+    "portion": "90 г",
+    "kcal": 121.5,
+    "protein": 26.1,
+    "carbs": 0,
+    "fat": 1.8
+  },
+  {
+    "id": "turkey-breast-x110",
+    "name": "Индейка грудка",
+    "portion": "110 г",
+    "kcal": 148.5,
+    "protein": 31.9,
+    "carbs": 0,
+    "fat": 2.2
+  },
+  {
+    "id": "turkey-breast-x125",
+    "name": "Индейка грудка",
+    "portion": "125 г",
+    "kcal": 168.8,
+    "protein": 36.3,
+    "carbs": 0,
+    "fat": 2.5
+  },
+  {
+    "id": "turkey-breast-x175",
+    "name": "Индейка грудка",
+    "portion": "175 г",
+    "kcal": 236.3,
+    "protein": 50.8,
+    "carbs": 0,
+    "fat": 3.5
+  },
+  {
+    "id": "turkey-breast-x225",
+    "name": "Индейка грудка",
+    "portion": "225 г",
+    "kcal": 303.8,
+    "protein": 65.3,
+    "carbs": 0,
+    "fat": 4.5
+  },
+  {
+    "id": "turkey-breast-x275",
+    "name": "Индейка грудка",
+    "portion": "275 г",
+    "kcal": 371.3,
+    "protein": 79.8,
+    "carbs": 0,
+    "fat": 5.5
+  },
+  {
+    "id": "turkey-breast-x350",
+    "name": "Индейка грудка",
+    "portion": "350 г",
+    "kcal": 472.5,
+    "protein": 101.5,
+    "carbs": 0,
+    "fat": 7
+  },
+  {
+    "id": "turkey-breast-x400",
+    "name": "Индейка грудка",
+    "portion": "400 г",
+    "kcal": 540,
+    "protein": 116,
+    "carbs": 0,
+    "fat": 8
+  },
+  {
+    "id": "beef-lean-x30",
+    "name": "Говядина постная",
+    "portion": "30 г",
+    "kcal": 56.1,
+    "protein": 7.8,
+    "carbs": 0,
+    "fat": 2.7
+  },
+  {
+    "id": "beef-lean-x40",
+    "name": "Говядина постная",
+    "portion": "40 г",
+    "kcal": 74.8,
+    "protein": 10.4,
+    "carbs": 0,
+    "fat": 3.6
+  },
+  {
+    "id": "beef-lean-x60",
+    "name": "Говядина постная",
+    "portion": "60 г",
+    "kcal": 112.2,
+    "protein": 15.6,
+    "carbs": 0,
+    "fat": 5.4
+  },
+  {
+    "id": "beef-lean-x80",
+    "name": "Говядина постная",
+    "portion": "80 г",
+    "kcal": 149.6,
+    "protein": 20.8,
+    "carbs": 0,
+    "fat": 7.2
+  },
+  {
+    "id": "beef-lean-x90",
+    "name": "Говядина постная",
+    "portion": "90 г",
+    "kcal": 168.3,
+    "protein": 23.4,
+    "carbs": 0,
+    "fat": 8.1
+  },
+  {
+    "id": "beef-lean-x110",
+    "name": "Говядина постная",
+    "portion": "110 г",
+    "kcal": 205.7,
+    "protein": 28.6,
+    "carbs": 0,
+    "fat": 9.9
+  },
+  {
+    "id": "beef-lean-x125",
+    "name": "Говядина постная",
+    "portion": "125 г",
+    "kcal": 233.8,
+    "protein": 32.5,
+    "carbs": 0,
+    "fat": 11.3
+  },
+  {
+    "id": "beef-lean-x175",
+    "name": "Говядина постная",
+    "portion": "175 г",
+    "kcal": 327.3,
+    "protein": 45.5,
+    "carbs": 0,
+    "fat": 15.8
+  },
+  {
+    "id": "beef-lean-x225",
+    "name": "Говядина постная",
+    "portion": "225 г",
+    "kcal": 420.8,
+    "protein": 58.5,
+    "carbs": 0,
+    "fat": 20.3
+  },
+  {
+    "id": "beef-lean-x275",
+    "name": "Говядина постная",
+    "portion": "275 г",
+    "kcal": 514.3,
+    "protein": 71.5,
+    "carbs": 0,
+    "fat": 24.8
+  },
+  {
+    "id": "beef-lean-x350",
+    "name": "Говядина постная",
+    "portion": "350 г",
+    "kcal": 654.5,
+    "protein": 91,
+    "carbs": 0,
+    "fat": 31.5
+  },
+  {
+    "id": "beef-lean-x400",
+    "name": "Говядина постная",
+    "portion": "400 г",
+    "kcal": 748,
+    "protein": 104,
+    "carbs": 0,
+    "fat": 36
+  },
+  {
+    "id": "salmon-x30",
+    "name": "Лосось",
+    "portion": "30 г",
+    "kcal": 62.4,
+    "protein": 6,
+    "carbs": 0,
+    "fat": 3.9
+  },
+  {
+    "id": "salmon-x40",
+    "name": "Лосось",
+    "portion": "40 г",
+    "kcal": 83.2,
+    "protein": 8,
+    "carbs": 0,
+    "fat": 5.2
+  },
+  {
+    "id": "salmon-x60",
+    "name": "Лосось",
+    "portion": "60 г",
+    "kcal": 124.8,
+    "protein": 12,
+    "carbs": 0,
+    "fat": 7.8
+  },
+  {
+    "id": "salmon-x80",
+    "name": "Лосось",
+    "portion": "80 г",
+    "kcal": 166.4,
+    "protein": 16,
+    "carbs": 0,
+    "fat": 10.4
+  },
+  {
+    "id": "salmon-x90",
+    "name": "Лосось",
+    "portion": "90 г",
+    "kcal": 187.2,
+    "protein": 18,
+    "carbs": 0,
+    "fat": 11.7
+  },
+  {
+    "id": "salmon-x110",
+    "name": "Лосось",
+    "portion": "110 г",
+    "kcal": 228.8,
+    "protein": 22,
+    "carbs": 0,
+    "fat": 14.3
+  },
+  {
+    "id": "salmon-x125",
+    "name": "Лосось",
+    "portion": "125 г",
+    "kcal": 260,
+    "protein": 25,
+    "carbs": 0,
+    "fat": 16.3
+  },
+  {
+    "id": "salmon-x175",
+    "name": "Лосось",
+    "portion": "175 г",
+    "kcal": 364,
+    "protein": 35,
+    "carbs": 0,
+    "fat": 22.8
+  },
+  {
+    "id": "salmon-x225",
+    "name": "Лосось",
+    "portion": "225 г",
+    "kcal": 468,
+    "protein": 45,
+    "carbs": 0,
+    "fat": 29.3
+  },
+  {
+    "id": "salmon-x275",
+    "name": "Лосось",
+    "portion": "275 г",
+    "kcal": 572,
+    "protein": 55,
+    "carbs": 0,
+    "fat": 35.8
+  },
+  {
+    "id": "salmon-x350",
+    "name": "Лосось",
+    "portion": "350 г",
+    "kcal": 728,
+    "protein": 70,
+    "carbs": 0,
+    "fat": 45.5
+  },
+  {
+    "id": "salmon-x400",
+    "name": "Лосось",
+    "portion": "400 г",
+    "kcal": 832,
+    "protein": 80,
+    "carbs": 0,
+    "fat": 52
+  },
+  {
+    "id": "cottage-5-x30",
+    "name": "Творог 5%",
+    "portion": "30 г",
+    "kcal": 36.3,
+    "protein": 5.1,
+    "carbs": 0.9,
+    "fat": 1.5
+  },
+  {
+    "id": "cottage-5-x40",
+    "name": "Творог 5%",
+    "portion": "40 г",
+    "kcal": 48.4,
+    "protein": 6.8,
+    "carbs": 1.2,
+    "fat": 2
+  },
+  {
+    "id": "cottage-5-x60",
+    "name": "Творог 5%",
+    "portion": "60 г",
+    "kcal": 72.6,
+    "protein": 10.2,
+    "carbs": 1.8,
+    "fat": 3
+  },
+  {
+    "id": "cottage-5-x80",
+    "name": "Творог 5%",
+    "portion": "80 г",
+    "kcal": 96.8,
+    "protein": 13.6,
+    "carbs": 2.4,
+    "fat": 4
+  },
+  {
+    "id": "cottage-5-x90",
+    "name": "Творог 5%",
+    "portion": "90 г",
+    "kcal": 108.9,
+    "protein": 15.3,
+    "carbs": 2.7,
+    "fat": 4.5
+  },
+  {
+    "id": "cottage-5-x110",
+    "name": "Творог 5%",
+    "portion": "110 г",
+    "kcal": 133.1,
+    "protein": 18.7,
+    "carbs": 3.3,
+    "fat": 5.5
+  },
+  {
+    "id": "cottage-5-x125",
+    "name": "Творог 5%",
+    "portion": "125 г",
+    "kcal": 151.3,
+    "protein": 21.3,
+    "carbs": 3.8,
+    "fat": 6.3
+  },
+  {
+    "id": "cottage-5-x175",
+    "name": "Творог 5%",
+    "portion": "175 г",
+    "kcal": 211.8,
+    "protein": 29.8,
+    "carbs": 5.3,
+    "fat": 8.8
+  },
+  {
+    "id": "cottage-5-x225",
+    "name": "Творог 5%",
+    "portion": "225 г",
+    "kcal": 272.3,
+    "protein": 38.3,
+    "carbs": 6.8,
+    "fat": 11.3
+  },
+  {
+    "id": "cottage-5-x275",
+    "name": "Творог 5%",
+    "portion": "275 г",
+    "kcal": 332.8,
+    "protein": 46.8,
+    "carbs": 8.3,
+    "fat": 13.8
+  },
+  {
+    "id": "cottage-5-x350",
+    "name": "Творог 5%",
+    "portion": "350 г",
+    "kcal": 423.5,
+    "protein": 59.5,
+    "carbs": 10.5,
+    "fat": 17.5
+  },
+  {
+    "id": "cottage-5-x400",
+    "name": "Творог 5%",
+    "portion": "400 г",
+    "kcal": 484,
+    "protein": 68,
+    "carbs": 12,
+    "fat": 20
+  },
+  {
+    "id": "cottage-0-x30",
+    "name": "Творог 0–2%",
+    "portion": "30 г",
+    "kcal": 25.8,
+    "protein": 5.4,
+    "carbs": 1,
+    "fat": 0.2
+  },
+  {
+    "id": "cottage-0-x40",
+    "name": "Творог 0–2%",
+    "portion": "40 г",
+    "kcal": 34.4,
+    "protein": 7.2,
+    "carbs": 1.3,
+    "fat": 0.2
+  },
+  {
+    "id": "cottage-0-x60",
+    "name": "Творог 0–2%",
+    "portion": "60 г",
+    "kcal": 51.6,
+    "protein": 10.8,
+    "carbs": 2,
+    "fat": 0.4
+  },
+  {
+    "id": "cottage-0-x80",
+    "name": "Творог 0–2%",
+    "portion": "80 г",
+    "kcal": 68.8,
+    "protein": 14.4,
+    "carbs": 2.6,
+    "fat": 0.5
+  },
+  {
+    "id": "cottage-0-x90",
+    "name": "Творог 0–2%",
+    "portion": "90 г",
+    "kcal": 77.4,
+    "protein": 16.2,
+    "carbs": 3,
+    "fat": 0.5
+  },
+  {
+    "id": "cottage-0-x110",
+    "name": "Творог 0–2%",
+    "portion": "110 г",
+    "kcal": 94.6,
+    "protein": 19.8,
+    "carbs": 3.6,
+    "fat": 0.7
+  },
+  {
+    "id": "cottage-0-x125",
+    "name": "Творог 0–2%",
+    "portion": "125 г",
+    "kcal": 107.5,
+    "protein": 22.5,
+    "carbs": 4.1,
+    "fat": 0.8
+  },
+  {
+    "id": "cottage-0-x175",
+    "name": "Творог 0–2%",
+    "portion": "175 г",
+    "kcal": 150.5,
+    "protein": 31.5,
+    "carbs": 5.8,
+    "fat": 1.1
+  },
+  {
+    "id": "cottage-0-x225",
+    "name": "Творог 0–2%",
+    "portion": "225 г",
+    "kcal": 193.5,
+    "protein": 40.5,
+    "carbs": 7.4,
+    "fat": 1.3
+  },
+  {
+    "id": "cottage-0-x275",
+    "name": "Творог 0–2%",
+    "portion": "275 г",
+    "kcal": 236.5,
+    "protein": 49.5,
+    "carbs": 9.1,
+    "fat": 1.7
+  },
+  {
+    "id": "cottage-0-x350",
+    "name": "Творог 0–2%",
+    "portion": "350 г",
+    "kcal": 301,
+    "protein": 63,
+    "carbs": 11.5,
+    "fat": 2.1
+  },
+  {
+    "id": "cottage-0-x400",
+    "name": "Творог 0–2%",
+    "portion": "400 г",
+    "kcal": 344,
+    "protein": 72,
+    "carbs": 13.2,
+    "fat": 2.4
+  },
+  {
+    "id": "rice-white-x30",
+    "name": "Рис варёный",
+    "portion": "30 г",
+    "kcal": 39,
+    "protein": 0.8,
+    "carbs": 8.4,
+    "fat": 0.1
+  },
+  {
+    "id": "rice-white-x40",
+    "name": "Рис варёный",
+    "portion": "40 г",
+    "kcal": 52,
+    "protein": 1.1,
+    "carbs": 11.2,
+    "fat": 0.1
+  },
+  {
+    "id": "rice-white-x60",
+    "name": "Рис варёный",
+    "portion": "60 г",
+    "kcal": 78,
+    "protein": 1.6,
+    "carbs": 16.8,
+    "fat": 0.2
+  },
+  {
+    "id": "rice-white-x80",
+    "name": "Рис варёный",
+    "portion": "80 г",
+    "kcal": 104,
+    "protein": 2.2,
+    "carbs": 22.4,
+    "fat": 0.2
+  },
+  {
+    "id": "rice-white-x90",
+    "name": "Рис варёный",
+    "portion": "90 г",
+    "kcal": 117,
+    "protein": 2.4,
+    "carbs": 25.2,
+    "fat": 0.3
+  },
+  {
+    "id": "rice-white-x110",
+    "name": "Рис варёный",
+    "portion": "110 г",
+    "kcal": 143,
+    "protein": 3,
+    "carbs": 30.8,
+    "fat": 0.3
+  },
+  {
+    "id": "rice-white-x125",
+    "name": "Рис варёный",
+    "portion": "125 г",
+    "kcal": 162.5,
+    "protein": 3.4,
+    "carbs": 35,
+    "fat": 0.4
+  },
+  {
+    "id": "rice-white-x175",
+    "name": "Рис варёный",
+    "portion": "175 г",
+    "kcal": 227.5,
+    "protein": 4.7,
+    "carbs": 49,
+    "fat": 0.5
+  },
+  {
+    "id": "rice-white-x225",
+    "name": "Рис варёный",
+    "portion": "225 г",
+    "kcal": 292.5,
+    "protein": 6.1,
+    "carbs": 63,
+    "fat": 0.7
+  },
+  {
+    "id": "rice-white-x275",
+    "name": "Рис варёный",
+    "portion": "275 г",
+    "kcal": 357.5,
+    "protein": 7.4,
+    "carbs": 77,
+    "fat": 0.8
+  },
+  {
+    "id": "rice-white-x350",
+    "name": "Рис варёный",
+    "portion": "350 г",
+    "kcal": 455,
+    "protein": 9.5,
+    "carbs": 98,
+    "fat": 1.1
+  },
+  {
+    "id": "rice-white-x400",
+    "name": "Рис варёный",
+    "portion": "400 г",
+    "kcal": 520,
+    "protein": 10.8,
+    "carbs": 112,
+    "fat": 1.2
+  },
+  {
+    "id": "buckwheat-x30",
+    "name": "Гречка варёная",
+    "portion": "30 г",
+    "kcal": 33,
+    "protein": 1.2,
+    "carbs": 6.3,
+    "fat": 0.2
+  },
+  {
+    "id": "buckwheat-x40",
+    "name": "Гречка варёная",
+    "portion": "40 г",
+    "kcal": 44,
+    "protein": 1.6,
+    "carbs": 8.4,
+    "fat": 0.3
+  },
+  {
+    "id": "buckwheat-x60",
+    "name": "Гречка варёная",
+    "portion": "60 г",
+    "kcal": 66,
+    "protein": 2.4,
+    "carbs": 12.6,
+    "fat": 0.4
+  },
+  {
+    "id": "buckwheat-x80",
+    "name": "Гречка варёная",
+    "portion": "80 г",
+    "kcal": 88,
+    "protein": 3.2,
+    "carbs": 16.8,
+    "fat": 0.6
+  },
+  {
+    "id": "buckwheat-x90",
+    "name": "Гречка варёная",
+    "portion": "90 г",
+    "kcal": 99,
+    "protein": 3.6,
+    "carbs": 18.9,
+    "fat": 0.6
+  },
+  {
+    "id": "buckwheat-x110",
+    "name": "Гречка варёная",
+    "portion": "110 г",
+    "kcal": 121,
+    "protein": 4.4,
+    "carbs": 23.1,
+    "fat": 0.8
+  },
+  {
+    "id": "buckwheat-x125",
+    "name": "Гречка варёная",
+    "portion": "125 г",
+    "kcal": 137.5,
+    "protein": 5,
+    "carbs": 26.3,
+    "fat": 0.9
+  },
+  {
+    "id": "buckwheat-x175",
+    "name": "Гречка варёная",
+    "portion": "175 г",
+    "kcal": 192.5,
+    "protein": 7,
+    "carbs": 36.8,
+    "fat": 1.2
+  },
+  {
+    "id": "buckwheat-x225",
+    "name": "Гречка варёная",
+    "portion": "225 г",
+    "kcal": 247.5,
+    "protein": 9,
+    "carbs": 47.3,
+    "fat": 1.6
+  },
+  {
+    "id": "buckwheat-x275",
+    "name": "Гречка варёная",
+    "portion": "275 г",
+    "kcal": 302.5,
+    "protein": 11,
+    "carbs": 57.8,
+    "fat": 1.9
+  },
+  {
+    "id": "buckwheat-x350",
+    "name": "Гречка варёная",
+    "portion": "350 г",
+    "kcal": 385,
+    "protein": 14,
+    "carbs": 73.5,
+    "fat": 2.4
+  },
+  {
+    "id": "buckwheat-x400",
+    "name": "Гречка варёная",
+    "portion": "400 г",
+    "kcal": 440,
+    "protein": 16,
+    "carbs": 84,
+    "fat": 2.8
+  },
+  {
+    "id": "pasta-x30",
+    "name": "Макароны варёные",
+    "portion": "30 г",
+    "kcal": 39.6,
+    "protein": 1.3,
+    "carbs": 7.8,
+    "fat": 0.2
+  },
+  {
+    "id": "pasta-x40",
+    "name": "Макароны варёные",
+    "portion": "40 г",
+    "kcal": 52.8,
+    "protein": 1.8,
+    "carbs": 10.4,
+    "fat": 0.3
+  },
+  {
+    "id": "pasta-x60",
+    "name": "Макароны варёные",
+    "portion": "60 г",
+    "kcal": 79.2,
+    "protein": 2.7,
+    "carbs": 15.6,
+    "fat": 0.5
+  },
+  {
+    "id": "pasta-x80",
+    "name": "Макароны варёные",
+    "portion": "80 г",
+    "kcal": 105.6,
+    "protein": 3.6,
+    "carbs": 20.8,
+    "fat": 0.6
+  },
+  {
+    "id": "pasta-x90",
+    "name": "Макароны варёные",
+    "portion": "90 г",
+    "kcal": 118.8,
+    "protein": 4.1,
+    "carbs": 23.4,
+    "fat": 0.7
+  },
+  {
+    "id": "pasta-x110",
+    "name": "Макароны варёные",
+    "portion": "110 г",
+    "kcal": 145.2,
+    "protein": 5,
+    "carbs": 28.6,
+    "fat": 0.9
+  },
+  {
+    "id": "pasta-x125",
+    "name": "Макароны варёные",
+    "portion": "125 г",
+    "kcal": 165,
+    "protein": 5.6,
+    "carbs": 32.5,
+    "fat": 1
+  },
+  {
+    "id": "pasta-x175",
+    "name": "Макароны варёные",
+    "portion": "175 г",
+    "kcal": 231,
+    "protein": 7.9,
+    "carbs": 45.5,
+    "fat": 1.4
+  },
+  {
+    "id": "pasta-x225",
+    "name": "Макароны варёные",
+    "portion": "225 г",
+    "kcal": 297,
+    "protein": 10.1,
+    "carbs": 58.5,
+    "fat": 1.8
+  },
+  {
+    "id": "pasta-x275",
+    "name": "Макароны варёные",
+    "portion": "275 г",
+    "kcal": 363,
+    "protein": 12.4,
+    "carbs": 71.5,
+    "fat": 2.2
+  },
+  {
+    "id": "pasta-x350",
+    "name": "Макароны варёные",
+    "portion": "350 г",
+    "kcal": 462,
+    "protein": 15.8,
+    "carbs": 91,
+    "fat": 2.8
+  },
+  {
+    "id": "pasta-x400",
+    "name": "Макароны варёные",
+    "portion": "400 г",
+    "kcal": 528,
+    "protein": 18,
+    "carbs": 104,
+    "fat": 3.2
+  },
+  {
+    "id": "oats-dry-x30",
+    "name": "Овсяные хлопья",
+    "portion": "30 г",
+    "kcal": 111,
+    "protein": 3.9,
+    "carbs": 19.8,
+    "fat": 2.1
+  },
+  {
+    "id": "oats-dry-x40",
+    "name": "Овсяные хлопья",
+    "portion": "40 г",
+    "kcal": 148,
+    "protein": 5.2,
+    "carbs": 26.4,
+    "fat": 2.8
+  },
+  {
+    "id": "oats-dry-x60",
+    "name": "Овсяные хлопья",
+    "portion": "60 г",
+    "kcal": 222,
+    "protein": 7.8,
+    "carbs": 39.6,
+    "fat": 4.2
+  },
+  {
+    "id": "oats-dry-x80",
+    "name": "Овсяные хлопья",
+    "portion": "80 г",
+    "kcal": 296,
+    "protein": 10.4,
+    "carbs": 52.8,
+    "fat": 5.6
+  },
+  {
+    "id": "oats-dry-x90",
+    "name": "Овсяные хлопья",
+    "portion": "90 г",
+    "kcal": 333,
+    "protein": 11.7,
+    "carbs": 59.4,
+    "fat": 6.3
+  },
+  {
+    "id": "oats-dry-x110",
+    "name": "Овсяные хлопья",
+    "portion": "110 г",
+    "kcal": 407,
+    "protein": 14.3,
+    "carbs": 72.6,
+    "fat": 7.7
+  },
+  {
+    "id": "oats-dry-x125",
+    "name": "Овсяные хлопья",
+    "portion": "125 г",
+    "kcal": 462.5,
+    "protein": 16.3,
+    "carbs": 82.5,
+    "fat": 8.8
+  },
+  {
+    "id": "oats-dry-x175",
+    "name": "Овсяные хлопья",
+    "portion": "175 г",
+    "kcal": 647.5,
+    "protein": 22.8,
+    "carbs": 115.5,
+    "fat": 12.3
+  },
+  {
+    "id": "oats-dry-x225",
+    "name": "Овсяные хлопья",
+    "portion": "225 г",
+    "kcal": 832.5,
+    "protein": 29.3,
+    "carbs": 148.5,
+    "fat": 15.8
+  },
+  {
+    "id": "oats-dry-x275",
+    "name": "Овсяные хлопья",
+    "portion": "275 г",
+    "kcal": 1017.5,
+    "protein": 35.8,
+    "carbs": 181.5,
+    "fat": 19.3
+  },
+  {
+    "id": "oats-dry-x350",
+    "name": "Овсяные хлопья",
+    "portion": "350 г",
+    "kcal": 1295,
+    "protein": 45.5,
+    "carbs": 231,
+    "fat": 24.5
+  },
+  {
+    "id": "oats-dry-x400",
+    "name": "Овсяные хлопья",
+    "portion": "400 г",
+    "kcal": 1480,
+    "protein": 52,
+    "carbs": 264,
+    "fat": 28
+  },
+  {
+    "id": "potato-boil-x30",
+    "name": "Картофель варёный",
+    "portion": "30 г",
+    "kcal": 26.1,
+    "protein": 0.6,
+    "carbs": 6,
+    "fat": 0
+  },
+  {
+    "id": "potato-boil-x40",
+    "name": "Картофель варёный",
+    "portion": "40 г",
+    "kcal": 34.8,
+    "protein": 0.8,
+    "carbs": 8,
+    "fat": 0
+  },
+  {
+    "id": "potato-boil-x60",
+    "name": "Картофель варёный",
+    "portion": "60 г",
+    "kcal": 52.2,
+    "protein": 1.2,
+    "carbs": 12,
+    "fat": 0.1
+  },
+  {
+    "id": "potato-boil-x80",
+    "name": "Картофель варёный",
+    "portion": "80 г",
+    "kcal": 69.6,
+    "protein": 1.6,
+    "carbs": 16,
+    "fat": 0.1
+  },
+  {
+    "id": "potato-boil-x90",
+    "name": "Картофель варёный",
+    "portion": "90 г",
+    "kcal": 78.3,
+    "protein": 1.8,
+    "carbs": 18,
+    "fat": 0.1
+  },
+  {
+    "id": "potato-boil-x110",
+    "name": "Картофель варёный",
+    "portion": "110 г",
+    "kcal": 95.7,
+    "protein": 2.2,
+    "carbs": 22,
+    "fat": 0.1
+  },
+  {
+    "id": "potato-boil-x125",
+    "name": "Картофель варёный",
+    "portion": "125 г",
+    "kcal": 108.8,
+    "protein": 2.5,
+    "carbs": 25,
+    "fat": 0.1
+  },
+  {
+    "id": "potato-boil-x175",
+    "name": "Картофель варёный",
+    "portion": "175 г",
+    "kcal": 152.3,
+    "protein": 3.5,
+    "carbs": 35,
+    "fat": 0.2
+  },
+  {
+    "id": "potato-boil-x225",
+    "name": "Картофель варёный",
+    "portion": "225 г",
+    "kcal": 195.8,
+    "protein": 4.5,
+    "carbs": 45,
+    "fat": 0.2
+  },
+  {
+    "id": "potato-boil-x275",
+    "name": "Картофель варёный",
+    "portion": "275 г",
+    "kcal": 239.3,
+    "protein": 5.5,
+    "carbs": 55,
+    "fat": 0.3
+  },
+  {
+    "id": "potato-boil-x350",
+    "name": "Картофель варёный",
+    "portion": "350 г",
+    "kcal": 304.5,
+    "protein": 7,
+    "carbs": 70,
+    "fat": 0.4
+  },
+  {
+    "id": "potato-boil-x400",
+    "name": "Картофель варёный",
+    "portion": "400 г",
+    "kcal": 348,
+    "protein": 8,
+    "carbs": 80,
+    "fat": 0.4
+  },
+  {
+    "id": "egg-x30",
+    "name": "Яйцо куриное (на 50 г)",
+    "portion": "30 г",
+    "kcal": 46.5,
+    "protein": 3.9,
+    "carbs": 0.3,
+    "fat": 3.3
+  },
+  {
+    "id": "egg-x40",
+    "name": "Яйцо куриное (на 50 г)",
+    "portion": "40 г",
+    "kcal": 62,
+    "protein": 5.2,
+    "carbs": 0.4,
+    "fat": 4.4
+  },
+  {
+    "id": "egg-x60",
+    "name": "Яйцо куриное (на 50 г)",
+    "portion": "60 г",
+    "kcal": 93,
+    "protein": 7.8,
+    "carbs": 0.7,
+    "fat": 6.6
+  },
+  {
+    "id": "egg-x80",
+    "name": "Яйцо куриное (на 50 г)",
+    "portion": "80 г",
+    "kcal": 124,
+    "protein": 10.4,
+    "carbs": 0.9,
+    "fat": 8.8
+  },
+  {
+    "id": "egg-x90",
+    "name": "Яйцо куриное (на 50 г)",
+    "portion": "90 г",
+    "kcal": 139.5,
+    "protein": 11.7,
+    "carbs": 1,
+    "fat": 9.9
+  },
+  {
+    "id": "egg-x110",
+    "name": "Яйцо куриное (на 50 г)",
+    "portion": "110 г",
+    "kcal": 170.5,
+    "protein": 14.3,
+    "carbs": 1.2,
+    "fat": 12.1
+  },
+  {
+    "id": "egg-x125",
+    "name": "Яйцо куриное (на 50 г)",
+    "portion": "125 г",
+    "kcal": 193.8,
+    "protein": 16.3,
+    "carbs": 1.4,
+    "fat": 13.8
+  },
+  {
+    "id": "egg-x175",
+    "name": "Яйцо куриное (на 50 г)",
+    "portion": "175 г",
+    "kcal": 271.3,
+    "protein": 22.8,
+    "carbs": 1.9,
+    "fat": 19.3
+  },
+  {
+    "id": "egg-x225",
+    "name": "Яйцо куриное (на 50 г)",
+    "portion": "225 г",
+    "kcal": 348.8,
+    "protein": 29.3,
+    "carbs": 2.5,
+    "fat": 24.8
+  },
+  {
+    "id": "egg-x275",
+    "name": "Яйцо куриное (на 50 г)",
+    "portion": "275 г",
+    "kcal": 426.3,
+    "protein": 35.8,
+    "carbs": 3,
+    "fat": 30.3
+  },
+  {
+    "id": "egg-x350",
+    "name": "Яйцо куриное (на 50 г)",
+    "portion": "350 г",
+    "kcal": 542.5,
+    "protein": 45.5,
+    "carbs": 3.9,
+    "fat": 38.5
+  },
+  {
+    "id": "egg-x400",
+    "name": "Яйцо куриное (на 50 г)",
+    "portion": "400 г",
+    "kcal": 620,
+    "protein": 52,
+    "carbs": 4.4,
+    "fat": 44
+  },
+  {
+    "id": "shrimp-x30",
+    "name": "Креветки",
+    "portion": "30 г",
+    "kcal": 29.7,
+    "protein": 7.2,
+    "carbs": 0.1,
+    "fat": 0.1
+  },
+  {
+    "id": "shrimp-x40",
+    "name": "Креветки",
+    "portion": "40 г",
+    "kcal": 39.6,
+    "protein": 9.6,
+    "carbs": 0.1,
+    "fat": 0.1
+  },
+  {
+    "id": "shrimp-x60",
+    "name": "Креветки",
+    "portion": "60 г",
+    "kcal": 59.4,
+    "protein": 14.4,
+    "carbs": 0.1,
+    "fat": 0.2
+  },
+  {
+    "id": "shrimp-x80",
+    "name": "Креветки",
+    "portion": "80 г",
+    "kcal": 79.2,
+    "protein": 19.2,
+    "carbs": 0.2,
+    "fat": 0.2
+  },
+  {
+    "id": "shrimp-x90",
+    "name": "Креветки",
+    "portion": "90 г",
+    "kcal": 89.1,
+    "protein": 21.6,
+    "carbs": 0.2,
+    "fat": 0.3
+  },
+  {
+    "id": "shrimp-x110",
+    "name": "Креветки",
+    "portion": "110 г",
+    "kcal": 108.9,
+    "protein": 26.4,
+    "carbs": 0.2,
+    "fat": 0.3
+  },
+  {
+    "id": "shrimp-x125",
+    "name": "Креветки",
+    "portion": "125 г",
+    "kcal": 123.8,
+    "protein": 30,
+    "carbs": 0.3,
+    "fat": 0.4
+  },
+  {
+    "id": "shrimp-x175",
+    "name": "Креветки",
+    "portion": "175 г",
+    "kcal": 173.3,
+    "protein": 42,
+    "carbs": 0.4,
+    "fat": 0.5
+  },
+  {
+    "id": "shrimp-x225",
+    "name": "Креветки",
+    "portion": "225 г",
+    "kcal": 222.8,
+    "protein": 54,
+    "carbs": 0.5,
+    "fat": 0.7
+  },
+  {
+    "id": "shrimp-x275",
+    "name": "Креветки",
+    "portion": "275 г",
+    "kcal": 272.3,
+    "protein": 66,
+    "carbs": 0.6,
+    "fat": 0.8
+  },
+  {
+    "id": "shrimp-x350",
+    "name": "Креветки",
+    "portion": "350 г",
+    "kcal": 346.5,
+    "protein": 84,
+    "carbs": 0.7,
+    "fat": 1.1
+  },
+  {
+    "id": "shrimp-x400",
+    "name": "Креветки",
+    "portion": "400 г",
+    "kcal": 396,
+    "protein": 96,
+    "carbs": 0.8,
+    "fat": 1.2
+  },
+  {
+    "id": "tofu-x30",
+    "name": "Тофу",
+    "portion": "30 г",
+    "kcal": 22.8,
+    "protein": 2.4,
+    "carbs": 0.6,
+    "fat": 1.3
+  },
+  {
+    "id": "tofu-x40",
+    "name": "Тофу",
+    "portion": "40 г",
+    "kcal": 30.4,
+    "protein": 3.2,
+    "carbs": 0.8,
+    "fat": 1.8
+  },
+  {
+    "id": "tofu-x60",
+    "name": "Тофу",
+    "portion": "60 г",
+    "kcal": 45.6,
+    "protein": 4.8,
+    "carbs": 1.2,
+    "fat": 2.7
+  },
+  {
+    "id": "tofu-x80",
+    "name": "Тофу",
+    "portion": "80 г",
+    "kcal": 60.8,
+    "protein": 6.4,
+    "carbs": 1.6,
+    "fat": 3.6
+  },
+  {
+    "id": "tofu-x90",
+    "name": "Тофу",
+    "portion": "90 г",
+    "kcal": 68.4,
+    "protein": 7.2,
+    "carbs": 1.8,
+    "fat": 4.1
+  },
+  {
+    "id": "tofu-x110",
+    "name": "Тофу",
+    "portion": "110 г",
+    "kcal": 83.6,
+    "protein": 8.8,
+    "carbs": 2.2,
+    "fat": 5
+  },
+  {
+    "id": "tofu-x125",
+    "name": "Тофу",
+    "portion": "125 г",
+    "kcal": 95,
+    "protein": 10,
+    "carbs": 2.5,
+    "fat": 5.6
+  },
+  {
+    "id": "tofu-x175",
+    "name": "Тофу",
+    "portion": "175 г",
+    "kcal": 133,
+    "protein": 14,
+    "carbs": 3.5,
+    "fat": 7.9
+  },
+  {
+    "id": "tofu-x225",
+    "name": "Тофу",
+    "portion": "225 г",
+    "kcal": 171,
+    "protein": 18,
+    "carbs": 4.5,
+    "fat": 10.1
+  },
+  {
+    "id": "tofu-x275",
+    "name": "Тофу",
+    "portion": "275 г",
+    "kcal": 209,
+    "protein": 22,
+    "carbs": 5.5,
+    "fat": 12.4
+  },
+  {
+    "id": "tofu-x350",
+    "name": "Тофу",
+    "portion": "350 г",
+    "kcal": 266,
+    "protein": 28,
+    "carbs": 7,
+    "fat": 15.8
+  },
+  {
+    "id": "tofu-x400",
+    "name": "Тофу",
+    "portion": "400 г",
+    "kcal": 304,
+    "protein": 32,
+    "carbs": 8,
+    "fat": 18
+  },
+  {
+    "id": "banana-x30",
+    "name": "Банан",
+    "portion": "30 г",
+    "kcal": 26.7,
+    "protein": 0.3,
+    "carbs": 6.9,
+    "fat": 0.1
+  },
+  {
+    "id": "banana-x40",
+    "name": "Банан",
+    "portion": "40 г",
+    "kcal": 35.6,
+    "protein": 0.4,
+    "carbs": 9.2,
+    "fat": 0.1
+  },
+  {
+    "id": "banana-x60",
+    "name": "Банан",
+    "portion": "60 г",
+    "kcal": 53.4,
+    "protein": 0.7,
+    "carbs": 13.8,
+    "fat": 0.2
+  },
+  {
+    "id": "banana-x80",
+    "name": "Банан",
+    "portion": "80 г",
+    "kcal": 71.2,
+    "protein": 0.9,
+    "carbs": 18.4,
+    "fat": 0.2
+  },
+  {
+    "id": "banana-x90",
+    "name": "Банан",
+    "portion": "90 г",
+    "kcal": 80.1,
+    "protein": 1,
+    "carbs": 20.7,
+    "fat": 0.3
+  },
+  {
+    "id": "banana-x110",
+    "name": "Банан",
+    "portion": "110 г",
+    "kcal": 97.9,
+    "protein": 1.2,
+    "carbs": 25.3,
+    "fat": 0.3
+  },
+  {
+    "id": "banana-x125",
+    "name": "Банан",
+    "portion": "125 г",
+    "kcal": 111.3,
+    "protein": 1.4,
+    "carbs": 28.8,
+    "fat": 0.4
+  },
+  {
+    "id": "banana-x175",
+    "name": "Банан",
+    "portion": "175 г",
+    "kcal": 155.8,
+    "protein": 1.9,
+    "carbs": 40.3,
+    "fat": 0.5
+  },
+  {
+    "id": "banana-x225",
+    "name": "Банан",
+    "portion": "225 г",
+    "kcal": 200.3,
+    "protein": 2.5,
+    "carbs": 51.8,
+    "fat": 0.7
+  },
+  {
+    "id": "banana-x275",
+    "name": "Банан",
+    "portion": "275 г",
+    "kcal": 244.8,
+    "protein": 3,
+    "carbs": 63.3,
+    "fat": 0.8
+  },
+  {
+    "id": "banana-x350",
+    "name": "Банан",
+    "portion": "350 г",
+    "kcal": 311.5,
+    "protein": 3.9,
+    "carbs": 80.5,
+    "fat": 1.1
+  },
+  {
+    "id": "banana-x400",
+    "name": "Банан",
+    "portion": "400 г",
+    "kcal": 356,
+    "protein": 4.4,
+    "carbs": 92,
+    "fat": 1.2
+  },
+  {
+    "id": "avocado-x30",
+    "name": "Авокадо",
+    "portion": "30 г",
+    "kcal": 48,
+    "protein": 0.6,
+    "carbs": 2.7,
+    "fat": 4.5
+  },
+  {
+    "id": "avocado-x40",
+    "name": "Авокадо",
+    "portion": "40 г",
+    "kcal": 64,
+    "protein": 0.8,
+    "carbs": 3.6,
+    "fat": 6
+  },
+  {
+    "id": "avocado-x60",
+    "name": "Авокадо",
+    "portion": "60 г",
+    "kcal": 96,
+    "protein": 1.2,
+    "carbs": 5.4,
+    "fat": 9
+  },
+  {
+    "id": "avocado-x80",
+    "name": "Авокадо",
+    "portion": "80 г",
+    "kcal": 128,
+    "protein": 1.6,
+    "carbs": 7.2,
+    "fat": 12
+  },
+  {
+    "id": "avocado-x90",
+    "name": "Авокадо",
+    "portion": "90 г",
+    "kcal": 144,
+    "protein": 1.8,
+    "carbs": 8.1,
+    "fat": 13.5
+  },
+  {
+    "id": "avocado-x110",
+    "name": "Авокадо",
+    "portion": "110 г",
+    "kcal": 176,
+    "protein": 2.2,
+    "carbs": 9.9,
+    "fat": 16.5
+  },
+  {
+    "id": "avocado-x125",
+    "name": "Авокадо",
+    "portion": "125 г",
+    "kcal": 200,
+    "protein": 2.5,
+    "carbs": 11.3,
+    "fat": 18.8
+  },
+  {
+    "id": "avocado-x175",
+    "name": "Авокадо",
+    "portion": "175 г",
+    "kcal": 280,
+    "protein": 3.5,
+    "carbs": 15.8,
+    "fat": 26.3
+  },
+  {
+    "id": "avocado-x225",
+    "name": "Авокадо",
+    "portion": "225 г",
+    "kcal": 360,
+    "protein": 4.5,
+    "carbs": 20.3,
+    "fat": 33.8
+  },
+  {
+    "id": "avocado-x275",
+    "name": "Авокадо",
+    "portion": "275 г",
+    "kcal": 440,
+    "protein": 5.5,
+    "carbs": 24.8,
+    "fat": 41.3
+  },
+  {
+    "id": "avocado-x350",
+    "name": "Авокадо",
+    "portion": "350 г",
+    "kcal": 560,
+    "protein": 7,
+    "carbs": 31.5,
+    "fat": 52.5
+  },
+  {
+    "id": "avocado-x400",
+    "name": "Авокадо",
+    "portion": "400 г",
+    "kcal": 640,
+    "protein": 8,
+    "carbs": 36,
+    "fat": 60
+  },
+  {
+    "id": "almond-x30",
+    "name": "Миндаль",
+    "portion": "30 г",
+    "kcal": 173.7,
+    "protein": 6.3,
+    "carbs": 6.6,
+    "fat": 15
+  },
+  {
+    "id": "almond-x40",
+    "name": "Миндаль",
+    "portion": "40 г",
+    "kcal": 231.6,
+    "protein": 8.4,
+    "carbs": 8.8,
+    "fat": 20
+  },
+  {
+    "id": "almond-x60",
+    "name": "Миндаль",
+    "portion": "60 г",
+    "kcal": 347.4,
+    "protein": 12.6,
+    "carbs": 13.2,
+    "fat": 30
+  },
+  {
+    "id": "almond-x80",
+    "name": "Миндаль",
+    "portion": "80 г",
+    "kcal": 463.2,
+    "protein": 16.8,
+    "carbs": 17.6,
+    "fat": 40
+  },
+  {
+    "id": "almond-x90",
+    "name": "Миндаль",
+    "portion": "90 г",
+    "kcal": 521.1,
+    "protein": 18.9,
+    "carbs": 19.8,
+    "fat": 45
+  },
+  {
+    "id": "almond-x110",
+    "name": "Миндаль",
+    "portion": "110 г",
+    "kcal": 636.9,
+    "protein": 23.1,
+    "carbs": 24.2,
+    "fat": 55
+  },
+  {
+    "id": "almond-x125",
+    "name": "Миндаль",
+    "portion": "125 г",
+    "kcal": 723.8,
+    "protein": 26.3,
+    "carbs": 27.5,
+    "fat": 62.5
+  },
+  {
+    "id": "almond-x175",
+    "name": "Миндаль",
+    "portion": "175 г",
+    "kcal": 1013.3,
+    "protein": 36.8,
+    "carbs": 38.5,
+    "fat": 87.5
+  },
+  {
+    "id": "almond-x225",
+    "name": "Миндаль",
+    "portion": "225 г",
+    "kcal": 1302.8,
+    "protein": 47.3,
+    "carbs": 49.5,
+    "fat": 112.5
+  },
+  {
+    "id": "almond-x275",
+    "name": "Миндаль",
+    "portion": "275 г",
+    "kcal": 1592.3,
+    "protein": 57.8,
+    "carbs": 60.5,
+    "fat": 137.5
+  },
+  {
+    "id": "almond-x350",
+    "name": "Миндаль",
+    "portion": "350 г",
+    "kcal": 2026.5,
+    "protein": 73.5,
+    "carbs": 77,
+    "fat": 175
+  },
+  {
+    "id": "almond-x400",
+    "name": "Миндаль",
+    "portion": "400 г",
+    "kcal": 2316,
+    "protein": 84,
+    "carbs": 88,
+    "fat": 200
+  },
+  {
+    "id": "peanut-x30",
+    "name": "Арахис",
+    "portion": "30 г",
+    "kcal": 170.1,
+    "protein": 7.8,
+    "carbs": 4.8,
+    "fat": 14.7
+  },
+  {
+    "id": "peanut-x40",
+    "name": "Арахис",
+    "portion": "40 г",
+    "kcal": 226.8,
+    "protein": 10.4,
+    "carbs": 6.4,
+    "fat": 19.6
+  },
+  {
+    "id": "peanut-x60",
+    "name": "Арахис",
+    "portion": "60 г",
+    "kcal": 340.2,
+    "protein": 15.6,
+    "carbs": 9.6,
+    "fat": 29.4
+  },
+  {
+    "id": "peanut-x80",
+    "name": "Арахис",
+    "portion": "80 г",
+    "kcal": 453.6,
+    "protein": 20.8,
+    "carbs": 12.8,
+    "fat": 39.2
+  },
+  {
+    "id": "peanut-x90",
+    "name": "Арахис",
+    "portion": "90 г",
+    "kcal": 510.3,
+    "protein": 23.4,
+    "carbs": 14.4,
+    "fat": 44.1
+  },
+  {
+    "id": "peanut-x110",
+    "name": "Арахис",
+    "portion": "110 г",
+    "kcal": 623.7,
+    "protein": 28.6,
+    "carbs": 17.6,
+    "fat": 53.9
+  },
+  {
+    "id": "peanut-x125",
+    "name": "Арахис",
+    "portion": "125 г",
+    "kcal": 708.8,
+    "protein": 32.5,
+    "carbs": 20,
+    "fat": 61.3
+  },
+  {
+    "id": "peanut-x175",
+    "name": "Арахис",
+    "portion": "175 г",
+    "kcal": 992.3,
+    "protein": 45.5,
+    "carbs": 28,
+    "fat": 85.8
+  },
+  {
+    "id": "peanut-x225",
+    "name": "Арахис",
+    "portion": "225 г",
+    "kcal": 1275.8,
+    "protein": 58.5,
+    "carbs": 36,
+    "fat": 110.3
+  },
+  {
+    "id": "peanut-x275",
+    "name": "Арахис",
+    "portion": "275 г",
+    "kcal": 1559.3,
+    "protein": 71.5,
+    "carbs": 44,
+    "fat": 134.8
+  },
+  {
+    "id": "peanut-x350",
+    "name": "Арахис",
+    "portion": "350 г",
+    "kcal": 1984.5,
+    "protein": 91,
+    "carbs": 56,
+    "fat": 171.5
+  },
+  {
+    "id": "peanut-x400",
+    "name": "Арахис",
+    "portion": "400 г",
+    "kcal": 2268,
+    "protein": 104,
+    "carbs": 64,
+    "fat": 196
+  },
+  {
     "id": "combo-1",
     "name": "Рис с курицей",
     "portion": "200 г",
@@ -6853,276 +10714,231 @@ export const FOOD_PRESETS: FoodPreset[] = [
   },
   {
     "id": "combo-16",
-    "name": "Рис с курицей",
+    "name": "Гречка с курицей",
     "portion": "200 г",
-    "kcal": 180,
-    "protein": 14,
-    "carbs": 20,
+    "kcal": 170,
+    "protein": 16,
+    "carbs": 18,
     "fat": 5
   },
   {
     "id": "combo-17",
-    "name": "Гречка с говядиной",
+    "name": "Рис с индейкой",
     "portion": "200 г",
-    "kcal": 190,
+    "kcal": 165,
     "protein": 15,
-    "carbs": 16,
-    "fat": 7
+    "carbs": 20,
+    "fat": 4
   },
   {
     "id": "combo-18",
-    "name": "Макароны с сыром",
+    "name": "Паста с курицей",
     "portion": "200 г",
-    "kcal": 220,
-    "protein": 10,
-    "carbs": 25,
-    "fat": 9
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 6
   },
   {
     "id": "combo-19",
-    "name": "Картофель с рыбой",
+    "name": "Картофель с курицей",
     "portion": "200 г",
-    "kcal": 150,
-    "protein": 12,
-    "carbs": 14,
+    "kcal": 160,
+    "protein": 14,
+    "carbs": 16,
     "fat": 5
   },
   {
     "id": "combo-20",
-    "name": "Салат с тунцом",
+    "name": "Киноа с лососем",
     "portion": "200 г",
-    "kcal": 140,
-    "protein": 14,
-    "carbs": 6,
+    "kcal": 190,
+    "protein": 16,
+    "carbs": 18,
     "fat": 7
   },
   {
     "id": "combo-21",
-    "name": "Омлет с сыром",
+    "name": "Булгур с говядиной",
     "portion": "200 г",
-    "kcal": 200,
-    "protein": 14,
-    "carbs": 2,
-    "fat": 15
+    "kcal": 185,
+    "protein": 15,
+    "carbs": 18,
+    "fat": 6
   },
   {
     "id": "combo-22",
-    "name": "Творог с бананом",
+    "name": "Чечевица с курицей",
     "portion": "200 г",
-    "kcal": 140,
-    "protein": 12,
+    "kcal": 170,
+    "protein": 18,
     "carbs": 16,
     "fat": 4
   },
   {
     "id": "combo-23",
-    "name": "Йогурт с орехами",
+    "name": "Рис с яйцом",
     "portion": "200 г",
     "kcal": 160,
-    "protein": 8,
-    "carbs": 12,
-    "fat": 9
-  },
-  {
-    "id": "combo-24",
-    "name": "Курица с овощами",
-    "portion": "200 г",
-    "kcal": 140,
-    "protein": 18,
-    "carbs": 6,
+    "protein": 10,
+    "carbs": 22,
     "fat": 5
   },
   {
-    "id": "combo-25",
-    "name": "Индейка с рисом",
+    "id": "combo-24",
+    "name": "Овсянка с протеином",
     "portion": "200 г",
-    "kcal": 160,
-    "protein": 16,
-    "carbs": 16,
+    "kcal": 180,
+    "protein": 20,
+    "carbs": 22,
     "fat": 4
   },
   {
-    "id": "combo-26",
-    "name": "Лосось с овощами",
+    "id": "combo-25",
+    "name": "Творог с ягодами",
     "portion": "200 г",
-    "kcal": 180,
-    "protein": 16,
-    "carbs": 5,
-    "fat": 10
+    "kcal": 120,
+    "protein": 14,
+    "carbs": 12,
+    "fat": 3
+  },
+  {
+    "id": "combo-26",
+    "name": "Йогурт с гранолой",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 24,
+    "fat": 5
   },
   {
     "id": "combo-27",
-    "name": "Креветки с рисом",
+    "name": "Курица терияки с рисом",
     "portion": "200 г",
-    "kcal": 150,
-    "protein": 14,
-    "carbs": 18,
-    "fat": 3
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 24,
+    "fat": 5
   },
   {
     "id": "combo-28",
-    "name": "Фасоль с овощами",
+    "name": "Говядина с гречкой",
     "portion": "200 г",
-    "kcal": 120,
-    "protein": 7,
+    "kcal": 195,
+    "protein": 16,
     "carbs": 16,
-    "fat": 3
+    "fat": 7
   },
   {
     "id": "combo-29",
-    "name": "Нут с овощами",
+    "name": "Рыба с овощами",
     "portion": "200 г",
     "kcal": 140,
-    "protein": 7,
-    "carbs": 18,
+    "protein": 16,
+    "carbs": 8,
     "fat": 4
   },
   {
     "id": "combo-30",
-    "name": "Тофу с овощами",
+    "name": "Индейка с гречкой",
     "portion": "200 г",
-    "kcal": 110,
-    "protein": 9,
-    "carbs": 8,
-    "fat": 5
+    "kcal": 165,
+    "protein": 17,
+    "carbs": 16,
+    "fat": 4
   },
   {
     "id": "combo-31",
-    "name": "Рис с курицей",
+    "name": "Тофу с рисом",
     "portion": "200 г",
-    "kcal": 180,
-    "protein": 14,
-    "carbs": 20,
-    "fat": 5
+    "kcal": 140,
+    "protein": 10,
+    "carbs": 18,
+    "fat": 4
   },
   {
     "id": "combo-32",
-    "name": "Гречка с говядиной",
+    "name": "Креветки с гречкой",
     "portion": "200 г",
-    "kcal": 190,
+    "kcal": 150,
     "protein": 15,
     "carbs": 16,
-    "fat": 7
+    "fat": 3
   },
   {
     "id": "combo-33",
-    "name": "Макароны с сыром",
+    "name": "Стейк с овощами",
     "portion": "200 г",
-    "kcal": 220,
-    "protein": 10,
-    "carbs": 25,
+    "kcal": 200,
+    "protein": 22,
+    "carbs": 8,
     "fat": 9
   },
   {
     "id": "combo-34",
-    "name": "Картофель с рыбой",
+    "name": "Котлета с пюре",
     "portion": "200 г",
-    "kcal": 150,
+    "kcal": 210,
     "protein": 12,
-    "carbs": 14,
-    "fat": 5
+    "carbs": 20,
+    "fat": 10
   },
   {
     "id": "combo-35",
-    "name": "Салат с тунцом",
+    "name": "Пельмени со сметаной",
     "portion": "200 г",
-    "kcal": 140,
-    "protein": 14,
-    "carbs": 6,
-    "fat": 7
+    "kcal": 240,
+    "protein": 12,
+    "carbs": 24,
+    "fat": 11
   },
   {
     "id": "combo-36",
-    "name": "Омлет с сыром",
+    "name": "Блины с творогом",
     "portion": "200 г",
     "kcal": 200,
-    "protein": 14,
-    "carbs": 2,
-    "fat": 15
+    "protein": 10,
+    "carbs": 26,
+    "fat": 7
   },
   {
     "id": "combo-37",
-    "name": "Творог с бананом",
+    "name": "Сырники со сметаной",
     "portion": "200 г",
-    "kcal": 140,
+    "kcal": 220,
     "protein": 12,
-    "carbs": 16,
-    "fat": 4
+    "carbs": 20,
+    "fat": 10
   },
   {
     "id": "combo-38",
-    "name": "Йогурт с орехами",
+    "name": "Шаурма лёгкая",
     "portion": "200 г",
-    "kcal": 160,
-    "protein": 8,
-    "carbs": 12,
-    "fat": 9
+    "kcal": 220,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 8
   },
   {
     "id": "combo-39",
-    "name": "Курица с овощами",
+    "name": "Боул киноа курица",
     "portion": "200 г",
-    "kcal": 140,
-    "protein": 18,
-    "carbs": 6,
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 18,
     "fat": 5
   },
   {
     "id": "combo-40",
-    "name": "Индейка с рисом",
+    "name": "Боул рис тунец",
     "portion": "200 г",
-    "kcal": 160,
-    "protein": 16,
-    "carbs": 16,
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 18,
     "fat": 4
   },
   {
     "id": "combo-41",
-    "name": "Лосось с овощами",
-    "portion": "200 г",
-    "kcal": 180,
-    "protein": 16,
-    "carbs": 5,
-    "fat": 10
-  },
-  {
-    "id": "combo-42",
-    "name": "Креветки с рисом",
-    "portion": "200 г",
-    "kcal": 150,
-    "protein": 14,
-    "carbs": 18,
-    "fat": 3
-  },
-  {
-    "id": "combo-43",
-    "name": "Фасоль с овощами",
-    "portion": "200 г",
-    "kcal": 120,
-    "protein": 7,
-    "carbs": 16,
-    "fat": 3
-  },
-  {
-    "id": "combo-44",
-    "name": "Нут с овощами",
-    "portion": "200 г",
-    "kcal": 140,
-    "protein": 7,
-    "carbs": 18,
-    "fat": 4
-  },
-  {
-    "id": "combo-45",
-    "name": "Тофу с овощами",
-    "portion": "200 г",
-    "kcal": 110,
-    "protein": 9,
-    "carbs": 8,
-    "fat": 5
-  },
-  {
-    "id": "combo-46",
     "name": "Рис с курицей",
     "portion": "200 г",
     "kcal": 180,
@@ -7131,7 +10947,7 @@ export const FOOD_PRESETS: FoodPreset[] = [
     "fat": 5
   },
   {
-    "id": "combo-47",
+    "id": "combo-42",
     "name": "Гречка с говядиной",
     "portion": "200 г",
     "kcal": 190,
@@ -7140,61 +10956,61 @@ export const FOOD_PRESETS: FoodPreset[] = [
     "fat": 7
   },
   {
-    "id": "combo-48",
+    "id": "combo-43",
     "name": "Макароны с сыром",
     "portion": "200 г",
     "kcal": 220,
     "protein": 10,
     "carbs": 25,
+    "fat": 9
+  },
+  {
+    "id": "combo-44",
+    "name": "Картофель с рыбой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 12,
+    "carbs": 14,
+    "fat": 5
+  },
+  {
+    "id": "combo-45",
+    "name": "Салат с тунцом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 14,
+    "carbs": 6,
+    "fat": 7
+  },
+  {
+    "id": "combo-46",
+    "name": "Омлет с сыром",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 14,
+    "carbs": 2,
+    "fat": 15
+  },
+  {
+    "id": "combo-47",
+    "name": "Творог с бананом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 12,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-48",
+    "name": "Йогурт с орехами",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 12,
     "fat": 9
   },
   {
     "id": "combo-49",
-    "name": "Картофель с рыбой",
-    "portion": "200 г",
-    "kcal": 150,
-    "protein": 12,
-    "carbs": 14,
-    "fat": 5
-  },
-  {
-    "id": "combo-50",
-    "name": "Салат с тунцом",
-    "portion": "200 г",
-    "kcal": 140,
-    "protein": 14,
-    "carbs": 6,
-    "fat": 7
-  },
-  {
-    "id": "combo-51",
-    "name": "Омлет с сыром",
-    "portion": "200 г",
-    "kcal": 200,
-    "protein": 14,
-    "carbs": 2,
-    "fat": 15
-  },
-  {
-    "id": "combo-52",
-    "name": "Творог с бананом",
-    "portion": "200 г",
-    "kcal": 140,
-    "protein": 12,
-    "carbs": 16,
-    "fat": 4
-  },
-  {
-    "id": "combo-53",
-    "name": "Йогурт с орехами",
-    "portion": "200 г",
-    "kcal": 160,
-    "protein": 8,
-    "carbs": 12,
-    "fat": 9
-  },
-  {
-    "id": "combo-54",
     "name": "Курица с овощами",
     "portion": "200 г",
     "kcal": 140,
@@ -7203,7 +11019,7 @@ export const FOOD_PRESETS: FoodPreset[] = [
     "fat": 5
   },
   {
-    "id": "combo-55",
+    "id": "combo-50",
     "name": "Индейка с рисом",
     "portion": "200 г",
     "kcal": 160,
@@ -7212,7 +11028,7 @@ export const FOOD_PRESETS: FoodPreset[] = [
     "fat": 4
   },
   {
-    "id": "combo-56",
+    "id": "combo-51",
     "name": "Лосось с овощами",
     "portion": "200 г",
     "kcal": 180,
@@ -7221,7 +11037,7 @@ export const FOOD_PRESETS: FoodPreset[] = [
     "fat": 10
   },
   {
-    "id": "combo-57",
+    "id": "combo-52",
     "name": "Креветки с рисом",
     "portion": "200 г",
     "kcal": 150,
@@ -7230,7 +11046,7 @@ export const FOOD_PRESETS: FoodPreset[] = [
     "fat": 3
   },
   {
-    "id": "combo-58",
+    "id": "combo-53",
     "name": "Фасоль с овощами",
     "portion": "200 г",
     "kcal": 120,
@@ -7239,7 +11055,7 @@ export const FOOD_PRESETS: FoodPreset[] = [
     "fat": 3
   },
   {
-    "id": "combo-59",
+    "id": "combo-54",
     "name": "Нут с овощами",
     "portion": "200 г",
     "kcal": 140,
@@ -7248,7 +11064,7 @@ export const FOOD_PRESETS: FoodPreset[] = [
     "fat": 4
   },
   {
-    "id": "combo-60",
+    "id": "combo-55",
     "name": "Тофу с овощами",
     "portion": "200 г",
     "kcal": 110,
@@ -7257,313 +11073,268 @@ export const FOOD_PRESETS: FoodPreset[] = [
     "fat": 5
   },
   {
-    "id": "combo-61",
-    "name": "Рис с курицей",
+    "id": "combo-56",
+    "name": "Гречка с курицей",
     "portion": "200 г",
-    "kcal": 180,
-    "protein": 14,
-    "carbs": 20,
+    "kcal": 170,
+    "protein": 16,
+    "carbs": 18,
     "fat": 5
+  },
+  {
+    "id": "combo-57",
+    "name": "Рис с индейкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 15,
+    "carbs": 20,
+    "fat": 4
+  },
+  {
+    "id": "combo-58",
+    "name": "Паста с курицей",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 6
+  },
+  {
+    "id": "combo-59",
+    "name": "Картофель с курицей",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 14,
+    "carbs": 16,
+    "fat": 5
+  },
+  {
+    "id": "combo-60",
+    "name": "Киноа с лососем",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 7
+  },
+  {
+    "id": "combo-61",
+    "name": "Булгур с говядиной",
+    "portion": "200 г",
+    "kcal": 185,
+    "protein": 15,
+    "carbs": 18,
+    "fat": 6
   },
   {
     "id": "combo-62",
-    "name": "Гречка с говядиной",
+    "name": "Чечевица с курицей",
     "portion": "200 г",
-    "kcal": 190,
-    "protein": 15,
-    "carbs": 16,
-    "fat": 7
-  },
-  {
-    "id": "combo-63",
-    "name": "Макароны с сыром",
-    "portion": "200 г",
-    "kcal": 220,
-    "protein": 10,
-    "carbs": 25,
-    "fat": 9
-  },
-  {
-    "id": "combo-64",
-    "name": "Картофель с рыбой",
-    "portion": "200 г",
-    "kcal": 150,
-    "protein": 12,
-    "carbs": 14,
-    "fat": 5
-  },
-  {
-    "id": "combo-65",
-    "name": "Салат с тунцом",
-    "portion": "200 г",
-    "kcal": 140,
-    "protein": 14,
-    "carbs": 6,
-    "fat": 7
-  },
-  {
-    "id": "combo-66",
-    "name": "Омлет с сыром",
-    "portion": "200 г",
-    "kcal": 200,
-    "protein": 14,
-    "carbs": 2,
-    "fat": 15
-  },
-  {
-    "id": "combo-67",
-    "name": "Творог с бананом",
-    "portion": "200 г",
-    "kcal": 140,
-    "protein": 12,
+    "kcal": 170,
+    "protein": 18,
     "carbs": 16,
     "fat": 4
   },
   {
-    "id": "combo-68",
-    "name": "Йогурт с орехами",
+    "id": "combo-63",
+    "name": "Рис с яйцом",
     "portion": "200 г",
     "kcal": 160,
-    "protein": 8,
-    "carbs": 12,
-    "fat": 9
-  },
-  {
-    "id": "combo-69",
-    "name": "Курица с овощами",
-    "portion": "200 г",
-    "kcal": 140,
-    "protein": 18,
-    "carbs": 6,
+    "protein": 10,
+    "carbs": 22,
     "fat": 5
   },
   {
-    "id": "combo-70",
-    "name": "Индейка с рисом",
+    "id": "combo-64",
+    "name": "Овсянка с протеином",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 20,
+    "carbs": 22,
+    "fat": 4
+  },
+  {
+    "id": "combo-65",
+    "name": "Творог с ягодами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 14,
+    "carbs": 12,
+    "fat": 3
+  },
+  {
+    "id": "combo-66",
+    "name": "Йогурт с гранолой",
     "portion": "200 г",
     "kcal": 160,
+    "protein": 8,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-67",
+    "name": "Курица терияки с рисом",
+    "portion": "200 г",
+    "kcal": 200,
     "protein": 16,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-68",
+    "name": "Говядина с гречкой",
+    "portion": "200 г",
+    "kcal": 195,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-69",
+    "name": "Рыба с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 16,
+    "carbs": 8,
+    "fat": 4
+  },
+  {
+    "id": "combo-70",
+    "name": "Индейка с гречкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 17,
     "carbs": 16,
     "fat": 4
   },
   {
     "id": "combo-71",
-    "name": "Лосось с овощами",
+    "name": "Тофу с рисом",
     "portion": "200 г",
-    "kcal": 180,
-    "protein": 16,
-    "carbs": 5,
-    "fat": 10
+    "kcal": 140,
+    "protein": 10,
+    "carbs": 18,
+    "fat": 4
   },
   {
     "id": "combo-72",
-    "name": "Креветки с рисом",
+    "name": "Креветки с гречкой",
     "portion": "200 г",
     "kcal": 150,
-    "protein": 14,
-    "carbs": 18,
+    "protein": 15,
+    "carbs": 16,
     "fat": 3
   },
   {
     "id": "combo-73",
-    "name": "Фасоль с овощами",
+    "name": "Стейк с овощами",
     "portion": "200 г",
-    "kcal": 120,
-    "protein": 7,
-    "carbs": 16,
-    "fat": 3
-  },
-  {
-    "id": "combo-74",
-    "name": "Нут с овощами",
-    "portion": "200 г",
-    "kcal": 140,
-    "protein": 7,
-    "carbs": 18,
-    "fat": 4
-  },
-  {
-    "id": "combo-75",
-    "name": "Тофу с овощами",
-    "portion": "200 г",
-    "kcal": 110,
-    "protein": 9,
+    "kcal": 200,
+    "protein": 22,
     "carbs": 8,
-    "fat": 5
-  },
-  {
-    "id": "combo-76",
-    "name": "Рис с курицей",
-    "portion": "200 г",
-    "kcal": 180,
-    "protein": 14,
-    "carbs": 20,
-    "fat": 5
-  },
-  {
-    "id": "combo-77",
-    "name": "Гречка с говядиной",
-    "portion": "200 г",
-    "kcal": 190,
-    "protein": 15,
-    "carbs": 16,
-    "fat": 7
-  },
-  {
-    "id": "combo-78",
-    "name": "Макароны с сыром",
-    "portion": "200 г",
-    "kcal": 220,
-    "protein": 10,
-    "carbs": 25,
     "fat": 9
   },
   {
-    "id": "combo-79",
-    "name": "Картофель с рыбой",
+    "id": "combo-74",
+    "name": "Котлета с пюре",
     "portion": "200 г",
-    "kcal": 150,
+    "kcal": 210,
     "protein": 12,
-    "carbs": 14,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-75",
+    "name": "Пельмени со сметаной",
+    "portion": "200 г",
+    "kcal": 240,
+    "protein": 12,
+    "carbs": 24,
+    "fat": 11
+  },
+  {
+    "id": "combo-76",
+    "name": "Блины с творогом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 10,
+    "carbs": 26,
+    "fat": 7
+  },
+  {
+    "id": "combo-77",
+    "name": "Сырники со сметаной",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-78",
+    "name": "Шаурма лёгкая",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 8
+  },
+  {
+    "id": "combo-79",
+    "name": "Боул киноа курица",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 18,
     "fat": 5
   },
   {
     "id": "combo-80",
-    "name": "Салат с тунцом",
+    "name": "Боул рис тунец",
     "portion": "200 г",
-    "kcal": 140,
-    "protein": 14,
-    "carbs": 6,
-    "fat": 7
-  },
-  {
-    "id": "combo-81",
-    "name": "Омлет с сыром",
-    "portion": "200 г",
-    "kcal": 200,
-    "protein": 14,
-    "carbs": 2,
-    "fat": 15
-  },
-  {
-    "id": "combo-82",
-    "name": "Творог с бананом",
-    "portion": "200 г",
-    "kcal": 140,
-    "protein": 12,
-    "carbs": 16,
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 18,
     "fat": 4
   },
   {
-    "id": "combo-83",
-    "name": "Йогурт с орехами",
+    "id": "combo-81",
+    "name": "Рис с курицей",
     "portion": "200 г",
-    "kcal": 160,
-    "protein": 8,
-    "carbs": 12,
+    "kcal": 180,
+    "protein": 14,
+    "carbs": 20,
+    "fat": 5
+  },
+  {
+    "id": "combo-82",
+    "name": "Гречка с говядиной",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-83",
+    "name": "Макароны с сыром",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 10,
+    "carbs": 25,
     "fat": 9
   },
   {
     "id": "combo-84",
-    "name": "Курица с овощами",
+    "name": "Картофель с рыбой",
     "portion": "200 г",
-    "kcal": 140,
-    "protein": 18,
-    "carbs": 6,
+    "kcal": 150,
+    "protein": 12,
+    "carbs": 14,
     "fat": 5
   },
   {
     "id": "combo-85",
-    "name": "Индейка с рисом",
-    "portion": "200 г",
-    "kcal": 160,
-    "protein": 16,
-    "carbs": 16,
-    "fat": 4
-  },
-  {
-    "id": "combo-86",
-    "name": "Лосось с овощами",
-    "portion": "200 г",
-    "kcal": 180,
-    "protein": 16,
-    "carbs": 5,
-    "fat": 10
-  },
-  {
-    "id": "combo-87",
-    "name": "Креветки с рисом",
-    "portion": "200 г",
-    "kcal": 150,
-    "protein": 14,
-    "carbs": 18,
-    "fat": 3
-  },
-  {
-    "id": "combo-88",
-    "name": "Фасоль с овощами",
-    "portion": "200 г",
-    "kcal": 120,
-    "protein": 7,
-    "carbs": 16,
-    "fat": 3
-  },
-  {
-    "id": "combo-89",
-    "name": "Нут с овощами",
-    "portion": "200 г",
-    "kcal": 140,
-    "protein": 7,
-    "carbs": 18,
-    "fat": 4
-  },
-  {
-    "id": "combo-90",
-    "name": "Тофу с овощами",
-    "portion": "200 г",
-    "kcal": 110,
-    "protein": 9,
-    "carbs": 8,
-    "fat": 5
-  },
-  {
-    "id": "combo-91",
-    "name": "Рис с курицей",
-    "portion": "200 г",
-    "kcal": 180,
-    "protein": 14,
-    "carbs": 20,
-    "fat": 5
-  },
-  {
-    "id": "combo-92",
-    "name": "Гречка с говядиной",
-    "portion": "200 г",
-    "kcal": 190,
-    "protein": 15,
-    "carbs": 16,
-    "fat": 7
-  },
-  {
-    "id": "combo-93",
-    "name": "Макароны с сыром",
-    "portion": "200 г",
-    "kcal": 220,
-    "protein": 10,
-    "carbs": 25,
-    "fat": 9
-  },
-  {
-    "id": "combo-94",
-    "name": "Картофель с рыбой",
-    "portion": "200 г",
-    "kcal": 150,
-    "protein": 12,
-    "carbs": 14,
-    "fat": 5
-  },
-  {
-    "id": "combo-95",
     "name": "Салат с тунцом",
     "portion": "200 г",
     "kcal": 140,
@@ -7572,7 +11343,7 @@ export const FOOD_PRESETS: FoodPreset[] = [
     "fat": 7
   },
   {
-    "id": "combo-96",
+    "id": "combo-86",
     "name": "Омлет с сыром",
     "portion": "200 г",
     "kcal": 200,
@@ -7581,220 +11352,310 @@ export const FOOD_PRESETS: FoodPreset[] = [
     "fat": 15
   },
   {
-    "id": "combo-97",
+    "id": "combo-87",
     "name": "Творог с бананом",
     "portion": "200 г",
     "kcal": 140,
     "protein": 12,
     "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-88",
+    "name": "Йогурт с орехами",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 12,
+    "fat": 9
+  },
+  {
+    "id": "combo-89",
+    "name": "Курица с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 18,
+    "carbs": 6,
+    "fat": 5
+  },
+  {
+    "id": "combo-90",
+    "name": "Индейка с рисом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-91",
+    "name": "Лосось с овощами",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 5,
+    "fat": 10
+  },
+  {
+    "id": "combo-92",
+    "name": "Креветки с рисом",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 14,
+    "carbs": 18,
+    "fat": 3
+  },
+  {
+    "id": "combo-93",
+    "name": "Фасоль с овощами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 7,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-94",
+    "name": "Нут с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 7,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-95",
+    "name": "Тофу с овощами",
+    "portion": "200 г",
+    "kcal": 110,
+    "protein": 9,
+    "carbs": 8,
+    "fat": 5
+  },
+  {
+    "id": "combo-96",
+    "name": "Гречка с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-97",
+    "name": "Рис с индейкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 15,
+    "carbs": 20,
     "fat": 4
   },
   {
     "id": "combo-98",
-    "name": "Йогурт с орехами",
+    "name": "Паста с курицей",
     "portion": "200 г",
-    "kcal": 160,
-    "protein": 8,
-    "carbs": 12,
-    "fat": 9
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 6
   },
   {
     "id": "combo-99",
-    "name": "Курица с овощами",
+    "name": "Картофель с курицей",
     "portion": "200 г",
-    "kcal": 140,
-    "protein": 18,
-    "carbs": 6,
+    "kcal": 160,
+    "protein": 14,
+    "carbs": 16,
     "fat": 5
   },
   {
     "id": "combo-100",
-    "name": "Индейка с рисом",
+    "name": "Киноа с лососем",
     "portion": "200 г",
-    "kcal": 160,
+    "kcal": 190,
     "protein": 16,
+    "carbs": 18,
+    "fat": 7
+  },
+  {
+    "id": "combo-101",
+    "name": "Булгур с говядиной",
+    "portion": "200 г",
+    "kcal": 185,
+    "protein": 15,
+    "carbs": 18,
+    "fat": 6
+  },
+  {
+    "id": "combo-102",
+    "name": "Чечевица с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
     "carbs": 16,
     "fat": 4
   },
   {
-    "id": "combo-101",
-    "name": "Лосось с овощами",
-    "portion": "200 г",
-    "kcal": 180,
-    "protein": 16,
-    "carbs": 5,
-    "fat": 10
-  },
-  {
-    "id": "combo-102",
-    "name": "Креветки с рисом",
-    "portion": "200 г",
-    "kcal": 150,
-    "protein": 14,
-    "carbs": 18,
-    "fat": 3
-  },
-  {
     "id": "combo-103",
-    "name": "Фасоль с овощами",
+    "name": "Рис с яйцом",
     "portion": "200 г",
-    "kcal": 120,
-    "protein": 7,
-    "carbs": 16,
-    "fat": 3
+    "kcal": 160,
+    "protein": 10,
+    "carbs": 22,
+    "fat": 5
   },
   {
     "id": "combo-104",
-    "name": "Нут с овощами",
+    "name": "Овсянка с протеином",
     "portion": "200 г",
-    "kcal": 140,
-    "protein": 7,
-    "carbs": 18,
+    "kcal": 180,
+    "protein": 20,
+    "carbs": 22,
     "fat": 4
   },
   {
     "id": "combo-105",
-    "name": "Тофу с овощами",
+    "name": "Творог с ягодами",
     "portion": "200 г",
-    "kcal": 110,
-    "protein": 9,
-    "carbs": 8,
-    "fat": 5
+    "kcal": 120,
+    "protein": 14,
+    "carbs": 12,
+    "fat": 3
   },
   {
     "id": "combo-106",
-    "name": "Рис с курицей",
+    "name": "Йогурт с гранолой",
     "portion": "200 г",
-    "kcal": 180,
-    "protein": 14,
-    "carbs": 20,
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 24,
     "fat": 5
   },
   {
     "id": "combo-107",
-    "name": "Гречка с говядиной",
+    "name": "Курица терияки с рисом",
     "portion": "200 г",
-    "kcal": 190,
-    "protein": 15,
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-108",
+    "name": "Говядина с гречкой",
+    "portion": "200 г",
+    "kcal": 195,
+    "protein": 16,
     "carbs": 16,
     "fat": 7
   },
   {
-    "id": "combo-108",
-    "name": "Макароны с сыром",
-    "portion": "200 г",
-    "kcal": 220,
-    "protein": 10,
-    "carbs": 25,
-    "fat": 9
-  },
-  {
     "id": "combo-109",
-    "name": "Картофель с рыбой",
+    "name": "Рыба с овощами",
     "portion": "200 г",
-    "kcal": 150,
-    "protein": 12,
-    "carbs": 14,
-    "fat": 5
+    "kcal": 140,
+    "protein": 16,
+    "carbs": 8,
+    "fat": 4
   },
   {
     "id": "combo-110",
-    "name": "Салат с тунцом",
+    "name": "Индейка с гречкой",
     "portion": "200 г",
-    "kcal": 140,
-    "protein": 14,
-    "carbs": 6,
-    "fat": 7
-  },
-  {
-    "id": "combo-111",
-    "name": "Омлет с сыром",
-    "portion": "200 г",
-    "kcal": 200,
-    "protein": 14,
-    "carbs": 2,
-    "fat": 15
-  },
-  {
-    "id": "combo-112",
-    "name": "Творог с бананом",
-    "portion": "200 г",
-    "kcal": 140,
-    "protein": 12,
+    "kcal": 165,
+    "protein": 17,
     "carbs": 16,
     "fat": 4
   },
   {
-    "id": "combo-113",
-    "name": "Йогурт с орехами",
+    "id": "combo-111",
+    "name": "Тофу с рисом",
     "portion": "200 г",
-    "kcal": 160,
-    "protein": 8,
-    "carbs": 12,
+    "kcal": 140,
+    "protein": 10,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-112",
+    "name": "Креветки с гречкой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-113",
+    "name": "Стейк с овощами",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 22,
+    "carbs": 8,
     "fat": 9
   },
   {
     "id": "combo-114",
-    "name": "Курица с овощами",
+    "name": "Котлета с пюре",
     "portion": "200 г",
-    "kcal": 140,
-    "protein": 18,
-    "carbs": 6,
-    "fat": 5
-  },
-  {
-    "id": "combo-115",
-    "name": "Индейка с рисом",
-    "portion": "200 г",
-    "kcal": 160,
-    "protein": 16,
-    "carbs": 16,
-    "fat": 4
-  },
-  {
-    "id": "combo-116",
-    "name": "Лосось с овощами",
-    "portion": "200 г",
-    "kcal": 180,
-    "protein": 16,
-    "carbs": 5,
+    "kcal": 210,
+    "protein": 12,
+    "carbs": 20,
     "fat": 10
   },
   {
-    "id": "combo-117",
-    "name": "Креветки с рисом",
+    "id": "combo-115",
+    "name": "Пельмени со сметаной",
     "portion": "200 г",
-    "kcal": 150,
-    "protein": 14,
-    "carbs": 18,
-    "fat": 3
+    "kcal": 240,
+    "protein": 12,
+    "carbs": 24,
+    "fat": 11
+  },
+  {
+    "id": "combo-116",
+    "name": "Блины с творогом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 10,
+    "carbs": 26,
+    "fat": 7
+  },
+  {
+    "id": "combo-117",
+    "name": "Сырники со сметаной",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
   },
   {
     "id": "combo-118",
-    "name": "Фасоль с овощами",
+    "name": "Шаурма лёгкая",
     "portion": "200 г",
-    "kcal": 120,
-    "protein": 7,
-    "carbs": 16,
-    "fat": 3
+    "kcal": 220,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 8
   },
   {
     "id": "combo-119",
-    "name": "Нут с овощами",
+    "name": "Боул киноа курица",
     "portion": "200 г",
-    "kcal": 140,
-    "protein": 7,
+    "kcal": 180,
+    "protein": 16,
     "carbs": 18,
-    "fat": 4
+    "fat": 5
   },
   {
     "id": "combo-120",
-    "name": "Тофу с овощами",
+    "name": "Боул рис тунец",
     "portion": "200 г",
-    "kcal": 110,
-    "protein": 9,
-    "carbs": 8,
-    "fat": 5
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 18,
+    "fat": 4
   },
   {
     "id": "combo-121",
@@ -7933,276 +11794,231 @@ export const FOOD_PRESETS: FoodPreset[] = [
   },
   {
     "id": "combo-136",
-    "name": "Рис с курицей",
+    "name": "Гречка с курицей",
     "portion": "200 г",
-    "kcal": 180,
-    "protein": 14,
-    "carbs": 20,
+    "kcal": 170,
+    "protein": 16,
+    "carbs": 18,
     "fat": 5
   },
   {
     "id": "combo-137",
-    "name": "Гречка с говядиной",
+    "name": "Рис с индейкой",
     "portion": "200 г",
-    "kcal": 190,
+    "kcal": 165,
     "protein": 15,
-    "carbs": 16,
-    "fat": 7
+    "carbs": 20,
+    "fat": 4
   },
   {
     "id": "combo-138",
-    "name": "Макароны с сыром",
+    "name": "Паста с курицей",
     "portion": "200 г",
-    "kcal": 220,
-    "protein": 10,
-    "carbs": 25,
-    "fat": 9
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 6
   },
   {
     "id": "combo-139",
-    "name": "Картофель с рыбой",
+    "name": "Картофель с курицей",
     "portion": "200 г",
-    "kcal": 150,
-    "protein": 12,
-    "carbs": 14,
+    "kcal": 160,
+    "protein": 14,
+    "carbs": 16,
     "fat": 5
   },
   {
     "id": "combo-140",
-    "name": "Салат с тунцом",
+    "name": "Киноа с лососем",
     "portion": "200 г",
-    "kcal": 140,
-    "protein": 14,
-    "carbs": 6,
+    "kcal": 190,
+    "protein": 16,
+    "carbs": 18,
     "fat": 7
   },
   {
     "id": "combo-141",
-    "name": "Омлет с сыром",
+    "name": "Булгур с говядиной",
     "portion": "200 г",
-    "kcal": 200,
-    "protein": 14,
-    "carbs": 2,
-    "fat": 15
+    "kcal": 185,
+    "protein": 15,
+    "carbs": 18,
+    "fat": 6
   },
   {
     "id": "combo-142",
-    "name": "Творог с бананом",
+    "name": "Чечевица с курицей",
     "portion": "200 г",
-    "kcal": 140,
-    "protein": 12,
+    "kcal": 170,
+    "protein": 18,
     "carbs": 16,
     "fat": 4
   },
   {
     "id": "combo-143",
-    "name": "Йогурт с орехами",
+    "name": "Рис с яйцом",
     "portion": "200 г",
     "kcal": 160,
-    "protein": 8,
-    "carbs": 12,
-    "fat": 9
-  },
-  {
-    "id": "combo-144",
-    "name": "Курица с овощами",
-    "portion": "200 г",
-    "kcal": 140,
-    "protein": 18,
-    "carbs": 6,
+    "protein": 10,
+    "carbs": 22,
     "fat": 5
   },
   {
-    "id": "combo-145",
-    "name": "Индейка с рисом",
+    "id": "combo-144",
+    "name": "Овсянка с протеином",
     "portion": "200 г",
-    "kcal": 160,
-    "protein": 16,
-    "carbs": 16,
+    "kcal": 180,
+    "protein": 20,
+    "carbs": 22,
     "fat": 4
   },
   {
-    "id": "combo-146",
-    "name": "Лосось с овощами",
+    "id": "combo-145",
+    "name": "Творог с ягодами",
     "portion": "200 г",
-    "kcal": 180,
-    "protein": 16,
-    "carbs": 5,
-    "fat": 10
+    "kcal": 120,
+    "protein": 14,
+    "carbs": 12,
+    "fat": 3
+  },
+  {
+    "id": "combo-146",
+    "name": "Йогурт с гранолой",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 24,
+    "fat": 5
   },
   {
     "id": "combo-147",
-    "name": "Креветки с рисом",
+    "name": "Курица терияки с рисом",
     "portion": "200 г",
-    "kcal": 150,
-    "protein": 14,
-    "carbs": 18,
-    "fat": 3
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 24,
+    "fat": 5
   },
   {
     "id": "combo-148",
-    "name": "Фасоль с овощами",
+    "name": "Говядина с гречкой",
     "portion": "200 г",
-    "kcal": 120,
-    "protein": 7,
+    "kcal": 195,
+    "protein": 16,
     "carbs": 16,
-    "fat": 3
+    "fat": 7
   },
   {
     "id": "combo-149",
-    "name": "Нут с овощами",
+    "name": "Рыба с овощами",
     "portion": "200 г",
     "kcal": 140,
-    "protein": 7,
-    "carbs": 18,
+    "protein": 16,
+    "carbs": 8,
     "fat": 4
   },
   {
     "id": "combo-150",
-    "name": "Тофу с овощами",
+    "name": "Индейка с гречкой",
     "portion": "200 г",
-    "kcal": 110,
-    "protein": 9,
-    "carbs": 8,
-    "fat": 5
+    "kcal": 165,
+    "protein": 17,
+    "carbs": 16,
+    "fat": 4
   },
   {
     "id": "combo-151",
-    "name": "Рис с курицей",
+    "name": "Тофу с рисом",
     "portion": "200 г",
-    "kcal": 180,
-    "protein": 14,
-    "carbs": 20,
-    "fat": 5
+    "kcal": 140,
+    "protein": 10,
+    "carbs": 18,
+    "fat": 4
   },
   {
     "id": "combo-152",
-    "name": "Гречка с говядиной",
+    "name": "Креветки с гречкой",
     "portion": "200 г",
-    "kcal": 190,
+    "kcal": 150,
     "protein": 15,
     "carbs": 16,
-    "fat": 7
+    "fat": 3
   },
   {
     "id": "combo-153",
-    "name": "Макароны с сыром",
+    "name": "Стейк с овощами",
     "portion": "200 г",
-    "kcal": 220,
-    "protein": 10,
-    "carbs": 25,
+    "kcal": 200,
+    "protein": 22,
+    "carbs": 8,
     "fat": 9
   },
   {
     "id": "combo-154",
-    "name": "Картофель с рыбой",
+    "name": "Котлета с пюре",
     "portion": "200 г",
-    "kcal": 150,
+    "kcal": 210,
     "protein": 12,
-    "carbs": 14,
-    "fat": 5
+    "carbs": 20,
+    "fat": 10
   },
   {
     "id": "combo-155",
-    "name": "Салат с тунцом",
+    "name": "Пельмени со сметаной",
     "portion": "200 г",
-    "kcal": 140,
-    "protein": 14,
-    "carbs": 6,
-    "fat": 7
+    "kcal": 240,
+    "protein": 12,
+    "carbs": 24,
+    "fat": 11
   },
   {
     "id": "combo-156",
-    "name": "Омлет с сыром",
+    "name": "Блины с творогом",
     "portion": "200 г",
     "kcal": 200,
-    "protein": 14,
-    "carbs": 2,
-    "fat": 15
+    "protein": 10,
+    "carbs": 26,
+    "fat": 7
   },
   {
     "id": "combo-157",
-    "name": "Творог с бананом",
+    "name": "Сырники со сметаной",
     "portion": "200 г",
-    "kcal": 140,
+    "kcal": 220,
     "protein": 12,
-    "carbs": 16,
-    "fat": 4
+    "carbs": 20,
+    "fat": 10
   },
   {
     "id": "combo-158",
-    "name": "Йогурт с орехами",
+    "name": "Шаурма лёгкая",
     "portion": "200 г",
-    "kcal": 160,
-    "protein": 8,
-    "carbs": 12,
-    "fat": 9
+    "kcal": 220,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 8
   },
   {
     "id": "combo-159",
-    "name": "Курица с овощами",
+    "name": "Боул киноа курица",
     "portion": "200 г",
-    "kcal": 140,
-    "protein": 18,
-    "carbs": 6,
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 18,
     "fat": 5
   },
   {
     "id": "combo-160",
-    "name": "Индейка с рисом",
+    "name": "Боул рис тунец",
     "portion": "200 г",
-    "kcal": 160,
-    "protein": 16,
-    "carbs": 16,
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 18,
     "fat": 4
   },
   {
     "id": "combo-161",
-    "name": "Лосось с овощами",
-    "portion": "200 г",
-    "kcal": 180,
-    "protein": 16,
-    "carbs": 5,
-    "fat": 10
-  },
-  {
-    "id": "combo-162",
-    "name": "Креветки с рисом",
-    "portion": "200 г",
-    "kcal": 150,
-    "protein": 14,
-    "carbs": 18,
-    "fat": 3
-  },
-  {
-    "id": "combo-163",
-    "name": "Фасоль с овощами",
-    "portion": "200 г",
-    "kcal": 120,
-    "protein": 7,
-    "carbs": 16,
-    "fat": 3
-  },
-  {
-    "id": "combo-164",
-    "name": "Нут с овощами",
-    "portion": "200 г",
-    "kcal": 140,
-    "protein": 7,
-    "carbs": 18,
-    "fat": 4
-  },
-  {
-    "id": "combo-165",
-    "name": "Тофу с овощами",
-    "portion": "200 г",
-    "kcal": 110,
-    "protein": 9,
-    "carbs": 8,
-    "fat": 5
-  },
-  {
-    "id": "combo-166",
     "name": "Рис с курицей",
     "portion": "200 г",
     "kcal": 180,
@@ -8211,7 +12027,7 @@ export const FOOD_PRESETS: FoodPreset[] = [
     "fat": 5
   },
   {
-    "id": "combo-167",
+    "id": "combo-162",
     "name": "Гречка с говядиной",
     "portion": "200 г",
     "kcal": 190,
@@ -8220,61 +12036,61 @@ export const FOOD_PRESETS: FoodPreset[] = [
     "fat": 7
   },
   {
-    "id": "combo-168",
+    "id": "combo-163",
     "name": "Макароны с сыром",
     "portion": "200 г",
     "kcal": 220,
     "protein": 10,
     "carbs": 25,
+    "fat": 9
+  },
+  {
+    "id": "combo-164",
+    "name": "Картофель с рыбой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 12,
+    "carbs": 14,
+    "fat": 5
+  },
+  {
+    "id": "combo-165",
+    "name": "Салат с тунцом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 14,
+    "carbs": 6,
+    "fat": 7
+  },
+  {
+    "id": "combo-166",
+    "name": "Омлет с сыром",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 14,
+    "carbs": 2,
+    "fat": 15
+  },
+  {
+    "id": "combo-167",
+    "name": "Творог с бананом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 12,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-168",
+    "name": "Йогурт с орехами",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 12,
     "fat": 9
   },
   {
     "id": "combo-169",
-    "name": "Картофель с рыбой",
-    "portion": "200 г",
-    "kcal": 150,
-    "protein": 12,
-    "carbs": 14,
-    "fat": 5
-  },
-  {
-    "id": "combo-170",
-    "name": "Салат с тунцом",
-    "portion": "200 г",
-    "kcal": 140,
-    "protein": 14,
-    "carbs": 6,
-    "fat": 7
-  },
-  {
-    "id": "combo-171",
-    "name": "Омлет с сыром",
-    "portion": "200 г",
-    "kcal": 200,
-    "protein": 14,
-    "carbs": 2,
-    "fat": 15
-  },
-  {
-    "id": "combo-172",
-    "name": "Творог с бананом",
-    "portion": "200 г",
-    "kcal": 140,
-    "protein": 12,
-    "carbs": 16,
-    "fat": 4
-  },
-  {
-    "id": "combo-173",
-    "name": "Йогурт с орехами",
-    "portion": "200 г",
-    "kcal": 160,
-    "protein": 8,
-    "carbs": 12,
-    "fat": 9
-  },
-  {
-    "id": "combo-174",
     "name": "Курица с овощами",
     "portion": "200 г",
     "kcal": 140,
@@ -8283,7 +12099,7 @@ export const FOOD_PRESETS: FoodPreset[] = [
     "fat": 5
   },
   {
-    "id": "combo-175",
+    "id": "combo-170",
     "name": "Индейка с рисом",
     "portion": "200 г",
     "kcal": 160,
@@ -8292,7 +12108,7 @@ export const FOOD_PRESETS: FoodPreset[] = [
     "fat": 4
   },
   {
-    "id": "combo-176",
+    "id": "combo-171",
     "name": "Лосось с овощами",
     "portion": "200 г",
     "kcal": 180,
@@ -8301,7 +12117,7 @@ export const FOOD_PRESETS: FoodPreset[] = [
     "fat": 10
   },
   {
-    "id": "combo-177",
+    "id": "combo-172",
     "name": "Креветки с рисом",
     "portion": "200 г",
     "kcal": 150,
@@ -8310,7 +12126,7 @@ export const FOOD_PRESETS: FoodPreset[] = [
     "fat": 3
   },
   {
-    "id": "combo-178",
+    "id": "combo-173",
     "name": "Фасоль с овощами",
     "portion": "200 г",
     "kcal": 120,
@@ -8319,7 +12135,7 @@ export const FOOD_PRESETS: FoodPreset[] = [
     "fat": 3
   },
   {
-    "id": "combo-179",
+    "id": "combo-174",
     "name": "Нут с овощами",
     "portion": "200 г",
     "kcal": 140,
@@ -8328,7 +12144,7 @@ export const FOOD_PRESETS: FoodPreset[] = [
     "fat": 4
   },
   {
-    "id": "combo-180",
+    "id": "combo-175",
     "name": "Тофу с овощами",
     "portion": "200 г",
     "kcal": 110,
@@ -8337,313 +12153,268 @@ export const FOOD_PRESETS: FoodPreset[] = [
     "fat": 5
   },
   {
-    "id": "combo-181",
-    "name": "Рис с курицей",
+    "id": "combo-176",
+    "name": "Гречка с курицей",
     "portion": "200 г",
-    "kcal": 180,
-    "protein": 14,
-    "carbs": 20,
+    "kcal": 170,
+    "protein": 16,
+    "carbs": 18,
     "fat": 5
+  },
+  {
+    "id": "combo-177",
+    "name": "Рис с индейкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 15,
+    "carbs": 20,
+    "fat": 4
+  },
+  {
+    "id": "combo-178",
+    "name": "Паста с курицей",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 6
+  },
+  {
+    "id": "combo-179",
+    "name": "Картофель с курицей",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 14,
+    "carbs": 16,
+    "fat": 5
+  },
+  {
+    "id": "combo-180",
+    "name": "Киноа с лососем",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 7
+  },
+  {
+    "id": "combo-181",
+    "name": "Булгур с говядиной",
+    "portion": "200 г",
+    "kcal": 185,
+    "protein": 15,
+    "carbs": 18,
+    "fat": 6
   },
   {
     "id": "combo-182",
-    "name": "Гречка с говядиной",
+    "name": "Чечевица с курицей",
     "portion": "200 г",
-    "kcal": 190,
-    "protein": 15,
-    "carbs": 16,
-    "fat": 7
-  },
-  {
-    "id": "combo-183",
-    "name": "Макароны с сыром",
-    "portion": "200 г",
-    "kcal": 220,
-    "protein": 10,
-    "carbs": 25,
-    "fat": 9
-  },
-  {
-    "id": "combo-184",
-    "name": "Картофель с рыбой",
-    "portion": "200 г",
-    "kcal": 150,
-    "protein": 12,
-    "carbs": 14,
-    "fat": 5
-  },
-  {
-    "id": "combo-185",
-    "name": "Салат с тунцом",
-    "portion": "200 г",
-    "kcal": 140,
-    "protein": 14,
-    "carbs": 6,
-    "fat": 7
-  },
-  {
-    "id": "combo-186",
-    "name": "Омлет с сыром",
-    "portion": "200 г",
-    "kcal": 200,
-    "protein": 14,
-    "carbs": 2,
-    "fat": 15
-  },
-  {
-    "id": "combo-187",
-    "name": "Творог с бананом",
-    "portion": "200 г",
-    "kcal": 140,
-    "protein": 12,
+    "kcal": 170,
+    "protein": 18,
     "carbs": 16,
     "fat": 4
   },
   {
-    "id": "combo-188",
-    "name": "Йогурт с орехами",
+    "id": "combo-183",
+    "name": "Рис с яйцом",
     "portion": "200 г",
     "kcal": 160,
-    "protein": 8,
-    "carbs": 12,
-    "fat": 9
-  },
-  {
-    "id": "combo-189",
-    "name": "Курица с овощами",
-    "portion": "200 г",
-    "kcal": 140,
-    "protein": 18,
-    "carbs": 6,
+    "protein": 10,
+    "carbs": 22,
     "fat": 5
   },
   {
-    "id": "combo-190",
-    "name": "Индейка с рисом",
+    "id": "combo-184",
+    "name": "Овсянка с протеином",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 20,
+    "carbs": 22,
+    "fat": 4
+  },
+  {
+    "id": "combo-185",
+    "name": "Творог с ягодами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 14,
+    "carbs": 12,
+    "fat": 3
+  },
+  {
+    "id": "combo-186",
+    "name": "Йогурт с гранолой",
     "portion": "200 г",
     "kcal": 160,
+    "protein": 8,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-187",
+    "name": "Курица терияки с рисом",
+    "portion": "200 г",
+    "kcal": 200,
     "protein": 16,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-188",
+    "name": "Говядина с гречкой",
+    "portion": "200 г",
+    "kcal": 195,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-189",
+    "name": "Рыба с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 16,
+    "carbs": 8,
+    "fat": 4
+  },
+  {
+    "id": "combo-190",
+    "name": "Индейка с гречкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 17,
     "carbs": 16,
     "fat": 4
   },
   {
     "id": "combo-191",
-    "name": "Лосось с овощами",
+    "name": "Тофу с рисом",
     "portion": "200 г",
-    "kcal": 180,
-    "protein": 16,
-    "carbs": 5,
-    "fat": 10
+    "kcal": 140,
+    "protein": 10,
+    "carbs": 18,
+    "fat": 4
   },
   {
     "id": "combo-192",
-    "name": "Креветки с рисом",
+    "name": "Креветки с гречкой",
     "portion": "200 г",
     "kcal": 150,
-    "protein": 14,
-    "carbs": 18,
+    "protein": 15,
+    "carbs": 16,
     "fat": 3
   },
   {
     "id": "combo-193",
-    "name": "Фасоль с овощами",
+    "name": "Стейк с овощами",
     "portion": "200 г",
-    "kcal": 120,
-    "protein": 7,
-    "carbs": 16,
-    "fat": 3
-  },
-  {
-    "id": "combo-194",
-    "name": "Нут с овощами",
-    "portion": "200 г",
-    "kcal": 140,
-    "protein": 7,
-    "carbs": 18,
-    "fat": 4
-  },
-  {
-    "id": "combo-195",
-    "name": "Тофу с овощами",
-    "portion": "200 г",
-    "kcal": 110,
-    "protein": 9,
+    "kcal": 200,
+    "protein": 22,
     "carbs": 8,
-    "fat": 5
-  },
-  {
-    "id": "combo-196",
-    "name": "Рис с курицей",
-    "portion": "200 г",
-    "kcal": 180,
-    "protein": 14,
-    "carbs": 20,
-    "fat": 5
-  },
-  {
-    "id": "combo-197",
-    "name": "Гречка с говядиной",
-    "portion": "200 г",
-    "kcal": 190,
-    "protein": 15,
-    "carbs": 16,
-    "fat": 7
-  },
-  {
-    "id": "combo-198",
-    "name": "Макароны с сыром",
-    "portion": "200 г",
-    "kcal": 220,
-    "protein": 10,
-    "carbs": 25,
     "fat": 9
   },
   {
-    "id": "combo-199",
-    "name": "Картофель с рыбой",
+    "id": "combo-194",
+    "name": "Котлета с пюре",
     "portion": "200 г",
-    "kcal": 150,
+    "kcal": 210,
     "protein": 12,
-    "carbs": 14,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-195",
+    "name": "Пельмени со сметаной",
+    "portion": "200 г",
+    "kcal": 240,
+    "protein": 12,
+    "carbs": 24,
+    "fat": 11
+  },
+  {
+    "id": "combo-196",
+    "name": "Блины с творогом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 10,
+    "carbs": 26,
+    "fat": 7
+  },
+  {
+    "id": "combo-197",
+    "name": "Сырники со сметаной",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-198",
+    "name": "Шаурма лёгкая",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 8
+  },
+  {
+    "id": "combo-199",
+    "name": "Боул киноа курица",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 18,
     "fat": 5
   },
   {
     "id": "combo-200",
-    "name": "Салат с тунцом",
+    "name": "Боул рис тунец",
     "portion": "200 г",
-    "kcal": 140,
-    "protein": 14,
-    "carbs": 6,
-    "fat": 7
-  },
-  {
-    "id": "combo-201",
-    "name": "Омлет с сыром",
-    "portion": "200 г",
-    "kcal": 200,
-    "protein": 14,
-    "carbs": 2,
-    "fat": 15
-  },
-  {
-    "id": "combo-202",
-    "name": "Творог с бананом",
-    "portion": "200 г",
-    "kcal": 140,
-    "protein": 12,
-    "carbs": 16,
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 18,
     "fat": 4
   },
   {
-    "id": "combo-203",
-    "name": "Йогурт с орехами",
+    "id": "combo-201",
+    "name": "Рис с курицей",
     "portion": "200 г",
-    "kcal": 160,
-    "protein": 8,
-    "carbs": 12,
+    "kcal": 180,
+    "protein": 14,
+    "carbs": 20,
+    "fat": 5
+  },
+  {
+    "id": "combo-202",
+    "name": "Гречка с говядиной",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-203",
+    "name": "Макароны с сыром",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 10,
+    "carbs": 25,
     "fat": 9
   },
   {
     "id": "combo-204",
-    "name": "Курица с овощами",
+    "name": "Картофель с рыбой",
     "portion": "200 г",
-    "kcal": 140,
-    "protein": 18,
-    "carbs": 6,
+    "kcal": 150,
+    "protein": 12,
+    "carbs": 14,
     "fat": 5
   },
   {
     "id": "combo-205",
-    "name": "Индейка с рисом",
-    "portion": "200 г",
-    "kcal": 160,
-    "protein": 16,
-    "carbs": 16,
-    "fat": 4
-  },
-  {
-    "id": "combo-206",
-    "name": "Лосось с овощами",
-    "portion": "200 г",
-    "kcal": 180,
-    "protein": 16,
-    "carbs": 5,
-    "fat": 10
-  },
-  {
-    "id": "combo-207",
-    "name": "Креветки с рисом",
-    "portion": "200 г",
-    "kcal": 150,
-    "protein": 14,
-    "carbs": 18,
-    "fat": 3
-  },
-  {
-    "id": "combo-208",
-    "name": "Фасоль с овощами",
-    "portion": "200 г",
-    "kcal": 120,
-    "protein": 7,
-    "carbs": 16,
-    "fat": 3
-  },
-  {
-    "id": "combo-209",
-    "name": "Нут с овощами",
-    "portion": "200 г",
-    "kcal": 140,
-    "protein": 7,
-    "carbs": 18,
-    "fat": 4
-  },
-  {
-    "id": "combo-210",
-    "name": "Тофу с овощами",
-    "portion": "200 г",
-    "kcal": 110,
-    "protein": 9,
-    "carbs": 8,
-    "fat": 5
-  },
-  {
-    "id": "combo-211",
-    "name": "Рис с курицей",
-    "portion": "200 г",
-    "kcal": 180,
-    "protein": 14,
-    "carbs": 20,
-    "fat": 5
-  },
-  {
-    "id": "combo-212",
-    "name": "Гречка с говядиной",
-    "portion": "200 г",
-    "kcal": 190,
-    "protein": 15,
-    "carbs": 16,
-    "fat": 7
-  },
-  {
-    "id": "combo-213",
-    "name": "Макароны с сыром",
-    "portion": "200 г",
-    "kcal": 220,
-    "protein": 10,
-    "carbs": 25,
-    "fat": 9
-  },
-  {
-    "id": "combo-214",
-    "name": "Картофель с рыбой",
-    "portion": "200 г",
-    "kcal": 150,
-    "protein": 12,
-    "carbs": 14,
-    "fat": 5
-  },
-  {
-    "id": "combo-215",
     "name": "Салат с тунцом",
     "portion": "200 г",
     "kcal": 140,
@@ -8652,7 +12423,7 @@ export const FOOD_PRESETS: FoodPreset[] = [
     "fat": 7
   },
   {
-    "id": "combo-216",
+    "id": "combo-206",
     "name": "Омлет с сыром",
     "portion": "200 г",
     "kcal": 200,
@@ -8661,220 +12432,310 @@ export const FOOD_PRESETS: FoodPreset[] = [
     "fat": 15
   },
   {
-    "id": "combo-217",
+    "id": "combo-207",
     "name": "Творог с бананом",
     "portion": "200 г",
     "kcal": 140,
     "protein": 12,
     "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-208",
+    "name": "Йогурт с орехами",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 12,
+    "fat": 9
+  },
+  {
+    "id": "combo-209",
+    "name": "Курица с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 18,
+    "carbs": 6,
+    "fat": 5
+  },
+  {
+    "id": "combo-210",
+    "name": "Индейка с рисом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-211",
+    "name": "Лосось с овощами",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 5,
+    "fat": 10
+  },
+  {
+    "id": "combo-212",
+    "name": "Креветки с рисом",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 14,
+    "carbs": 18,
+    "fat": 3
+  },
+  {
+    "id": "combo-213",
+    "name": "Фасоль с овощами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 7,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-214",
+    "name": "Нут с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 7,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-215",
+    "name": "Тофу с овощами",
+    "portion": "200 г",
+    "kcal": 110,
+    "protein": 9,
+    "carbs": 8,
+    "fat": 5
+  },
+  {
+    "id": "combo-216",
+    "name": "Гречка с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-217",
+    "name": "Рис с индейкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 15,
+    "carbs": 20,
     "fat": 4
   },
   {
     "id": "combo-218",
-    "name": "Йогурт с орехами",
+    "name": "Паста с курицей",
     "portion": "200 г",
-    "kcal": 160,
-    "protein": 8,
-    "carbs": 12,
-    "fat": 9
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 6
   },
   {
     "id": "combo-219",
-    "name": "Курица с овощами",
+    "name": "Картофель с курицей",
     "portion": "200 г",
-    "kcal": 140,
-    "protein": 18,
-    "carbs": 6,
+    "kcal": 160,
+    "protein": 14,
+    "carbs": 16,
     "fat": 5
   },
   {
     "id": "combo-220",
-    "name": "Индейка с рисом",
+    "name": "Киноа с лососем",
     "portion": "200 г",
-    "kcal": 160,
+    "kcal": 190,
     "protein": 16,
+    "carbs": 18,
+    "fat": 7
+  },
+  {
+    "id": "combo-221",
+    "name": "Булгур с говядиной",
+    "portion": "200 г",
+    "kcal": 185,
+    "protein": 15,
+    "carbs": 18,
+    "fat": 6
+  },
+  {
+    "id": "combo-222",
+    "name": "Чечевица с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
     "carbs": 16,
     "fat": 4
   },
   {
-    "id": "combo-221",
-    "name": "Лосось с овощами",
-    "portion": "200 г",
-    "kcal": 180,
-    "protein": 16,
-    "carbs": 5,
-    "fat": 10
-  },
-  {
-    "id": "combo-222",
-    "name": "Креветки с рисом",
-    "portion": "200 г",
-    "kcal": 150,
-    "protein": 14,
-    "carbs": 18,
-    "fat": 3
-  },
-  {
     "id": "combo-223",
-    "name": "Фасоль с овощами",
+    "name": "Рис с яйцом",
     "portion": "200 г",
-    "kcal": 120,
-    "protein": 7,
-    "carbs": 16,
-    "fat": 3
+    "kcal": 160,
+    "protein": 10,
+    "carbs": 22,
+    "fat": 5
   },
   {
     "id": "combo-224",
-    "name": "Нут с овощами",
+    "name": "Овсянка с протеином",
     "portion": "200 г",
-    "kcal": 140,
-    "protein": 7,
-    "carbs": 18,
+    "kcal": 180,
+    "protein": 20,
+    "carbs": 22,
     "fat": 4
   },
   {
     "id": "combo-225",
-    "name": "Тофу с овощами",
+    "name": "Творог с ягодами",
     "portion": "200 г",
-    "kcal": 110,
-    "protein": 9,
-    "carbs": 8,
-    "fat": 5
+    "kcal": 120,
+    "protein": 14,
+    "carbs": 12,
+    "fat": 3
   },
   {
     "id": "combo-226",
-    "name": "Рис с курицей",
+    "name": "Йогурт с гранолой",
     "portion": "200 г",
-    "kcal": 180,
-    "protein": 14,
-    "carbs": 20,
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 24,
     "fat": 5
   },
   {
     "id": "combo-227",
-    "name": "Гречка с говядиной",
+    "name": "Курица терияки с рисом",
     "portion": "200 г",
-    "kcal": 190,
-    "protein": 15,
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-228",
+    "name": "Говядина с гречкой",
+    "portion": "200 г",
+    "kcal": 195,
+    "protein": 16,
     "carbs": 16,
     "fat": 7
   },
   {
-    "id": "combo-228",
-    "name": "Макароны с сыром",
-    "portion": "200 г",
-    "kcal": 220,
-    "protein": 10,
-    "carbs": 25,
-    "fat": 9
-  },
-  {
     "id": "combo-229",
-    "name": "Картофель с рыбой",
+    "name": "Рыба с овощами",
     "portion": "200 г",
-    "kcal": 150,
-    "protein": 12,
-    "carbs": 14,
-    "fat": 5
+    "kcal": 140,
+    "protein": 16,
+    "carbs": 8,
+    "fat": 4
   },
   {
     "id": "combo-230",
-    "name": "Салат с тунцом",
+    "name": "Индейка с гречкой",
     "portion": "200 г",
-    "kcal": 140,
-    "protein": 14,
-    "carbs": 6,
-    "fat": 7
-  },
-  {
-    "id": "combo-231",
-    "name": "Омлет с сыром",
-    "portion": "200 г",
-    "kcal": 200,
-    "protein": 14,
-    "carbs": 2,
-    "fat": 15
-  },
-  {
-    "id": "combo-232",
-    "name": "Творог с бананом",
-    "portion": "200 г",
-    "kcal": 140,
-    "protein": 12,
+    "kcal": 165,
+    "protein": 17,
     "carbs": 16,
     "fat": 4
   },
   {
-    "id": "combo-233",
-    "name": "Йогурт с орехами",
+    "id": "combo-231",
+    "name": "Тофу с рисом",
     "portion": "200 г",
-    "kcal": 160,
-    "protein": 8,
-    "carbs": 12,
+    "kcal": 140,
+    "protein": 10,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-232",
+    "name": "Креветки с гречкой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-233",
+    "name": "Стейк с овощами",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 22,
+    "carbs": 8,
     "fat": 9
   },
   {
     "id": "combo-234",
-    "name": "Курица с овощами",
+    "name": "Котлета с пюре",
     "portion": "200 г",
-    "kcal": 140,
-    "protein": 18,
-    "carbs": 6,
-    "fat": 5
-  },
-  {
-    "id": "combo-235",
-    "name": "Индейка с рисом",
-    "portion": "200 г",
-    "kcal": 160,
-    "protein": 16,
-    "carbs": 16,
-    "fat": 4
-  },
-  {
-    "id": "combo-236",
-    "name": "Лосось с овощами",
-    "portion": "200 г",
-    "kcal": 180,
-    "protein": 16,
-    "carbs": 5,
+    "kcal": 210,
+    "protein": 12,
+    "carbs": 20,
     "fat": 10
   },
   {
-    "id": "combo-237",
-    "name": "Креветки с рисом",
+    "id": "combo-235",
+    "name": "Пельмени со сметаной",
     "portion": "200 г",
-    "kcal": 150,
-    "protein": 14,
-    "carbs": 18,
-    "fat": 3
+    "kcal": 240,
+    "protein": 12,
+    "carbs": 24,
+    "fat": 11
+  },
+  {
+    "id": "combo-236",
+    "name": "Блины с творогом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 10,
+    "carbs": 26,
+    "fat": 7
+  },
+  {
+    "id": "combo-237",
+    "name": "Сырники со сметаной",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
   },
   {
     "id": "combo-238",
-    "name": "Фасоль с овощами",
+    "name": "Шаурма лёгкая",
     "portion": "200 г",
-    "kcal": 120,
-    "protein": 7,
-    "carbs": 16,
-    "fat": 3
+    "kcal": 220,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 8
   },
   {
     "id": "combo-239",
-    "name": "Нут с овощами",
+    "name": "Боул киноа курица",
     "portion": "200 г",
-    "kcal": 140,
-    "protein": 7,
+    "kcal": 180,
+    "protein": 16,
     "carbs": 18,
-    "fat": 4
+    "fat": 5
   },
   {
     "id": "combo-240",
-    "name": "Тофу с овощами",
+    "name": "Боул рис тунец",
     "portion": "200 г",
-    "kcal": 110,
-    "protein": 9,
-    "carbs": 8,
-    "fat": 5
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 18,
+    "fat": 4
   },
   {
     "id": "combo-241",
@@ -9009,6 +12870,5145 @@ export const FOOD_PRESETS: FoodPreset[] = [
     "kcal": 110,
     "protein": 9,
     "carbs": 8,
+    "fat": 5
+  },
+  {
+    "id": "combo-256",
+    "name": "Гречка с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-257",
+    "name": "Рис с индейкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 15,
+    "carbs": 20,
+    "fat": 4
+  },
+  {
+    "id": "combo-258",
+    "name": "Паста с курицей",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 6
+  },
+  {
+    "id": "combo-259",
+    "name": "Картофель с курицей",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 14,
+    "carbs": 16,
+    "fat": 5
+  },
+  {
+    "id": "combo-260",
+    "name": "Киноа с лососем",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 7
+  },
+  {
+    "id": "combo-261",
+    "name": "Булгур с говядиной",
+    "portion": "200 г",
+    "kcal": 185,
+    "protein": 15,
+    "carbs": 18,
+    "fat": 6
+  },
+  {
+    "id": "combo-262",
+    "name": "Чечевица с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-263",
+    "name": "Рис с яйцом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 10,
+    "carbs": 22,
+    "fat": 5
+  },
+  {
+    "id": "combo-264",
+    "name": "Овсянка с протеином",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 20,
+    "carbs": 22,
+    "fat": 4
+  },
+  {
+    "id": "combo-265",
+    "name": "Творог с ягодами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 14,
+    "carbs": 12,
+    "fat": 3
+  },
+  {
+    "id": "combo-266",
+    "name": "Йогурт с гранолой",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-267",
+    "name": "Курица терияки с рисом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-268",
+    "name": "Говядина с гречкой",
+    "portion": "200 г",
+    "kcal": 195,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-269",
+    "name": "Рыба с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 16,
+    "carbs": 8,
+    "fat": 4
+  },
+  {
+    "id": "combo-270",
+    "name": "Индейка с гречкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 17,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-271",
+    "name": "Тофу с рисом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 10,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-272",
+    "name": "Креветки с гречкой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-273",
+    "name": "Стейк с овощами",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 22,
+    "carbs": 8,
+    "fat": 9
+  },
+  {
+    "id": "combo-274",
+    "name": "Котлета с пюре",
+    "portion": "200 г",
+    "kcal": 210,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-275",
+    "name": "Пельмени со сметаной",
+    "portion": "200 г",
+    "kcal": 240,
+    "protein": 12,
+    "carbs": 24,
+    "fat": 11
+  },
+  {
+    "id": "combo-276",
+    "name": "Блины с творогом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 10,
+    "carbs": 26,
+    "fat": 7
+  },
+  {
+    "id": "combo-277",
+    "name": "Сырники со сметаной",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-278",
+    "name": "Шаурма лёгкая",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 8
+  },
+  {
+    "id": "combo-279",
+    "name": "Боул киноа курица",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-280",
+    "name": "Боул рис тунец",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-281",
+    "name": "Рис с курицей",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 14,
+    "carbs": 20,
+    "fat": 5
+  },
+  {
+    "id": "combo-282",
+    "name": "Гречка с говядиной",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-283",
+    "name": "Макароны с сыром",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 10,
+    "carbs": 25,
+    "fat": 9
+  },
+  {
+    "id": "combo-284",
+    "name": "Картофель с рыбой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 12,
+    "carbs": 14,
+    "fat": 5
+  },
+  {
+    "id": "combo-285",
+    "name": "Салат с тунцом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 14,
+    "carbs": 6,
+    "fat": 7
+  },
+  {
+    "id": "combo-286",
+    "name": "Омлет с сыром",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 14,
+    "carbs": 2,
+    "fat": 15
+  },
+  {
+    "id": "combo-287",
+    "name": "Творог с бананом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 12,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-288",
+    "name": "Йогурт с орехами",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 12,
+    "fat": 9
+  },
+  {
+    "id": "combo-289",
+    "name": "Курица с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 18,
+    "carbs": 6,
+    "fat": 5
+  },
+  {
+    "id": "combo-290",
+    "name": "Индейка с рисом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-291",
+    "name": "Лосось с овощами",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 5,
+    "fat": 10
+  },
+  {
+    "id": "combo-292",
+    "name": "Креветки с рисом",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 14,
+    "carbs": 18,
+    "fat": 3
+  },
+  {
+    "id": "combo-293",
+    "name": "Фасоль с овощами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 7,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-294",
+    "name": "Нут с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 7,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-295",
+    "name": "Тофу с овощами",
+    "portion": "200 г",
+    "kcal": 110,
+    "protein": 9,
+    "carbs": 8,
+    "fat": 5
+  },
+  {
+    "id": "combo-296",
+    "name": "Гречка с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-297",
+    "name": "Рис с индейкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 15,
+    "carbs": 20,
+    "fat": 4
+  },
+  {
+    "id": "combo-298",
+    "name": "Паста с курицей",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 6
+  },
+  {
+    "id": "combo-299",
+    "name": "Картофель с курицей",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 14,
+    "carbs": 16,
+    "fat": 5
+  },
+  {
+    "id": "combo-300",
+    "name": "Киноа с лососем",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 7
+  },
+  {
+    "id": "combo-301",
+    "name": "Булгур с говядиной",
+    "portion": "200 г",
+    "kcal": 185,
+    "protein": 15,
+    "carbs": 18,
+    "fat": 6
+  },
+  {
+    "id": "combo-302",
+    "name": "Чечевица с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-303",
+    "name": "Рис с яйцом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 10,
+    "carbs": 22,
+    "fat": 5
+  },
+  {
+    "id": "combo-304",
+    "name": "Овсянка с протеином",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 20,
+    "carbs": 22,
+    "fat": 4
+  },
+  {
+    "id": "combo-305",
+    "name": "Творог с ягодами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 14,
+    "carbs": 12,
+    "fat": 3
+  },
+  {
+    "id": "combo-306",
+    "name": "Йогурт с гранолой",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-307",
+    "name": "Курица терияки с рисом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-308",
+    "name": "Говядина с гречкой",
+    "portion": "200 г",
+    "kcal": 195,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-309",
+    "name": "Рыба с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 16,
+    "carbs": 8,
+    "fat": 4
+  },
+  {
+    "id": "combo-310",
+    "name": "Индейка с гречкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 17,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-311",
+    "name": "Тофу с рисом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 10,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-312",
+    "name": "Креветки с гречкой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-313",
+    "name": "Стейк с овощами",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 22,
+    "carbs": 8,
+    "fat": 9
+  },
+  {
+    "id": "combo-314",
+    "name": "Котлета с пюре",
+    "portion": "200 г",
+    "kcal": 210,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-315",
+    "name": "Пельмени со сметаной",
+    "portion": "200 г",
+    "kcal": 240,
+    "protein": 12,
+    "carbs": 24,
+    "fat": 11
+  },
+  {
+    "id": "combo-316",
+    "name": "Блины с творогом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 10,
+    "carbs": 26,
+    "fat": 7
+  },
+  {
+    "id": "combo-317",
+    "name": "Сырники со сметаной",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-318",
+    "name": "Шаурма лёгкая",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 8
+  },
+  {
+    "id": "combo-319",
+    "name": "Боул киноа курица",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-320",
+    "name": "Боул рис тунец",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-321",
+    "name": "Рис с курицей",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 14,
+    "carbs": 20,
+    "fat": 5
+  },
+  {
+    "id": "combo-322",
+    "name": "Гречка с говядиной",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-323",
+    "name": "Макароны с сыром",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 10,
+    "carbs": 25,
+    "fat": 9
+  },
+  {
+    "id": "combo-324",
+    "name": "Картофель с рыбой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 12,
+    "carbs": 14,
+    "fat": 5
+  },
+  {
+    "id": "combo-325",
+    "name": "Салат с тунцом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 14,
+    "carbs": 6,
+    "fat": 7
+  },
+  {
+    "id": "combo-326",
+    "name": "Омлет с сыром",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 14,
+    "carbs": 2,
+    "fat": 15
+  },
+  {
+    "id": "combo-327",
+    "name": "Творог с бананом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 12,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-328",
+    "name": "Йогурт с орехами",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 12,
+    "fat": 9
+  },
+  {
+    "id": "combo-329",
+    "name": "Курица с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 18,
+    "carbs": 6,
+    "fat": 5
+  },
+  {
+    "id": "combo-330",
+    "name": "Индейка с рисом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-331",
+    "name": "Лосось с овощами",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 5,
+    "fat": 10
+  },
+  {
+    "id": "combo-332",
+    "name": "Креветки с рисом",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 14,
+    "carbs": 18,
+    "fat": 3
+  },
+  {
+    "id": "combo-333",
+    "name": "Фасоль с овощами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 7,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-334",
+    "name": "Нут с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 7,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-335",
+    "name": "Тофу с овощами",
+    "portion": "200 г",
+    "kcal": 110,
+    "protein": 9,
+    "carbs": 8,
+    "fat": 5
+  },
+  {
+    "id": "combo-336",
+    "name": "Гречка с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-337",
+    "name": "Рис с индейкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 15,
+    "carbs": 20,
+    "fat": 4
+  },
+  {
+    "id": "combo-338",
+    "name": "Паста с курицей",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 6
+  },
+  {
+    "id": "combo-339",
+    "name": "Картофель с курицей",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 14,
+    "carbs": 16,
+    "fat": 5
+  },
+  {
+    "id": "combo-340",
+    "name": "Киноа с лососем",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 7
+  },
+  {
+    "id": "combo-341",
+    "name": "Булгур с говядиной",
+    "portion": "200 г",
+    "kcal": 185,
+    "protein": 15,
+    "carbs": 18,
+    "fat": 6
+  },
+  {
+    "id": "combo-342",
+    "name": "Чечевица с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-343",
+    "name": "Рис с яйцом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 10,
+    "carbs": 22,
+    "fat": 5
+  },
+  {
+    "id": "combo-344",
+    "name": "Овсянка с протеином",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 20,
+    "carbs": 22,
+    "fat": 4
+  },
+  {
+    "id": "combo-345",
+    "name": "Творог с ягодами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 14,
+    "carbs": 12,
+    "fat": 3
+  },
+  {
+    "id": "combo-346",
+    "name": "Йогурт с гранолой",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-347",
+    "name": "Курица терияки с рисом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-348",
+    "name": "Говядина с гречкой",
+    "portion": "200 г",
+    "kcal": 195,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-349",
+    "name": "Рыба с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 16,
+    "carbs": 8,
+    "fat": 4
+  },
+  {
+    "id": "combo-350",
+    "name": "Индейка с гречкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 17,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-351",
+    "name": "Тофу с рисом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 10,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-352",
+    "name": "Креветки с гречкой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-353",
+    "name": "Стейк с овощами",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 22,
+    "carbs": 8,
+    "fat": 9
+  },
+  {
+    "id": "combo-354",
+    "name": "Котлета с пюре",
+    "portion": "200 г",
+    "kcal": 210,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-355",
+    "name": "Пельмени со сметаной",
+    "portion": "200 г",
+    "kcal": 240,
+    "protein": 12,
+    "carbs": 24,
+    "fat": 11
+  },
+  {
+    "id": "combo-356",
+    "name": "Блины с творогом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 10,
+    "carbs": 26,
+    "fat": 7
+  },
+  {
+    "id": "combo-357",
+    "name": "Сырники со сметаной",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-358",
+    "name": "Шаурма лёгкая",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 8
+  },
+  {
+    "id": "combo-359",
+    "name": "Боул киноа курица",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-360",
+    "name": "Боул рис тунец",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-361",
+    "name": "Рис с курицей",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 14,
+    "carbs": 20,
+    "fat": 5
+  },
+  {
+    "id": "combo-362",
+    "name": "Гречка с говядиной",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-363",
+    "name": "Макароны с сыром",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 10,
+    "carbs": 25,
+    "fat": 9
+  },
+  {
+    "id": "combo-364",
+    "name": "Картофель с рыбой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 12,
+    "carbs": 14,
+    "fat": 5
+  },
+  {
+    "id": "combo-365",
+    "name": "Салат с тунцом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 14,
+    "carbs": 6,
+    "fat": 7
+  },
+  {
+    "id": "combo-366",
+    "name": "Омлет с сыром",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 14,
+    "carbs": 2,
+    "fat": 15
+  },
+  {
+    "id": "combo-367",
+    "name": "Творог с бананом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 12,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-368",
+    "name": "Йогурт с орехами",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 12,
+    "fat": 9
+  },
+  {
+    "id": "combo-369",
+    "name": "Курица с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 18,
+    "carbs": 6,
+    "fat": 5
+  },
+  {
+    "id": "combo-370",
+    "name": "Индейка с рисом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-371",
+    "name": "Лосось с овощами",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 5,
+    "fat": 10
+  },
+  {
+    "id": "combo-372",
+    "name": "Креветки с рисом",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 14,
+    "carbs": 18,
+    "fat": 3
+  },
+  {
+    "id": "combo-373",
+    "name": "Фасоль с овощами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 7,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-374",
+    "name": "Нут с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 7,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-375",
+    "name": "Тофу с овощами",
+    "portion": "200 г",
+    "kcal": 110,
+    "protein": 9,
+    "carbs": 8,
+    "fat": 5
+  },
+  {
+    "id": "combo-376",
+    "name": "Гречка с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-377",
+    "name": "Рис с индейкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 15,
+    "carbs": 20,
+    "fat": 4
+  },
+  {
+    "id": "combo-378",
+    "name": "Паста с курицей",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 6
+  },
+  {
+    "id": "combo-379",
+    "name": "Картофель с курицей",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 14,
+    "carbs": 16,
+    "fat": 5
+  },
+  {
+    "id": "combo-380",
+    "name": "Киноа с лососем",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 7
+  },
+  {
+    "id": "combo-381",
+    "name": "Булгур с говядиной",
+    "portion": "200 г",
+    "kcal": 185,
+    "protein": 15,
+    "carbs": 18,
+    "fat": 6
+  },
+  {
+    "id": "combo-382",
+    "name": "Чечевица с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-383",
+    "name": "Рис с яйцом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 10,
+    "carbs": 22,
+    "fat": 5
+  },
+  {
+    "id": "combo-384",
+    "name": "Овсянка с протеином",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 20,
+    "carbs": 22,
+    "fat": 4
+  },
+  {
+    "id": "combo-385",
+    "name": "Творог с ягодами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 14,
+    "carbs": 12,
+    "fat": 3
+  },
+  {
+    "id": "combo-386",
+    "name": "Йогурт с гранолой",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-387",
+    "name": "Курица терияки с рисом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-388",
+    "name": "Говядина с гречкой",
+    "portion": "200 г",
+    "kcal": 195,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-389",
+    "name": "Рыба с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 16,
+    "carbs": 8,
+    "fat": 4
+  },
+  {
+    "id": "combo-390",
+    "name": "Индейка с гречкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 17,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-391",
+    "name": "Тофу с рисом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 10,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-392",
+    "name": "Креветки с гречкой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-393",
+    "name": "Стейк с овощами",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 22,
+    "carbs": 8,
+    "fat": 9
+  },
+  {
+    "id": "combo-394",
+    "name": "Котлета с пюре",
+    "portion": "200 г",
+    "kcal": 210,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-395",
+    "name": "Пельмени со сметаной",
+    "portion": "200 г",
+    "kcal": 240,
+    "protein": 12,
+    "carbs": 24,
+    "fat": 11
+  },
+  {
+    "id": "combo-396",
+    "name": "Блины с творогом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 10,
+    "carbs": 26,
+    "fat": 7
+  },
+  {
+    "id": "combo-397",
+    "name": "Сырники со сметаной",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-398",
+    "name": "Шаурма лёгкая",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 8
+  },
+  {
+    "id": "combo-399",
+    "name": "Боул киноа курица",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-400",
+    "name": "Боул рис тунец",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-401",
+    "name": "Рис с курицей",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 14,
+    "carbs": 20,
+    "fat": 5
+  },
+  {
+    "id": "combo-402",
+    "name": "Гречка с говядиной",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-403",
+    "name": "Макароны с сыром",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 10,
+    "carbs": 25,
+    "fat": 9
+  },
+  {
+    "id": "combo-404",
+    "name": "Картофель с рыбой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 12,
+    "carbs": 14,
+    "fat": 5
+  },
+  {
+    "id": "combo-405",
+    "name": "Салат с тунцом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 14,
+    "carbs": 6,
+    "fat": 7
+  },
+  {
+    "id": "combo-406",
+    "name": "Омлет с сыром",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 14,
+    "carbs": 2,
+    "fat": 15
+  },
+  {
+    "id": "combo-407",
+    "name": "Творог с бананом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 12,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-408",
+    "name": "Йогурт с орехами",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 12,
+    "fat": 9
+  },
+  {
+    "id": "combo-409",
+    "name": "Курица с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 18,
+    "carbs": 6,
+    "fat": 5
+  },
+  {
+    "id": "combo-410",
+    "name": "Индейка с рисом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-411",
+    "name": "Лосось с овощами",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 5,
+    "fat": 10
+  },
+  {
+    "id": "combo-412",
+    "name": "Креветки с рисом",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 14,
+    "carbs": 18,
+    "fat": 3
+  },
+  {
+    "id": "combo-413",
+    "name": "Фасоль с овощами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 7,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-414",
+    "name": "Нут с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 7,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-415",
+    "name": "Тофу с овощами",
+    "portion": "200 г",
+    "kcal": 110,
+    "protein": 9,
+    "carbs": 8,
+    "fat": 5
+  },
+  {
+    "id": "combo-416",
+    "name": "Гречка с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-417",
+    "name": "Рис с индейкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 15,
+    "carbs": 20,
+    "fat": 4
+  },
+  {
+    "id": "combo-418",
+    "name": "Паста с курицей",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 6
+  },
+  {
+    "id": "combo-419",
+    "name": "Картофель с курицей",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 14,
+    "carbs": 16,
+    "fat": 5
+  },
+  {
+    "id": "combo-420",
+    "name": "Киноа с лососем",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 7
+  },
+  {
+    "id": "combo-421",
+    "name": "Булгур с говядиной",
+    "portion": "200 г",
+    "kcal": 185,
+    "protein": 15,
+    "carbs": 18,
+    "fat": 6
+  },
+  {
+    "id": "combo-422",
+    "name": "Чечевица с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-423",
+    "name": "Рис с яйцом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 10,
+    "carbs": 22,
+    "fat": 5
+  },
+  {
+    "id": "combo-424",
+    "name": "Овсянка с протеином",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 20,
+    "carbs": 22,
+    "fat": 4
+  },
+  {
+    "id": "combo-425",
+    "name": "Творог с ягодами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 14,
+    "carbs": 12,
+    "fat": 3
+  },
+  {
+    "id": "combo-426",
+    "name": "Йогурт с гранолой",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-427",
+    "name": "Курица терияки с рисом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-428",
+    "name": "Говядина с гречкой",
+    "portion": "200 г",
+    "kcal": 195,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-429",
+    "name": "Рыба с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 16,
+    "carbs": 8,
+    "fat": 4
+  },
+  {
+    "id": "combo-430",
+    "name": "Индейка с гречкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 17,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-431",
+    "name": "Тофу с рисом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 10,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-432",
+    "name": "Креветки с гречкой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-433",
+    "name": "Стейк с овощами",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 22,
+    "carbs": 8,
+    "fat": 9
+  },
+  {
+    "id": "combo-434",
+    "name": "Котлета с пюре",
+    "portion": "200 г",
+    "kcal": 210,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-435",
+    "name": "Пельмени со сметаной",
+    "portion": "200 г",
+    "kcal": 240,
+    "protein": 12,
+    "carbs": 24,
+    "fat": 11
+  },
+  {
+    "id": "combo-436",
+    "name": "Блины с творогом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 10,
+    "carbs": 26,
+    "fat": 7
+  },
+  {
+    "id": "combo-437",
+    "name": "Сырники со сметаной",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-438",
+    "name": "Шаурма лёгкая",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 8
+  },
+  {
+    "id": "combo-439",
+    "name": "Боул киноа курица",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-440",
+    "name": "Боул рис тунец",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-441",
+    "name": "Рис с курицей",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 14,
+    "carbs": 20,
+    "fat": 5
+  },
+  {
+    "id": "combo-442",
+    "name": "Гречка с говядиной",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-443",
+    "name": "Макароны с сыром",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 10,
+    "carbs": 25,
+    "fat": 9
+  },
+  {
+    "id": "combo-444",
+    "name": "Картофель с рыбой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 12,
+    "carbs": 14,
+    "fat": 5
+  },
+  {
+    "id": "combo-445",
+    "name": "Салат с тунцом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 14,
+    "carbs": 6,
+    "fat": 7
+  },
+  {
+    "id": "combo-446",
+    "name": "Омлет с сыром",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 14,
+    "carbs": 2,
+    "fat": 15
+  },
+  {
+    "id": "combo-447",
+    "name": "Творог с бананом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 12,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-448",
+    "name": "Йогурт с орехами",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 12,
+    "fat": 9
+  },
+  {
+    "id": "combo-449",
+    "name": "Курица с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 18,
+    "carbs": 6,
+    "fat": 5
+  },
+  {
+    "id": "combo-450",
+    "name": "Индейка с рисом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-451",
+    "name": "Лосось с овощами",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 5,
+    "fat": 10
+  },
+  {
+    "id": "combo-452",
+    "name": "Креветки с рисом",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 14,
+    "carbs": 18,
+    "fat": 3
+  },
+  {
+    "id": "combo-453",
+    "name": "Фасоль с овощами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 7,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-454",
+    "name": "Нут с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 7,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-455",
+    "name": "Тофу с овощами",
+    "portion": "200 г",
+    "kcal": 110,
+    "protein": 9,
+    "carbs": 8,
+    "fat": 5
+  },
+  {
+    "id": "combo-456",
+    "name": "Гречка с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-457",
+    "name": "Рис с индейкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 15,
+    "carbs": 20,
+    "fat": 4
+  },
+  {
+    "id": "combo-458",
+    "name": "Паста с курицей",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 6
+  },
+  {
+    "id": "combo-459",
+    "name": "Картофель с курицей",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 14,
+    "carbs": 16,
+    "fat": 5
+  },
+  {
+    "id": "combo-460",
+    "name": "Киноа с лососем",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 7
+  },
+  {
+    "id": "combo-461",
+    "name": "Булгур с говядиной",
+    "portion": "200 г",
+    "kcal": 185,
+    "protein": 15,
+    "carbs": 18,
+    "fat": 6
+  },
+  {
+    "id": "combo-462",
+    "name": "Чечевица с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-463",
+    "name": "Рис с яйцом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 10,
+    "carbs": 22,
+    "fat": 5
+  },
+  {
+    "id": "combo-464",
+    "name": "Овсянка с протеином",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 20,
+    "carbs": 22,
+    "fat": 4
+  },
+  {
+    "id": "combo-465",
+    "name": "Творог с ягодами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 14,
+    "carbs": 12,
+    "fat": 3
+  },
+  {
+    "id": "combo-466",
+    "name": "Йогурт с гранолой",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-467",
+    "name": "Курица терияки с рисом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-468",
+    "name": "Говядина с гречкой",
+    "portion": "200 г",
+    "kcal": 195,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-469",
+    "name": "Рыба с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 16,
+    "carbs": 8,
+    "fat": 4
+  },
+  {
+    "id": "combo-470",
+    "name": "Индейка с гречкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 17,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-471",
+    "name": "Тофу с рисом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 10,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-472",
+    "name": "Креветки с гречкой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-473",
+    "name": "Стейк с овощами",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 22,
+    "carbs": 8,
+    "fat": 9
+  },
+  {
+    "id": "combo-474",
+    "name": "Котлета с пюре",
+    "portion": "200 г",
+    "kcal": 210,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-475",
+    "name": "Пельмени со сметаной",
+    "portion": "200 г",
+    "kcal": 240,
+    "protein": 12,
+    "carbs": 24,
+    "fat": 11
+  },
+  {
+    "id": "combo-476",
+    "name": "Блины с творогом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 10,
+    "carbs": 26,
+    "fat": 7
+  },
+  {
+    "id": "combo-477",
+    "name": "Сырники со сметаной",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-478",
+    "name": "Шаурма лёгкая",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 8
+  },
+  {
+    "id": "combo-479",
+    "name": "Боул киноа курица",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-480",
+    "name": "Боул рис тунец",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-481",
+    "name": "Рис с курицей",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 14,
+    "carbs": 20,
+    "fat": 5
+  },
+  {
+    "id": "combo-482",
+    "name": "Гречка с говядиной",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-483",
+    "name": "Макароны с сыром",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 10,
+    "carbs": 25,
+    "fat": 9
+  },
+  {
+    "id": "combo-484",
+    "name": "Картофель с рыбой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 12,
+    "carbs": 14,
+    "fat": 5
+  },
+  {
+    "id": "combo-485",
+    "name": "Салат с тунцом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 14,
+    "carbs": 6,
+    "fat": 7
+  },
+  {
+    "id": "combo-486",
+    "name": "Омлет с сыром",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 14,
+    "carbs": 2,
+    "fat": 15
+  },
+  {
+    "id": "combo-487",
+    "name": "Творог с бананом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 12,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-488",
+    "name": "Йогурт с орехами",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 12,
+    "fat": 9
+  },
+  {
+    "id": "combo-489",
+    "name": "Курица с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 18,
+    "carbs": 6,
+    "fat": 5
+  },
+  {
+    "id": "combo-490",
+    "name": "Индейка с рисом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-491",
+    "name": "Лосось с овощами",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 5,
+    "fat": 10
+  },
+  {
+    "id": "combo-492",
+    "name": "Креветки с рисом",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 14,
+    "carbs": 18,
+    "fat": 3
+  },
+  {
+    "id": "combo-493",
+    "name": "Фасоль с овощами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 7,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-494",
+    "name": "Нут с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 7,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-495",
+    "name": "Тофу с овощами",
+    "portion": "200 г",
+    "kcal": 110,
+    "protein": 9,
+    "carbs": 8,
+    "fat": 5
+  },
+  {
+    "id": "combo-496",
+    "name": "Гречка с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-497",
+    "name": "Рис с индейкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 15,
+    "carbs": 20,
+    "fat": 4
+  },
+  {
+    "id": "combo-498",
+    "name": "Паста с курицей",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 6
+  },
+  {
+    "id": "combo-499",
+    "name": "Картофель с курицей",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 14,
+    "carbs": 16,
+    "fat": 5
+  },
+  {
+    "id": "combo-500",
+    "name": "Киноа с лососем",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 7
+  },
+  {
+    "id": "combo-501",
+    "name": "Булгур с говядиной",
+    "portion": "200 г",
+    "kcal": 185,
+    "protein": 15,
+    "carbs": 18,
+    "fat": 6
+  },
+  {
+    "id": "combo-502",
+    "name": "Чечевица с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-503",
+    "name": "Рис с яйцом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 10,
+    "carbs": 22,
+    "fat": 5
+  },
+  {
+    "id": "combo-504",
+    "name": "Овсянка с протеином",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 20,
+    "carbs": 22,
+    "fat": 4
+  },
+  {
+    "id": "combo-505",
+    "name": "Творог с ягодами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 14,
+    "carbs": 12,
+    "fat": 3
+  },
+  {
+    "id": "combo-506",
+    "name": "Йогурт с гранолой",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-507",
+    "name": "Курица терияки с рисом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-508",
+    "name": "Говядина с гречкой",
+    "portion": "200 г",
+    "kcal": 195,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-509",
+    "name": "Рыба с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 16,
+    "carbs": 8,
+    "fat": 4
+  },
+  {
+    "id": "combo-510",
+    "name": "Индейка с гречкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 17,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-511",
+    "name": "Тофу с рисом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 10,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-512",
+    "name": "Креветки с гречкой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-513",
+    "name": "Стейк с овощами",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 22,
+    "carbs": 8,
+    "fat": 9
+  },
+  {
+    "id": "combo-514",
+    "name": "Котлета с пюре",
+    "portion": "200 г",
+    "kcal": 210,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-515",
+    "name": "Пельмени со сметаной",
+    "portion": "200 г",
+    "kcal": 240,
+    "protein": 12,
+    "carbs": 24,
+    "fat": 11
+  },
+  {
+    "id": "combo-516",
+    "name": "Блины с творогом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 10,
+    "carbs": 26,
+    "fat": 7
+  },
+  {
+    "id": "combo-517",
+    "name": "Сырники со сметаной",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-518",
+    "name": "Шаурма лёгкая",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 8
+  },
+  {
+    "id": "combo-519",
+    "name": "Боул киноа курица",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-520",
+    "name": "Боул рис тунец",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-521",
+    "name": "Рис с курицей",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 14,
+    "carbs": 20,
+    "fat": 5
+  },
+  {
+    "id": "combo-522",
+    "name": "Гречка с говядиной",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-523",
+    "name": "Макароны с сыром",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 10,
+    "carbs": 25,
+    "fat": 9
+  },
+  {
+    "id": "combo-524",
+    "name": "Картофель с рыбой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 12,
+    "carbs": 14,
+    "fat": 5
+  },
+  {
+    "id": "combo-525",
+    "name": "Салат с тунцом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 14,
+    "carbs": 6,
+    "fat": 7
+  },
+  {
+    "id": "combo-526",
+    "name": "Омлет с сыром",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 14,
+    "carbs": 2,
+    "fat": 15
+  },
+  {
+    "id": "combo-527",
+    "name": "Творог с бананом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 12,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-528",
+    "name": "Йогурт с орехами",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 12,
+    "fat": 9
+  },
+  {
+    "id": "combo-529",
+    "name": "Курица с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 18,
+    "carbs": 6,
+    "fat": 5
+  },
+  {
+    "id": "combo-530",
+    "name": "Индейка с рисом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-531",
+    "name": "Лосось с овощами",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 5,
+    "fat": 10
+  },
+  {
+    "id": "combo-532",
+    "name": "Креветки с рисом",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 14,
+    "carbs": 18,
+    "fat": 3
+  },
+  {
+    "id": "combo-533",
+    "name": "Фасоль с овощами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 7,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-534",
+    "name": "Нут с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 7,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-535",
+    "name": "Тофу с овощами",
+    "portion": "200 г",
+    "kcal": 110,
+    "protein": 9,
+    "carbs": 8,
+    "fat": 5
+  },
+  {
+    "id": "combo-536",
+    "name": "Гречка с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-537",
+    "name": "Рис с индейкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 15,
+    "carbs": 20,
+    "fat": 4
+  },
+  {
+    "id": "combo-538",
+    "name": "Паста с курицей",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 6
+  },
+  {
+    "id": "combo-539",
+    "name": "Картофель с курицей",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 14,
+    "carbs": 16,
+    "fat": 5
+  },
+  {
+    "id": "combo-540",
+    "name": "Киноа с лососем",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 7
+  },
+  {
+    "id": "combo-541",
+    "name": "Булгур с говядиной",
+    "portion": "200 г",
+    "kcal": 185,
+    "protein": 15,
+    "carbs": 18,
+    "fat": 6
+  },
+  {
+    "id": "combo-542",
+    "name": "Чечевица с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-543",
+    "name": "Рис с яйцом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 10,
+    "carbs": 22,
+    "fat": 5
+  },
+  {
+    "id": "combo-544",
+    "name": "Овсянка с протеином",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 20,
+    "carbs": 22,
+    "fat": 4
+  },
+  {
+    "id": "combo-545",
+    "name": "Творог с ягодами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 14,
+    "carbs": 12,
+    "fat": 3
+  },
+  {
+    "id": "combo-546",
+    "name": "Йогурт с гранолой",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-547",
+    "name": "Курица терияки с рисом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-548",
+    "name": "Говядина с гречкой",
+    "portion": "200 г",
+    "kcal": 195,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-549",
+    "name": "Рыба с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 16,
+    "carbs": 8,
+    "fat": 4
+  },
+  {
+    "id": "combo-550",
+    "name": "Индейка с гречкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 17,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-551",
+    "name": "Тофу с рисом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 10,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-552",
+    "name": "Креветки с гречкой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-553",
+    "name": "Стейк с овощами",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 22,
+    "carbs": 8,
+    "fat": 9
+  },
+  {
+    "id": "combo-554",
+    "name": "Котлета с пюре",
+    "portion": "200 г",
+    "kcal": 210,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-555",
+    "name": "Пельмени со сметаной",
+    "portion": "200 г",
+    "kcal": 240,
+    "protein": 12,
+    "carbs": 24,
+    "fat": 11
+  },
+  {
+    "id": "combo-556",
+    "name": "Блины с творогом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 10,
+    "carbs": 26,
+    "fat": 7
+  },
+  {
+    "id": "combo-557",
+    "name": "Сырники со сметаной",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-558",
+    "name": "Шаурма лёгкая",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 8
+  },
+  {
+    "id": "combo-559",
+    "name": "Боул киноа курица",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-560",
+    "name": "Боул рис тунец",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-561",
+    "name": "Рис с курицей",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 14,
+    "carbs": 20,
+    "fat": 5
+  },
+  {
+    "id": "combo-562",
+    "name": "Гречка с говядиной",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-563",
+    "name": "Макароны с сыром",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 10,
+    "carbs": 25,
+    "fat": 9
+  },
+  {
+    "id": "combo-564",
+    "name": "Картофель с рыбой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 12,
+    "carbs": 14,
+    "fat": 5
+  },
+  {
+    "id": "combo-565",
+    "name": "Салат с тунцом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 14,
+    "carbs": 6,
+    "fat": 7
+  },
+  {
+    "id": "combo-566",
+    "name": "Омлет с сыром",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 14,
+    "carbs": 2,
+    "fat": 15
+  },
+  {
+    "id": "combo-567",
+    "name": "Творог с бананом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 12,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-568",
+    "name": "Йогурт с орехами",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 12,
+    "fat": 9
+  },
+  {
+    "id": "combo-569",
+    "name": "Курица с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 18,
+    "carbs": 6,
+    "fat": 5
+  },
+  {
+    "id": "combo-570",
+    "name": "Индейка с рисом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-571",
+    "name": "Лосось с овощами",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 5,
+    "fat": 10
+  },
+  {
+    "id": "combo-572",
+    "name": "Креветки с рисом",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 14,
+    "carbs": 18,
+    "fat": 3
+  },
+  {
+    "id": "combo-573",
+    "name": "Фасоль с овощами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 7,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-574",
+    "name": "Нут с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 7,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-575",
+    "name": "Тофу с овощами",
+    "portion": "200 г",
+    "kcal": 110,
+    "protein": 9,
+    "carbs": 8,
+    "fat": 5
+  },
+  {
+    "id": "combo-576",
+    "name": "Гречка с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-577",
+    "name": "Рис с индейкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 15,
+    "carbs": 20,
+    "fat": 4
+  },
+  {
+    "id": "combo-578",
+    "name": "Паста с курицей",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 6
+  },
+  {
+    "id": "combo-579",
+    "name": "Картофель с курицей",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 14,
+    "carbs": 16,
+    "fat": 5
+  },
+  {
+    "id": "combo-580",
+    "name": "Киноа с лососем",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 7
+  },
+  {
+    "id": "combo-581",
+    "name": "Булгур с говядиной",
+    "portion": "200 г",
+    "kcal": 185,
+    "protein": 15,
+    "carbs": 18,
+    "fat": 6
+  },
+  {
+    "id": "combo-582",
+    "name": "Чечевица с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-583",
+    "name": "Рис с яйцом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 10,
+    "carbs": 22,
+    "fat": 5
+  },
+  {
+    "id": "combo-584",
+    "name": "Овсянка с протеином",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 20,
+    "carbs": 22,
+    "fat": 4
+  },
+  {
+    "id": "combo-585",
+    "name": "Творог с ягодами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 14,
+    "carbs": 12,
+    "fat": 3
+  },
+  {
+    "id": "combo-586",
+    "name": "Йогурт с гранолой",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-587",
+    "name": "Курица терияки с рисом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-588",
+    "name": "Говядина с гречкой",
+    "portion": "200 г",
+    "kcal": 195,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-589",
+    "name": "Рыба с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 16,
+    "carbs": 8,
+    "fat": 4
+  },
+  {
+    "id": "combo-590",
+    "name": "Индейка с гречкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 17,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-591",
+    "name": "Тофу с рисом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 10,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-592",
+    "name": "Креветки с гречкой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-593",
+    "name": "Стейк с овощами",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 22,
+    "carbs": 8,
+    "fat": 9
+  },
+  {
+    "id": "combo-594",
+    "name": "Котлета с пюре",
+    "portion": "200 г",
+    "kcal": 210,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-595",
+    "name": "Пельмени со сметаной",
+    "portion": "200 г",
+    "kcal": 240,
+    "protein": 12,
+    "carbs": 24,
+    "fat": 11
+  },
+  {
+    "id": "combo-596",
+    "name": "Блины с творогом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 10,
+    "carbs": 26,
+    "fat": 7
+  },
+  {
+    "id": "combo-597",
+    "name": "Сырники со сметаной",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-598",
+    "name": "Шаурма лёгкая",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 8
+  },
+  {
+    "id": "combo-599",
+    "name": "Боул киноа курица",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-600",
+    "name": "Боул рис тунец",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-601",
+    "name": "Рис с курицей",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 14,
+    "carbs": 20,
+    "fat": 5
+  },
+  {
+    "id": "combo-602",
+    "name": "Гречка с говядиной",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-603",
+    "name": "Макароны с сыром",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 10,
+    "carbs": 25,
+    "fat": 9
+  },
+  {
+    "id": "combo-604",
+    "name": "Картофель с рыбой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 12,
+    "carbs": 14,
+    "fat": 5
+  },
+  {
+    "id": "combo-605",
+    "name": "Салат с тунцом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 14,
+    "carbs": 6,
+    "fat": 7
+  },
+  {
+    "id": "combo-606",
+    "name": "Омлет с сыром",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 14,
+    "carbs": 2,
+    "fat": 15
+  },
+  {
+    "id": "combo-607",
+    "name": "Творог с бананом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 12,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-608",
+    "name": "Йогурт с орехами",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 12,
+    "fat": 9
+  },
+  {
+    "id": "combo-609",
+    "name": "Курица с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 18,
+    "carbs": 6,
+    "fat": 5
+  },
+  {
+    "id": "combo-610",
+    "name": "Индейка с рисом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-611",
+    "name": "Лосось с овощами",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 5,
+    "fat": 10
+  },
+  {
+    "id": "combo-612",
+    "name": "Креветки с рисом",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 14,
+    "carbs": 18,
+    "fat": 3
+  },
+  {
+    "id": "combo-613",
+    "name": "Фасоль с овощами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 7,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-614",
+    "name": "Нут с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 7,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-615",
+    "name": "Тофу с овощами",
+    "portion": "200 г",
+    "kcal": 110,
+    "protein": 9,
+    "carbs": 8,
+    "fat": 5
+  },
+  {
+    "id": "combo-616",
+    "name": "Гречка с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-617",
+    "name": "Рис с индейкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 15,
+    "carbs": 20,
+    "fat": 4
+  },
+  {
+    "id": "combo-618",
+    "name": "Паста с курицей",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 6
+  },
+  {
+    "id": "combo-619",
+    "name": "Картофель с курицей",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 14,
+    "carbs": 16,
+    "fat": 5
+  },
+  {
+    "id": "combo-620",
+    "name": "Киноа с лососем",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 7
+  },
+  {
+    "id": "combo-621",
+    "name": "Булгур с говядиной",
+    "portion": "200 г",
+    "kcal": 185,
+    "protein": 15,
+    "carbs": 18,
+    "fat": 6
+  },
+  {
+    "id": "combo-622",
+    "name": "Чечевица с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-623",
+    "name": "Рис с яйцом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 10,
+    "carbs": 22,
+    "fat": 5
+  },
+  {
+    "id": "combo-624",
+    "name": "Овсянка с протеином",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 20,
+    "carbs": 22,
+    "fat": 4
+  },
+  {
+    "id": "combo-625",
+    "name": "Творог с ягодами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 14,
+    "carbs": 12,
+    "fat": 3
+  },
+  {
+    "id": "combo-626",
+    "name": "Йогурт с гранолой",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-627",
+    "name": "Курица терияки с рисом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-628",
+    "name": "Говядина с гречкой",
+    "portion": "200 г",
+    "kcal": 195,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-629",
+    "name": "Рыба с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 16,
+    "carbs": 8,
+    "fat": 4
+  },
+  {
+    "id": "combo-630",
+    "name": "Индейка с гречкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 17,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-631",
+    "name": "Тофу с рисом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 10,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-632",
+    "name": "Креветки с гречкой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-633",
+    "name": "Стейк с овощами",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 22,
+    "carbs": 8,
+    "fat": 9
+  },
+  {
+    "id": "combo-634",
+    "name": "Котлета с пюре",
+    "portion": "200 г",
+    "kcal": 210,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-635",
+    "name": "Пельмени со сметаной",
+    "portion": "200 г",
+    "kcal": 240,
+    "protein": 12,
+    "carbs": 24,
+    "fat": 11
+  },
+  {
+    "id": "combo-636",
+    "name": "Блины с творогом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 10,
+    "carbs": 26,
+    "fat": 7
+  },
+  {
+    "id": "combo-637",
+    "name": "Сырники со сметаной",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-638",
+    "name": "Шаурма лёгкая",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 8
+  },
+  {
+    "id": "combo-639",
+    "name": "Боул киноа курица",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-640",
+    "name": "Боул рис тунец",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-641",
+    "name": "Рис с курицей",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 14,
+    "carbs": 20,
+    "fat": 5
+  },
+  {
+    "id": "combo-642",
+    "name": "Гречка с говядиной",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-643",
+    "name": "Макароны с сыром",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 10,
+    "carbs": 25,
+    "fat": 9
+  },
+  {
+    "id": "combo-644",
+    "name": "Картофель с рыбой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 12,
+    "carbs": 14,
+    "fat": 5
+  },
+  {
+    "id": "combo-645",
+    "name": "Салат с тунцом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 14,
+    "carbs": 6,
+    "fat": 7
+  },
+  {
+    "id": "combo-646",
+    "name": "Омлет с сыром",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 14,
+    "carbs": 2,
+    "fat": 15
+  },
+  {
+    "id": "combo-647",
+    "name": "Творог с бананом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 12,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-648",
+    "name": "Йогурт с орехами",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 12,
+    "fat": 9
+  },
+  {
+    "id": "combo-649",
+    "name": "Курица с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 18,
+    "carbs": 6,
+    "fat": 5
+  },
+  {
+    "id": "combo-650",
+    "name": "Индейка с рисом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-651",
+    "name": "Лосось с овощами",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 5,
+    "fat": 10
+  },
+  {
+    "id": "combo-652",
+    "name": "Креветки с рисом",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 14,
+    "carbs": 18,
+    "fat": 3
+  },
+  {
+    "id": "combo-653",
+    "name": "Фасоль с овощами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 7,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-654",
+    "name": "Нут с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 7,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-655",
+    "name": "Тофу с овощами",
+    "portion": "200 г",
+    "kcal": 110,
+    "protein": 9,
+    "carbs": 8,
+    "fat": 5
+  },
+  {
+    "id": "combo-656",
+    "name": "Гречка с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-657",
+    "name": "Рис с индейкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 15,
+    "carbs": 20,
+    "fat": 4
+  },
+  {
+    "id": "combo-658",
+    "name": "Паста с курицей",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 6
+  },
+  {
+    "id": "combo-659",
+    "name": "Картофель с курицей",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 14,
+    "carbs": 16,
+    "fat": 5
+  },
+  {
+    "id": "combo-660",
+    "name": "Киноа с лососем",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 7
+  },
+  {
+    "id": "combo-661",
+    "name": "Булгур с говядиной",
+    "portion": "200 г",
+    "kcal": 185,
+    "protein": 15,
+    "carbs": 18,
+    "fat": 6
+  },
+  {
+    "id": "combo-662",
+    "name": "Чечевица с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-663",
+    "name": "Рис с яйцом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 10,
+    "carbs": 22,
+    "fat": 5
+  },
+  {
+    "id": "combo-664",
+    "name": "Овсянка с протеином",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 20,
+    "carbs": 22,
+    "fat": 4
+  },
+  {
+    "id": "combo-665",
+    "name": "Творог с ягодами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 14,
+    "carbs": 12,
+    "fat": 3
+  },
+  {
+    "id": "combo-666",
+    "name": "Йогурт с гранолой",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-667",
+    "name": "Курица терияки с рисом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-668",
+    "name": "Говядина с гречкой",
+    "portion": "200 г",
+    "kcal": 195,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-669",
+    "name": "Рыба с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 16,
+    "carbs": 8,
+    "fat": 4
+  },
+  {
+    "id": "combo-670",
+    "name": "Индейка с гречкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 17,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-671",
+    "name": "Тофу с рисом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 10,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-672",
+    "name": "Креветки с гречкой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-673",
+    "name": "Стейк с овощами",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 22,
+    "carbs": 8,
+    "fat": 9
+  },
+  {
+    "id": "combo-674",
+    "name": "Котлета с пюре",
+    "portion": "200 г",
+    "kcal": 210,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-675",
+    "name": "Пельмени со сметаной",
+    "portion": "200 г",
+    "kcal": 240,
+    "protein": 12,
+    "carbs": 24,
+    "fat": 11
+  },
+  {
+    "id": "combo-676",
+    "name": "Блины с творогом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 10,
+    "carbs": 26,
+    "fat": 7
+  },
+  {
+    "id": "combo-677",
+    "name": "Сырники со сметаной",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-678",
+    "name": "Шаурма лёгкая",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 8
+  },
+  {
+    "id": "combo-679",
+    "name": "Боул киноа курица",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-680",
+    "name": "Боул рис тунец",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-681",
+    "name": "Рис с курицей",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 14,
+    "carbs": 20,
+    "fat": 5
+  },
+  {
+    "id": "combo-682",
+    "name": "Гречка с говядиной",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-683",
+    "name": "Макароны с сыром",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 10,
+    "carbs": 25,
+    "fat": 9
+  },
+  {
+    "id": "combo-684",
+    "name": "Картофель с рыбой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 12,
+    "carbs": 14,
+    "fat": 5
+  },
+  {
+    "id": "combo-685",
+    "name": "Салат с тунцом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 14,
+    "carbs": 6,
+    "fat": 7
+  },
+  {
+    "id": "combo-686",
+    "name": "Омлет с сыром",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 14,
+    "carbs": 2,
+    "fat": 15
+  },
+  {
+    "id": "combo-687",
+    "name": "Творог с бананом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 12,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-688",
+    "name": "Йогурт с орехами",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 12,
+    "fat": 9
+  },
+  {
+    "id": "combo-689",
+    "name": "Курица с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 18,
+    "carbs": 6,
+    "fat": 5
+  },
+  {
+    "id": "combo-690",
+    "name": "Индейка с рисом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-691",
+    "name": "Лосось с овощами",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 5,
+    "fat": 10
+  },
+  {
+    "id": "combo-692",
+    "name": "Креветки с рисом",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 14,
+    "carbs": 18,
+    "fat": 3
+  },
+  {
+    "id": "combo-693",
+    "name": "Фасоль с овощами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 7,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-694",
+    "name": "Нут с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 7,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-695",
+    "name": "Тофу с овощами",
+    "portion": "200 г",
+    "kcal": 110,
+    "protein": 9,
+    "carbs": 8,
+    "fat": 5
+  },
+  {
+    "id": "combo-696",
+    "name": "Гречка с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-697",
+    "name": "Рис с индейкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 15,
+    "carbs": 20,
+    "fat": 4
+  },
+  {
+    "id": "combo-698",
+    "name": "Паста с курицей",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 6
+  },
+  {
+    "id": "combo-699",
+    "name": "Картофель с курицей",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 14,
+    "carbs": 16,
+    "fat": 5
+  },
+  {
+    "id": "combo-700",
+    "name": "Киноа с лососем",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 7
+  },
+  {
+    "id": "combo-701",
+    "name": "Булгур с говядиной",
+    "portion": "200 г",
+    "kcal": 185,
+    "protein": 15,
+    "carbs": 18,
+    "fat": 6
+  },
+  {
+    "id": "combo-702",
+    "name": "Чечевица с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-703",
+    "name": "Рис с яйцом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 10,
+    "carbs": 22,
+    "fat": 5
+  },
+  {
+    "id": "combo-704",
+    "name": "Овсянка с протеином",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 20,
+    "carbs": 22,
+    "fat": 4
+  },
+  {
+    "id": "combo-705",
+    "name": "Творог с ягодами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 14,
+    "carbs": 12,
+    "fat": 3
+  },
+  {
+    "id": "combo-706",
+    "name": "Йогурт с гранолой",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-707",
+    "name": "Курица терияки с рисом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-708",
+    "name": "Говядина с гречкой",
+    "portion": "200 г",
+    "kcal": 195,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-709",
+    "name": "Рыба с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 16,
+    "carbs": 8,
+    "fat": 4
+  },
+  {
+    "id": "combo-710",
+    "name": "Индейка с гречкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 17,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-711",
+    "name": "Тофу с рисом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 10,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-712",
+    "name": "Креветки с гречкой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-713",
+    "name": "Стейк с овощами",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 22,
+    "carbs": 8,
+    "fat": 9
+  },
+  {
+    "id": "combo-714",
+    "name": "Котлета с пюре",
+    "portion": "200 г",
+    "kcal": 210,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-715",
+    "name": "Пельмени со сметаной",
+    "portion": "200 г",
+    "kcal": 240,
+    "protein": 12,
+    "carbs": 24,
+    "fat": 11
+  },
+  {
+    "id": "combo-716",
+    "name": "Блины с творогом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 10,
+    "carbs": 26,
+    "fat": 7
+  },
+  {
+    "id": "combo-717",
+    "name": "Сырники со сметаной",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-718",
+    "name": "Шаурма лёгкая",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 8
+  },
+  {
+    "id": "combo-719",
+    "name": "Боул киноа курица",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-720",
+    "name": "Боул рис тунец",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-721",
+    "name": "Рис с курицей",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 14,
+    "carbs": 20,
+    "fat": 5
+  },
+  {
+    "id": "combo-722",
+    "name": "Гречка с говядиной",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-723",
+    "name": "Макароны с сыром",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 10,
+    "carbs": 25,
+    "fat": 9
+  },
+  {
+    "id": "combo-724",
+    "name": "Картофель с рыбой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 12,
+    "carbs": 14,
+    "fat": 5
+  },
+  {
+    "id": "combo-725",
+    "name": "Салат с тунцом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 14,
+    "carbs": 6,
+    "fat": 7
+  },
+  {
+    "id": "combo-726",
+    "name": "Омлет с сыром",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 14,
+    "carbs": 2,
+    "fat": 15
+  },
+  {
+    "id": "combo-727",
+    "name": "Творог с бананом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 12,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-728",
+    "name": "Йогурт с орехами",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 12,
+    "fat": 9
+  },
+  {
+    "id": "combo-729",
+    "name": "Курица с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 18,
+    "carbs": 6,
+    "fat": 5
+  },
+  {
+    "id": "combo-730",
+    "name": "Индейка с рисом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-731",
+    "name": "Лосось с овощами",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 5,
+    "fat": 10
+  },
+  {
+    "id": "combo-732",
+    "name": "Креветки с рисом",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 14,
+    "carbs": 18,
+    "fat": 3
+  },
+  {
+    "id": "combo-733",
+    "name": "Фасоль с овощами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 7,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-734",
+    "name": "Нут с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 7,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-735",
+    "name": "Тофу с овощами",
+    "portion": "200 г",
+    "kcal": 110,
+    "protein": 9,
+    "carbs": 8,
+    "fat": 5
+  },
+  {
+    "id": "combo-736",
+    "name": "Гречка с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-737",
+    "name": "Рис с индейкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 15,
+    "carbs": 20,
+    "fat": 4
+  },
+  {
+    "id": "combo-738",
+    "name": "Паста с курицей",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 6
+  },
+  {
+    "id": "combo-739",
+    "name": "Картофель с курицей",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 14,
+    "carbs": 16,
+    "fat": 5
+  },
+  {
+    "id": "combo-740",
+    "name": "Киноа с лососем",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 7
+  },
+  {
+    "id": "combo-741",
+    "name": "Булгур с говядиной",
+    "portion": "200 г",
+    "kcal": 185,
+    "protein": 15,
+    "carbs": 18,
+    "fat": 6
+  },
+  {
+    "id": "combo-742",
+    "name": "Чечевица с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-743",
+    "name": "Рис с яйцом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 10,
+    "carbs": 22,
+    "fat": 5
+  },
+  {
+    "id": "combo-744",
+    "name": "Овсянка с протеином",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 20,
+    "carbs": 22,
+    "fat": 4
+  },
+  {
+    "id": "combo-745",
+    "name": "Творог с ягодами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 14,
+    "carbs": 12,
+    "fat": 3
+  },
+  {
+    "id": "combo-746",
+    "name": "Йогурт с гранолой",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-747",
+    "name": "Курица терияки с рисом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-748",
+    "name": "Говядина с гречкой",
+    "portion": "200 г",
+    "kcal": 195,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-749",
+    "name": "Рыба с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 16,
+    "carbs": 8,
+    "fat": 4
+  },
+  {
+    "id": "combo-750",
+    "name": "Индейка с гречкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 17,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-751",
+    "name": "Тофу с рисом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 10,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-752",
+    "name": "Креветки с гречкой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-753",
+    "name": "Стейк с овощами",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 22,
+    "carbs": 8,
+    "fat": 9
+  },
+  {
+    "id": "combo-754",
+    "name": "Котлета с пюре",
+    "portion": "200 г",
+    "kcal": 210,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-755",
+    "name": "Пельмени со сметаной",
+    "portion": "200 г",
+    "kcal": 240,
+    "protein": 12,
+    "carbs": 24,
+    "fat": 11
+  },
+  {
+    "id": "combo-756",
+    "name": "Блины с творогом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 10,
+    "carbs": 26,
+    "fat": 7
+  },
+  {
+    "id": "combo-757",
+    "name": "Сырники со сметаной",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-758",
+    "name": "Шаурма лёгкая",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 8
+  },
+  {
+    "id": "combo-759",
+    "name": "Боул киноа курица",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-760",
+    "name": "Боул рис тунец",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-761",
+    "name": "Рис с курицей",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 14,
+    "carbs": 20,
+    "fat": 5
+  },
+  {
+    "id": "combo-762",
+    "name": "Гречка с говядиной",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-763",
+    "name": "Макароны с сыром",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 10,
+    "carbs": 25,
+    "fat": 9
+  },
+  {
+    "id": "combo-764",
+    "name": "Картофель с рыбой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 12,
+    "carbs": 14,
+    "fat": 5
+  },
+  {
+    "id": "combo-765",
+    "name": "Салат с тунцом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 14,
+    "carbs": 6,
+    "fat": 7
+  },
+  {
+    "id": "combo-766",
+    "name": "Омлет с сыром",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 14,
+    "carbs": 2,
+    "fat": 15
+  },
+  {
+    "id": "combo-767",
+    "name": "Творог с бананом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 12,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-768",
+    "name": "Йогурт с орехами",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 12,
+    "fat": 9
+  },
+  {
+    "id": "combo-769",
+    "name": "Курица с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 18,
+    "carbs": 6,
+    "fat": 5
+  },
+  {
+    "id": "combo-770",
+    "name": "Индейка с рисом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-771",
+    "name": "Лосось с овощами",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 5,
+    "fat": 10
+  },
+  {
+    "id": "combo-772",
+    "name": "Креветки с рисом",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 14,
+    "carbs": 18,
+    "fat": 3
+  },
+  {
+    "id": "combo-773",
+    "name": "Фасоль с овощами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 7,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-774",
+    "name": "Нут с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 7,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-775",
+    "name": "Тофу с овощами",
+    "portion": "200 г",
+    "kcal": 110,
+    "protein": 9,
+    "carbs": 8,
+    "fat": 5
+  },
+  {
+    "id": "combo-776",
+    "name": "Гречка с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-777",
+    "name": "Рис с индейкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 15,
+    "carbs": 20,
+    "fat": 4
+  },
+  {
+    "id": "combo-778",
+    "name": "Паста с курицей",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 6
+  },
+  {
+    "id": "combo-779",
+    "name": "Картофель с курицей",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 14,
+    "carbs": 16,
+    "fat": 5
+  },
+  {
+    "id": "combo-780",
+    "name": "Киноа с лососем",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 7
+  },
+  {
+    "id": "combo-781",
+    "name": "Булгур с говядиной",
+    "portion": "200 г",
+    "kcal": 185,
+    "protein": 15,
+    "carbs": 18,
+    "fat": 6
+  },
+  {
+    "id": "combo-782",
+    "name": "Чечевица с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-783",
+    "name": "Рис с яйцом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 10,
+    "carbs": 22,
+    "fat": 5
+  },
+  {
+    "id": "combo-784",
+    "name": "Овсянка с протеином",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 20,
+    "carbs": 22,
+    "fat": 4
+  },
+  {
+    "id": "combo-785",
+    "name": "Творог с ягодами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 14,
+    "carbs": 12,
+    "fat": 3
+  },
+  {
+    "id": "combo-786",
+    "name": "Йогурт с гранолой",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-787",
+    "name": "Курица терияки с рисом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 24,
+    "fat": 5
+  },
+  {
+    "id": "combo-788",
+    "name": "Говядина с гречкой",
+    "portion": "200 г",
+    "kcal": 195,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-789",
+    "name": "Рыба с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 16,
+    "carbs": 8,
+    "fat": 4
+  },
+  {
+    "id": "combo-790",
+    "name": "Индейка с гречкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 17,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-791",
+    "name": "Тофу с рисом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 10,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-792",
+    "name": "Креветки с гречкой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-793",
+    "name": "Стейк с овощами",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 22,
+    "carbs": 8,
+    "fat": 9
+  },
+  {
+    "id": "combo-794",
+    "name": "Котлета с пюре",
+    "portion": "200 г",
+    "kcal": 210,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-795",
+    "name": "Пельмени со сметаной",
+    "portion": "200 г",
+    "kcal": 240,
+    "protein": 12,
+    "carbs": 24,
+    "fat": 11
+  },
+  {
+    "id": "combo-796",
+    "name": "Блины с творогом",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 10,
+    "carbs": 26,
+    "fat": 7
+  },
+  {
+    "id": "combo-797",
+    "name": "Сырники со сметаной",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 12,
+    "carbs": 20,
+    "fat": 10
+  },
+  {
+    "id": "combo-798",
+    "name": "Шаурма лёгкая",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 8
+  },
+  {
+    "id": "combo-799",
+    "name": "Боул киноа курица",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-800",
+    "name": "Боул рис тунец",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-801",
+    "name": "Рис с курицей",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 14,
+    "carbs": 20,
+    "fat": 5
+  },
+  {
+    "id": "combo-802",
+    "name": "Гречка с говядиной",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 15,
+    "carbs": 16,
+    "fat": 7
+  },
+  {
+    "id": "combo-803",
+    "name": "Макароны с сыром",
+    "portion": "200 г",
+    "kcal": 220,
+    "protein": 10,
+    "carbs": 25,
+    "fat": 9
+  },
+  {
+    "id": "combo-804",
+    "name": "Картофель с рыбой",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 12,
+    "carbs": 14,
+    "fat": 5
+  },
+  {
+    "id": "combo-805",
+    "name": "Салат с тунцом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 14,
+    "carbs": 6,
+    "fat": 7
+  },
+  {
+    "id": "combo-806",
+    "name": "Омлет с сыром",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 14,
+    "carbs": 2,
+    "fat": 15
+  },
+  {
+    "id": "combo-807",
+    "name": "Творог с бананом",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 12,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-808",
+    "name": "Йогурт с орехами",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 12,
+    "fat": 9
+  },
+  {
+    "id": "combo-809",
+    "name": "Курица с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 18,
+    "carbs": 6,
+    "fat": 5
+  },
+  {
+    "id": "combo-810",
+    "name": "Индейка с рисом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 16,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-811",
+    "name": "Лосось с овощами",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 16,
+    "carbs": 5,
+    "fat": 10
+  },
+  {
+    "id": "combo-812",
+    "name": "Креветки с рисом",
+    "portion": "200 г",
+    "kcal": 150,
+    "protein": 14,
+    "carbs": 18,
+    "fat": 3
+  },
+  {
+    "id": "combo-813",
+    "name": "Фасоль с овощами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 7,
+    "carbs": 16,
+    "fat": 3
+  },
+  {
+    "id": "combo-814",
+    "name": "Нут с овощами",
+    "portion": "200 г",
+    "kcal": 140,
+    "protein": 7,
+    "carbs": 18,
+    "fat": 4
+  },
+  {
+    "id": "combo-815",
+    "name": "Тофу с овощами",
+    "portion": "200 г",
+    "kcal": 110,
+    "protein": 9,
+    "carbs": 8,
+    "fat": 5
+  },
+  {
+    "id": "combo-816",
+    "name": "Гречка с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 5
+  },
+  {
+    "id": "combo-817",
+    "name": "Рис с индейкой",
+    "portion": "200 г",
+    "kcal": 165,
+    "protein": 15,
+    "carbs": 20,
+    "fat": 4
+  },
+  {
+    "id": "combo-818",
+    "name": "Паста с курицей",
+    "portion": "200 г",
+    "kcal": 200,
+    "protein": 16,
+    "carbs": 22,
+    "fat": 6
+  },
+  {
+    "id": "combo-819",
+    "name": "Картофель с курицей",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 14,
+    "carbs": 16,
+    "fat": 5
+  },
+  {
+    "id": "combo-820",
+    "name": "Киноа с лососем",
+    "portion": "200 г",
+    "kcal": 190,
+    "protein": 16,
+    "carbs": 18,
+    "fat": 7
+  },
+  {
+    "id": "combo-821",
+    "name": "Булгур с говядиной",
+    "portion": "200 г",
+    "kcal": 185,
+    "protein": 15,
+    "carbs": 18,
+    "fat": 6
+  },
+  {
+    "id": "combo-822",
+    "name": "Чечевица с курицей",
+    "portion": "200 г",
+    "kcal": 170,
+    "protein": 18,
+    "carbs": 16,
+    "fat": 4
+  },
+  {
+    "id": "combo-823",
+    "name": "Рис с яйцом",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 10,
+    "carbs": 22,
+    "fat": 5
+  },
+  {
+    "id": "combo-824",
+    "name": "Овсянка с протеином",
+    "portion": "200 г",
+    "kcal": 180,
+    "protein": 20,
+    "carbs": 22,
+    "fat": 4
+  },
+  {
+    "id": "combo-825",
+    "name": "Творог с ягодами",
+    "portion": "200 г",
+    "kcal": 120,
+    "protein": 14,
+    "carbs": 12,
+    "fat": 3
+  },
+  {
+    "id": "combo-826",
+    "name": "Йогурт с гранолой",
+    "portion": "200 г",
+    "kcal": 160,
+    "protein": 8,
+    "carbs": 24,
     "fat": 5
   }
 ]
