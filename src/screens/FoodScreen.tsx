@@ -8,8 +8,14 @@ import {
   type MacroSet,
   type ScaleMode,
 } from '../lib/foodPortion'
+import {
+  INTENT_LABELS,
+  calcMacroTargets,
+  type GoalIntent,
+  type Sex,
+} from '../lib/bodyMetrics'
 import { effectiveGoals } from '../lib/nutritionGoals'
-import { macrosForDay, todayKey, type FoodEntry } from '../lib/storage'
+import { applyProfileToGoals, macrosForDay, todayKey, type FoodEntry } from '../lib/storage'
 
 function Ring({
   value,
@@ -53,6 +59,14 @@ export function FoodScreen() {
   const totals = macrosForDay(store.foods, date)
   const today = store.foods.filter((f) => f.date === date)
   const goalsToday = effectiveGoals(store, date)
+  const body = calcMacroTargets(store.profile)
+
+  const patchProfile = (patch: Partial<typeof store.profile>) => {
+    setStore((s) => {
+      const profile = { ...s.profile, ...patch }
+      return applyProfileToGoals({ ...s, profile })
+    })
+  }
 
   const [open, setOpen] = useState(false)
   const [meal, setMeal] = useState<MealSlot>('lunch')
@@ -303,12 +317,74 @@ export function FoodScreen() {
       })}
 
       <section className="goals">
+        <h2>Профиль</h2>
+        <div className="form-grid glass" style={{ padding: 14, borderRadius: 18, marginBottom: 14 }}>
+          <p className="span2" style={{ margin: 0, color: 'var(--muted)', fontSize: '0.82rem' }}>
+            Mifflin–St Jeor · BMR {body.bmr} ккал · {body.age} лет. База отдыха ≈ BMR × 1.4
+            {store.profile.intent === 'cut' ? ' − 300' : store.profile.intent === 'bulk' ? ' + 250' : ''}.
+          </p>
+          <div className="field">
+            <label>Дата рождения</label>
+            <input
+              type="date"
+              value={store.profile.birthDate}
+              onChange={(e) => patchProfile({ birthDate: e.target.value })}
+            />
+          </div>
+          <div className="field">
+            <label>Пол</label>
+            <select
+              value={store.profile.sex}
+              onChange={(e) => patchProfile({ sex: e.target.value as Sex })}
+            >
+              <option value="male">Мужской</option>
+              <option value="female">Женский</option>
+            </select>
+          </div>
+          <div className="field">
+            <label>Рост, см</label>
+            <input
+              type="number"
+              min={120}
+              max={250}
+              value={store.profile.heightCm}
+              onChange={(e) => patchProfile({ heightCm: Number(e.target.value) || 0 })}
+            />
+          </div>
+          <div className="field">
+            <label>Вес, кг</label>
+            <input
+              type="number"
+              min={30}
+              max={250}
+              step={0.1}
+              value={store.profile.weightKg}
+              onChange={(e) => patchProfile({ weightKg: Number(e.target.value) || 0 })}
+            />
+          </div>
+          <div className="field span2">
+            <label>Цель</label>
+            <div className="chips">
+              {(Object.keys(INTENT_LABELS) as GoalIntent[]).map((key) => (
+                <button
+                  key={key}
+                  type="button"
+                  className={`chip${store.profile.intent === key ? ' on' : ''}`}
+                  onClick={() => patchProfile({ intent: key })}
+                >
+                  {INTENT_LABELS[key]}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
         <h2>Цели дня</h2>
         <div className="form-grid glass" style={{ padding: 14, borderRadius: 18 }}>
           <p className="span2" style={{ margin: 0, color: 'var(--muted)', fontSize: '0.82rem' }}>
-            База — день отдыха. В день тренировки (есть сессия в зале) добавляется бонус.
-            Сегодня: <strong style={{ color: 'var(--text)' }}>{goalsToday.kcal}</strong> ккал
-            {goalsToday.boostApplied ? ' с бонусом' : ''}.
+            Считаются из профиля; можно подправить вручную. Сегодня:{' '}
+            <strong style={{ color: 'var(--text)' }}>{goalsToday.kcal}</strong> ккал
+            {goalsToday.boostApplied ? ' с бонусом тренировки' : ''}.
           </p>
           {(
             [
@@ -333,6 +409,15 @@ export function FoodScreen() {
               />
             </div>
           ))}
+
+          <button
+            type="button"
+            className="ghost span2"
+            style={{ justifySelf: 'start' }}
+            onClick={() => setStore((s) => applyProfileToGoals(s))}
+          >
+            Пересчитать из профиля
+          </button>
 
           <label
             className="span2"
