@@ -10,13 +10,13 @@ function sessionOnDate(session: WorkoutSession, date: string): boolean {
   return false
 }
 
-/** Есть завершённая или активная тренировка в этот день */
+/** Есть тренировка в этот день: активная или любая сессия за дату */
 export function hasWorkoutOnDate(
   store: Pick<Store, 'sessions' | 'activeSession'>,
   date: string,
 ): boolean {
   if (store.activeSession && sessionOnDate(store.activeSession, date)) return true
-  return store.sessions.some((s) => Boolean(s.finishedAt) && sessionOnDate(s, date))
+  return store.sessions.some((s) => sessionOnDate(s, date))
 }
 
 export type EffectiveGoals = {
