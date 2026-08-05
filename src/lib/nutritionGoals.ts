@@ -1,3 +1,4 @@
+import { calcMacroTargets, mergeProfile } from './bodyMetrics'
 import type { Store, WorkoutSession } from './storage'
 import { todayKey } from './storage'
 
@@ -26,25 +27,24 @@ export type EffectiveGoals = {
   fat: number
   trainingDay: boolean
   boostApplied: boolean
+  bmr: number
 }
 
-/** База + бонус в день тренировки (если включено) */
-const FALLBACK_BOOST = { enabled: true, kcal: 400, protein: 20, carbs: 50, fat: 0 }
-
+/** Цель на день считается сама: вес + тренировка / отдых */
 export function effectiveGoals(
-  store: Pick<Store, 'goals' | 'sessions' | 'activeSession'>,
+  store: Pick<Store, 'profile' | 'sessions' | 'activeSession'>,
   date: string,
 ): EffectiveGoals {
-  const goals = store.goals
+  const profile = mergeProfile(store.profile)
   const trainingDay = hasWorkoutOnDate(store, date)
-  const boost = goals.trainingBoost ?? FALLBACK_BOOST
-  const boostApplied = trainingDay && boost.enabled
+  const t = calcMacroTargets(profile, { trainingDay })
   return {
-    kcal: goals.kcal + (boostApplied ? boost.kcal : 0),
-    protein: goals.protein + (boostApplied ? boost.protein : 0),
-    carbs: goals.carbs + (boostApplied ? boost.carbs : 0),
-    fat: goals.fat + (boostApplied ? boost.fat : 0),
+    kcal: t.kcal,
+    protein: t.protein,
+    carbs: t.carbs,
+    fat: t.fat,
     trainingDay,
-    boostApplied,
+    boostApplied: trainingDay,
+    bmr: t.bmr,
   }
 }

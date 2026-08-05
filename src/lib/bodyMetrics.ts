@@ -1,4 +1,4 @@
-/** Профиль для расчёта BMR / целей КБЖУ */
+/** Статичные параметры тела + редактируемый вес */
 
 export type Sex = 'male' | 'female'
 export type GoalIntent = 'cut' | 'maintain' | 'bulk'
@@ -8,17 +8,20 @@ export interface UserProfile {
   heightCm: number
   weightKg: number
   sex: Sex
-  /** Цель по калориям относительно поддержки */
   intent: GoalIntent
 }
 
-/** Данные Ивана — стартовый профиль приложения */
-export const DEFAULT_PROFILE: UserProfile = {
+/** Иван: всё кроме веса зафиксировано в коде */
+export const STATIC_BODY = {
   birthDate: '1993-09-14',
   heightCm: 180,
+  sex: 'male' as Sex,
+  intent: 'maintain' as GoalIntent,
+}
+
+export const DEFAULT_PROFILE: UserProfile = {
+  ...STATIC_BODY,
   weightKg: 76,
-  sex: 'male',
-  intent: 'maintain',
 }
 
 export function ageFromBirthDate(birthDate: string, on = new Date()): number {
@@ -39,19 +42,17 @@ export function calcBmr(profile: UserProfile, on = new Date()): number {
   return Math.round(sex === 'male' ? base + 5 : base - 161)
 }
 
-/**
- * День отдыха: BMR × 1.4 (лёгкая/средняя повседневная активность).
- * Тренировочный расход учитывается отдельно бонусом к цели.
- */
-export function calcRestTdee(bmr: number): number {
-  return Math.round(bmr * 1.4)
-}
-
 const INTENT_DELTA: Record<GoalIntent, number> = {
   cut: -300,
   maintain: 0,
   bulk: 250,
 }
+
+/** Множитель активности: отдых / день с тренировкой */
+const ACTIVITY = {
+  rest: 1.4,
+  training: 1.55,
+} as const
 
 export type MacroTargets = {
   kcal: number
@@ -62,15 +63,23 @@ export type MacroTargets = {
   age: number
 }
 
-/** Цели на день отдыха из профиля */
-export function calcMacroTargets(profile: UserProfile, on = new Date()): MacroTargets {
+/** Цели КБЖУ: считаются сами по весу и факту тренировки */
+export function calcMacroTargets(
+  profile: UserProfile,
+  opts?: { trainingDay?: boolean; on?: Date },
+): MacroTargets {
+  const on = opts?.on ?? new Date()
+  const trainingDay = Boolean(opts?.trainingDay)
   const age = ageFromBirthDate(profile.birthDate, on)
   const bmr = calcBmr(profile, on)
-  const tdee = calcRestTdee(bmr)
-  const kcal = Math.max(1400, Math.round((tdee + INTENT_DELTA[profile.intent]) / 10) * 10)
+  const factor = trainingDay ? ACTIVITY.training : ACTIVITY.rest
+  const kcal = Math.max(
+    1400,
+    Math.round((bmr * factor + INTENT_DELTA[profile.intent]) / 10) * 10,
+  )
 
-  // Белок ~2 г/кг, жиры ~0.9 г/кг, углеводы — остаток
-  const protein = Math.round(profile.weightKg * 2)
+  // Белок чуть выше в день тренировки
+  const protein = Math.round(profile.weightKg * (trainingDay ? 2.1 : 2))
   const fat = Math.max(40, Math.round(profile.weightKg * 0.9))
   const carbKcal = Math.max(0, kcal - protein * 4 - fat * 9)
   const carbs = Math.round(carbKcal / 4)
@@ -78,21 +87,17 @@ export function calcMacroTargets(profile: UserProfile, on = new Date()): MacroTa
   return { kcal, protein, carbs, fat, bmr, age }
 }
 
+/** В хранилище живёт только вес; остальное всегда из STATIC_BODY */
 export function mergeProfile(raw: Partial<UserProfile> | undefined): UserProfile {
   return {
-    birthDate: raw?.birthDate || DEFAULT_PROFILE.birthDate,
-    heightCm: raw?.heightCm ?? DEFAULT_PROFILE.heightCm,
-    weightKg: raw?.weightKg ?? DEFAULT_PROFILE.weightKg,
-    sex: raw?.sex === 'female' ? 'female' : 'male',
-    intent:
-      raw?.intent === 'cut' || raw?.intent === 'bulk' || raw?.intent === 'maintain'
-        ? raw.intent
-        : DEFAULT_PROFILE.intent,
+    ...STATIC_BODY,
+    weightKg:
+      typeof raw?.weightKg === 'number' && raw.weightKg > 0
+        ? raw.weightKg
+        : DEFAULT_PROFILE.weightKg,
   }
 }
 
-export const INTENT_LABELS: Record<GoalIntent, string> = {
-  cut: 'Сушка (−300)',
-  maintain: 'Поддержка',
-  bulk: 'Набор (+250)',
+export function withWeight(weightKg: number): UserProfile {
+  return mergeProfile({ weightKg })
 }
