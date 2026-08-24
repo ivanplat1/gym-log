@@ -208,53 +208,74 @@ select {
   justify-content: space-between;
   gap: 12px;
   width: 100%;
-  padding: 14px 40px 14px 16px;
+  padding: 14px 16px;
   text-align: left;
 }
 
-.tile-head strong {
+/* строка упражнения в зале: заголовок + квадратный × */
+.tile > .tile-head {
+  justify-content: flex-start;
+  gap: 4px;
+  padding: 0 10px 0 0;
+}
+
+.tile-head-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  padding: 14px 8px 14px 16px;
+  text-align: left;
+}
+
+.tile-head strong,
+.tile-head-main strong {
   display: block;
   font-size: 1.05rem;
   font-weight: 700;
   letter-spacing: -0.02em;
 }
 
-.tile-head .meta {
+.tile-head .meta,
+.tile-head-main .meta {
   margin-top: 3px;
   font-size: 0.8rem;
   color: var(--muted);
 }
 
-.tile-head .badge {
+.tile-head .badge,
+.tile-head-main .badge {
   flex-shrink: 0;
   font-size: 0.78rem;
   font-weight: 650;
   color: var(--muted);
 }
 
-.tile-head .badge.done {
+.tile-head .badge.done,
+.tile-head-main .badge.done {
   color: var(--green);
 }
 
 .tile-remove {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  z-index: 2;
-  width: 32px;
-  height: 32px;
-  border-radius: 999px;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid var(--glass-border);
   display: grid;
   place-content: center;
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   line-height: 1;
   color: var(--muted);
-  background: transparent;
+  background: rgb(255 255 255 / 0.06);
 }
 
 .tile-remove:active {
   color: var(--red);
-  background: rgb(255 107 90 / 0.12);
+  background: rgb(255 107 90 / 0.14);
+  border-color: rgb(255 107 90 / 0.35);
 }
 
 .tile-body {
