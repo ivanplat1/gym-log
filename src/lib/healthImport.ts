@@ -149,4 +149,14 @@ export function encodeHealthForShortcut(day: Partial<HealthDay>): string {
   return b64
 }
 
+/** База для Ярлыка: текущий хост (Pages или VPS). */
+export function shortcutBaseUrl(): string {
+  const base = String(import.meta.env.BASE_URL || '/').replace(/\/$/, '')
+  if (typeof window === 'undefined') {
+    return `${base}/health`
+  }
+  return `${window.location.origin}${base}/health`
+}
+
+/** @deprecated используй shortcutBaseUrl() — зависит от хоста */
 export const SHORTCUT_BASE_URL = 'https://ivanplat1.github.io/gym-log/health'

@@ -12,7 +12,7 @@ import {
   parseHealthCsv,
   parseHealthJson,
   parseHealthSearchParams,
-  SHORTCUT_BASE_URL,
+  shortcutBaseUrl,
 } from '../lib/healthImport'
 
 function SleepBar({ min }: { min: number | null }) {
@@ -119,7 +119,7 @@ export function HealthScreen() {
     }
   }
 
-  const exampleUrl = `${SHORTCUT_BASE_URL}?date=${todayKey()}&sleepMin=420&steps=8000&activeKcal=350&source=shortcut`
+  const exampleUrl = `${shortcutBaseUrl()}?date=${todayKey()}&sleepMin=420&steps=8000&activeKcal=350&source=shortcut`
 
   return (
     <>
@@ -323,7 +323,7 @@ export function HealthScreen() {
                     color: 'var(--accent)',
                   }}
                 >
-                  {SHORTCUT_BASE_URL}?date=ДАТА&amp;sleepMin=МИНУТЫ&amp;steps=ШАГИ&amp;activeKcal=ККАЛ&amp;source=shortcut
+                  {shortcutBaseUrl()}?date=ДАТА&amp;sleepMin=МИНУТЫ&amp;steps=ШАГИ&amp;activeKcal=ККАЛ&amp;source=shortcut
                 </code>
                 <p style={{ margin: '10px 0 0', color: 'var(--muted)', fontSize: '0.88rem', lineHeight: 1.45 }}>
                   Автоматизация: «Время суток» утром → запуск Ярлыка. Safari откроет gym-log и

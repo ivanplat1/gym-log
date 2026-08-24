@@ -2,6 +2,8 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
+const base = process.env.VITE_BASE || '/gym-log/'
+
 export default defineConfig({
   plugins: [
     react(),
@@ -15,8 +17,8 @@ export default defineConfig({
         theme_color: '#0a0a0a',
         background_color: '#0a0a0a',
         display: 'standalone',
-        start_url: '/gym-log/',
-        scope: '/gym-log/',
+        start_url: base,
+        scope: base,
         lang: 'ru',
         icons: [
           {
@@ -41,5 +43,15 @@ export default defineConfig({
       },
     }),
   ],
-  base: '/gym-log/',
+  base,
+  server: {
+    proxy: {
+      // local: BASE=/gym-log/ → /gym-log/api/* ; сервер без APP_BASE слушает /api/*
+      [`${base.replace(/\/$/, '')}/api`]: {
+        target: 'http://127.0.0.1:8787',
+        rewrite: (p) => p.replace(new RegExp(`^${base.replace(/\/$/, '')}`), ''),
+      },
+      '/api': 'http://127.0.0.1:8787',
+    },
+  },
 })

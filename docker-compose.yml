@@ -1,0 +1,27 @@
+# VPS path endpoint (рядом с IndieRadar и др. на :80/:443):
+#   http://128.140.50.104/gym-log/
+# Docker слушает только localhost — снаружи идёт через nginx.
+services:
+  gym-log:
+    build:
+      context: .
+      args:
+        VITE_BASE: ${VITE_BASE:-/gym-log/}
+    ports:
+      - "127.0.0.1:8787:8787"
+    environment:
+      AUTH_USER: ${AUTH_USER:-ivan}
+      AUTH_PASSWORD: ${AUTH_PASSWORD:-change-me-now}
+      SESSION_SECRET: ${SESSION_SECRET:-change-this-session-secret}
+      COOKIE_SECURE: ${COOKIE_SECURE:-0}
+      APP_BASE: ${APP_BASE:-/gym-log}
+      NODE_ENV: production
+      PORT: 8787
+      STATIC_DIR: /app/dist
+      DATA_DIR: /data
+    volumes:
+      - gym-log-data:/data
+    restart: unless-stopped
+
+volumes:
+  gym-log-data:
