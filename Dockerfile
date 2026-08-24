@@ -22,7 +22,8 @@ ENV NODE_ENV=production
 ENV PORT=8787
 ENV STATIC_DIR=/app/dist
 ENV DATA_DIR=/data
-ENV COOKIE_SECURE=1
+# compose/VPS по HTTP: COOKIE_SECURE=0; за HTTPS-прокси — 1
+ENV COOKIE_SECURE=0
 EXPOSE 8787
 VOLUME ["/data"]
 CMD ["node", "src/index.js"]

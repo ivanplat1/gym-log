@@ -1,6 +1,12 @@
+# VPS: http://128.140.50.104:8787
+# Pages (отдельный деплой): https://ivanplat1.github.io/gym-log/
 services:
   gym-log:
-    build: .
+    build:
+      context: .
+      args:
+        # корневой URL на VPS (:8787). Для прокси /gym-log/ — VITE_BASE=/gym-log/
+        VITE_BASE: ${VITE_BASE:-/}
     ports:
       - "8787:8787"
     environment:
