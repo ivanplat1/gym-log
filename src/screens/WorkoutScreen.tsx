@@ -264,7 +264,10 @@ export function WorkoutScreen() {
               {ex.sets.length > 0 && (
                 <div className="logged-sets tnum">
                   {ex.sets.map((s, i) => (
-                    <span key={i}>{formatSet(s, ex.timed)}</span>
+                    <span key={i} className="logged-set">
+                      <i>{i + 1}</i>
+                      {formatSet(s, ex.timed)}
+                    </span>
                   ))}
                 </div>
               )}
