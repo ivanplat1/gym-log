@@ -1,5 +1,6 @@
 import { NavLink, Outlet } from 'react-router-dom'
 import type { SVGProps } from 'react'
+import { useStore } from '../lib/store'
 
 function IconTrain(props: SVGProps<SVGSVGElement>) {
   return (
@@ -58,9 +59,34 @@ function IconHistory(props: SVGProps<SVGSVGElement>) {
 }
 
 export function Shell() {
+  const { username, logout, syncing, syncError, serverMode } = useStore()
+
   return (
     <div className="app-shell">
       <div className="app-main">
+        <div className="shell-top">
+          <span className="tnum" style={{ color: 'var(--muted)', fontSize: '0.72rem' }}>
+            {!serverMode
+              ? 'локально'
+              : syncError
+                ? 'ошибка синка'
+                : syncing
+                  ? 'сохраняю…'
+                  : 'на сервере'}
+          </span>
+          {serverMode ? (
+            <button
+              type="button"
+              className="ghost"
+              style={{ padding: '4px 10px' }}
+              onClick={() => void logout()}
+            >
+              {username} · выход
+            </button>
+          ) : (
+            <span style={{ color: 'var(--muted)', fontSize: '0.72rem' }}>без логина</span>
+          )}
+        </div>
         <Outlet />
       </div>
       <nav className="dock glass dock-4" aria-label="Навигация">

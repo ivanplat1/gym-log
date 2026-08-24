@@ -1,0 +1,20 @@
+services:
+  gym-log:
+    build: .
+    ports:
+      - "8787:8787"
+    environment:
+      AUTH_USER: ${AUTH_USER:-ivan}
+      AUTH_PASSWORD: ${AUTH_PASSWORD:-change-me-now}
+      SESSION_SECRET: ${SESSION_SECRET:-change-this-session-secret}
+      COOKIE_SECURE: ${COOKIE_SECURE:-0}
+      NODE_ENV: production
+      PORT: 8787
+      STATIC_DIR: /app/dist
+      DATA_DIR: /data
+    volumes:
+      - gym-log-data:/data
+    restart: unless-stopped
+
+volumes:
+  gym-log-data:

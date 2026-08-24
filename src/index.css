@@ -77,6 +77,14 @@ select {
   margin: 0 auto;
 }
 
+.shell-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
 /* glass */
 .glass {
   background: var(--glass);
