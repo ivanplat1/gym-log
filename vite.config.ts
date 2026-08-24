@@ -46,6 +46,11 @@ export default defineConfig({
   base,
   server: {
     proxy: {
+      // local: BASE=/gym-log/ → /gym-log/api/* ; сервер без APP_BASE слушает /api/*
+      [`${base.replace(/\/$/, '')}/api`]: {
+        target: 'http://127.0.0.1:8787',
+        rewrite: (p) => p.replace(new RegExp(`^${base.replace(/\/$/, '')}`), ''),
+      },
       '/api': 'http://127.0.0.1:8787',
     },
   },

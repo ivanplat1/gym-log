@@ -13,7 +13,14 @@ import {
 import { apiGetStore, apiLogin, apiLogout, apiMe, apiPutStore } from './api'
 import { loadStore, saveStore, type Store } from './storage'
 
-const API_BASE = (import.meta.env.VITE_API_BASE as string | undefined) || '/api'
+function resolveApiBase(): string {
+  const explicit = import.meta.env.VITE_API_BASE as string | undefined
+  if (explicit) return explicit.replace(/\/$/, '')
+  const base = String(import.meta.env.BASE_URL || '/').replace(/\/$/, '')
+  return `${base}/api`
+}
+
+const API_BASE = resolveApiBase()
 
 interface StoreCtx {
   store: Store

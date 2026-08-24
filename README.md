@@ -5,14 +5,14 @@
 | # | Где | URL | Данные | Логин |
 |---|---|---|---|---|
 | 1 | GitHub Pages | https://ivanplat1.github.io/gym-log/ | `localStorage` | нет |
-| 2 | VPS | http://128.140.50.104:8787 | файл на диске | логин + пароль |
+| 2 | VPS (path) | http://128.140.50.104/gym-log/ | файл на диске | логин + пароль |
 
-Pages остаётся как был (деплой через `.github/workflows/deploy-pages.yml`).  
-VPS — Docker с API и cookie-сессией; если `/api/health` недоступен, UI сам уходит в локальный режим (как на Pages).
+На общем IP уже есть IndieRadar и др. на `:80`/`:443` — gym-log **не занимает порт снаружи**, только path `/gym-log/` через nginx → Docker на `127.0.0.1:8787`.
 
-## VPS `128.140.50.104`
+Pages остаётся как был (`.github/workflows/deploy-pages.yml`).  
+Если `/gym-log/api/health` недоступен (как на Pages), UI сам уходит в локальный режим.
 
-На сервере уже крутится IndieRadar на `:80` / `:443`. gym-log поднимаем **отдельно на порту 8787**.
+## VPS `128.140.50.104/gym-log/`
 
 ```bash
 git clone https://github.com/ivanplat1/gym-log.git
@@ -21,15 +21,20 @@ cp .env.example .env
 # AUTH_USER / AUTH_PASSWORD / SESSION_SECRET
 
 docker compose up -d --build
-ufw allow 8787/tcp   # если firewall закрывает порт
 ```
 
-Открой: **http://128.140.50.104:8787** → вход (`ivan` + пароль из `.env`).
+В nginx (рядом с остальными location) добавь фрагмент из `deploy/nginx-gym-log.conf`, затем:
 
-Данные: Docker volume `gym-log-data`.  
-Пример nginx (опционально): `deploy/nginx-gym-log.conf`.
+```bash
+nginx -t && systemctl reload nginx
+```
 
-За reverse-proxy с HTTPS: `COOKIE_SECURE=1`.
+Открой: **http://128.140.50.104/gym-log/** → вход (`ivan` + пароль из `.env`).
+
+Проверка API: `curl -s http://127.0.0.1:8787/gym-log/api/health`
+
+Данные: volume `gym-log-data`.  
+За HTTPS-прокси: `COOKIE_SECURE=1`.
 
 Смена пароля: удали `/data/users.json` в volume (или осторожно `docker compose down -v`) и перезапусти с новым `AUTH_PASSWORD`.
 
@@ -42,10 +47,10 @@ https://ivanplat1.github.io/gym-log/
 ## Локальная разработка
 
 ```bash
-# терминал 1 — API
+# терминал 1 — API (без APP_BASE, слушает /api)
 cd server && npm install && AUTH_PASSWORD=secret npm run dev
 
-# терминал 2 — UI (прокси /api → :8787)
+# терминал 2 — UI (vite proxy /gym-log/api → :8787/api)
 npm install && npm run dev
 ```
 
