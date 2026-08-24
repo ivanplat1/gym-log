@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { FOOD_PRESETS, MEAL_LABELS, type MealSlot } from '../data/foods'
+import { FOOD_PRESETS, MEAL_LABELS, mealByTime, type MealSlot } from '../data/foods'
 import { useStore } from '../lib/store'
 import {
   formatAmountLabel,
@@ -57,9 +57,14 @@ export function FoodScreen() {
 
   const [goalsOpen, setGoalsOpen] = useState(false)
   const [open, setOpen] = useState(false)
-  const [meal, setMeal] = useState<MealSlot>('lunch')
+  const [meal, setMeal] = useState<MealSlot>(() => mealByTime())
   const [name, setName] = useState('')
   const [q, setQ] = useState('')
+
+  const openSheet = () => {
+    setMeal(mealByTime())
+    setOpen(true)
+  }
 
   // база пресета (макросы на baseAmount)
   const [baseMacros, setBaseMacros] = useState<MacroSet | null>(null)
@@ -298,7 +303,7 @@ export function FoodScreen() {
         </div>
       </div>
 
-      <button type="button" className="primary" style={{ width: '100%' }} onClick={() => setOpen(true)}>
+      <button type="button" className="primary" style={{ width: '100%' }} onClick={openSheet}>
         + Добавить еду
       </button>
 
@@ -312,7 +317,7 @@ export function FoodScreen() {
                 type="button"
                 className="chip"
                 onClick={() => {
-                  setOpen(true)
+                  openSheet()
                   queueMicrotask(() => applyMemory(m))
                 }}
               >
