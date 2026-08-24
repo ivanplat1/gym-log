@@ -236,31 +236,30 @@ export function WorkoutScreen() {
             ? `Прошлый: ${last.map((s) => formatSet(s, ex.timed)).join('  ')}`
             : 'Первый раз'
           return (
-            <div key={ex.key} className="tile glass" style={{ position: 'relative' }}>
-              <button
-                type="button"
-                className="tile-remove"
-                aria-label="Убрать упражнение"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  removeExercise(ex.key)
-                }}
-              >
-                ×
-              </button>
-              <button
-                type="button"
-                className="tile-head"
-                onClick={() => setActiveKey(open ? null : ex.key)}
-              >
-                <div>
-                  <strong>{ex.name}</strong>
-                  <div className="meta">{lastSummary}</div>
-                </div>
-                <div className={`badge${ex.sets.length >= 3 ? ' done' : ''}`}>
-                  {ex.sets.length ? `${ex.sets.length}` : '—'}
-                </div>
-              </button>
+            <div key={ex.key} className="tile glass">
+              <div className="tile-head">
+                <button
+                  type="button"
+                  className="tile-head-main"
+                  onClick={() => setActiveKey(open ? null : ex.key)}
+                >
+                  <div>
+                    <strong>{ex.name}</strong>
+                    <div className="meta">{lastSummary}</div>
+                  </div>
+                  <div className={`badge${ex.sets.length >= 3 ? ' done' : ''}`}>
+                    {ex.sets.length ? `${ex.sets.length}` : '—'}
+                  </div>
+                </button>
+                <button
+                  type="button"
+                  className="tile-remove"
+                  aria-label="Убрать упражнение"
+                  onClick={() => removeExercise(ex.key)}
+                >
+                  ×
+                </button>
+              </div>
 
               {ex.sets.length > 0 && (
                 <div className="logged-sets tnum">
