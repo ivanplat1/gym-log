@@ -428,21 +428,39 @@ select {
 .rest-timer {
   position: fixed;
   z-index: 50;
-  left: 50%;
+  left: 12px;
+  right: 12px;
   bottom: calc(5.6rem + var(--safe-b));
-  transform: translateX(-50%);
-  width: min(480px, calc(100% - 24px));
+  width: auto;
+  max-width: 480px;
+  margin-inline: auto;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   padding: 12px 14px;
   border-radius: 16px;
-  animation: rise 0.25s ease both;
+  animation: rest-rise 0.25s ease both;
+}
+
+@keyframes rest-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rest-timer > div:nth-child(2) {
+  flex: 1;
+  min-width: 0;
 }
 
 .rest-timer .time {
-  flex: 1;
-  font-size: 1.35rem;
+  font-size: 1.25rem;
   font-weight: 750;
   letter-spacing: -0.03em;
 }
@@ -455,6 +473,12 @@ select {
 
 .rest-timer .done-txt {
   color: var(--green);
+}
+
+.rest-timer .ghost {
+  flex-shrink: 0;
+  padding: 6px 8px;
+  font-size: 0.85rem;
 }
 
 .ring {
