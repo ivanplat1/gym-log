@@ -18021,3 +18021,12 @@ export const MEAL_LABELS: Record<MealSlot, string> = {
   dinner: 'Ужин',
   snack: 'Перекус',
 }
+
+/** Приём пищи по локальному времени */
+export function mealByTime(d = new Date()): MealSlot {
+  const h = d.getHours()
+  if (h >= 5 && h < 11) return 'breakfast'
+  if (h >= 11 && h < 16) return 'lunch'
+  if (h >= 16 && h < 21) return 'dinner'
+  return 'snack'
+}
