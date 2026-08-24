@@ -57,6 +57,7 @@ export function FoodScreen() {
 
   const [goalsOpen, setGoalsOpen] = useState(false)
   const [open, setOpen] = useState(false)
+  const [detailOpen, setDetailOpen] = useState(false)
   const [meal, setMeal] = useState<MealSlot>(() => mealByTime())
   const [name, setName] = useState('')
   const [q, setQ] = useState('')
@@ -121,6 +122,19 @@ export function FoodScreen() {
     setQ('')
   }
 
+  const closeAll = () => {
+    setDetailOpen(false)
+    setOpen(false)
+    resetForm()
+  }
+
+  const openCustom = () => {
+    resetForm()
+    setMeal(mealByTime())
+    setOpen(true)
+    setDetailOpen(true)
+  }
+
   const apply = (id: string) => {
     const p = FOOD_PRESETS.find((x) => x.id === id)
     if (!p) return
@@ -153,6 +167,7 @@ export function FoodScreen() {
     setProtein(String(m.protein))
     setCarbs(String(m.carbs))
     setFat(String(m.fat))
+    setDetailOpen(true)
   }
 
   const applyMemory = (item: FoodMemoryItem) => {
@@ -167,6 +182,7 @@ export function FoodScreen() {
     setCarbs(String(item.macros.carbs))
     setFat(String(item.macros.fat))
     setQ('')
+    setDetailOpen(true)
   }
 
   const applyScaled = (n: number) => {
@@ -225,8 +241,7 @@ export function FoodScreen() {
       createdAt: new Date().toISOString(),
     }
     setStore((s) => addFoodEntry(s, entry))
-    resetForm()
-    setOpen(false)
+    closeAll()
   }
 
   const remove = (id: string) => {
@@ -436,11 +451,16 @@ export function FoodScreen() {
       </section>
 
       {open && (
-        <div className="sheet-bg" role="dialog" aria-modal onClick={() => setOpen(false)}>
+        <div
+          className="sheet-bg"
+          role="dialog"
+          aria-modal
+          onClick={() => (detailOpen ? setDetailOpen(false) : closeAll())}
+        >
           <div className="sheet" onClick={(e) => e.stopPropagation()}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <h2>Еда</h2>
-              <button type="button" className="ghost" onClick={() => setOpen(false)}>
+              <button type="button" className="ghost" onClick={closeAll}>
                 Закрыть
               </button>
             </div>
@@ -510,7 +530,7 @@ export function FoodScreen() {
             </div>
             {!q.trim() && (
               <p style={{ marginTop: 8, color: 'var(--muted)', fontSize: '0.82rem' }}>
-                Сверху — твои блюда с последней граммовкой. Ниже пресеты (первые 40).
+                Выбери блюдо — откроется окно с граммовкой
               </p>
             )}
             {q.trim() && !presets.length && !myFoods.length && (
@@ -519,7 +539,47 @@ export function FoodScreen() {
               </p>
             )}
 
-            <div className="form-grid" style={{ marginTop: 14 }}>
+            <div className="btn-row">
+              <button type="button" className="secondary" style={{ width: '100%' }} onClick={openCustom}>
+                Своё блюдо
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {detailOpen && (
+        <div
+          className="sheet-bg sheet-bg-stack"
+          role="dialog"
+          aria-modal
+          onClick={() => setDetailOpen(false)}
+        >
+          <div className="sheet" onClick={(e) => e.stopPropagation()}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <button type="button" className="ghost" onClick={() => setDetailOpen(false)}>
+                ← Назад
+              </button>
+              <h2 style={{ margin: 0, fontSize: '1.15rem' }}>{name.trim() || 'Порция'}</h2>
+              <button type="button" className="ghost" onClick={closeAll}>
+                ✕
+              </button>
+            </div>
+
+            <div className="chips" style={{ marginTop: 8 }}>
+              {(Object.keys(MEAL_LABELS) as MealSlot[]).map((m) => (
+                <button
+                  key={m}
+                  type="button"
+                  className={`chip${meal === m ? ' on' : ''}`}
+                  onClick={() => setMeal(m)}
+                >
+                  {MEAL_LABELS[m]}
+                </button>
+              ))}
+            </div>
+
+            <div className="form-grid" style={{ marginTop: 10 }}>
               <div className="field span2">
                 <label>Название</label>
                 <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Блюдо" />

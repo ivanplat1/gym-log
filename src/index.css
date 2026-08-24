@@ -551,6 +551,11 @@ select {
   animation: fade 0.2s ease;
 }
 
+.sheet-bg-stack {
+  z-index: 70;
+  background: rgb(0 0 0 / 0.45);
+}
+
 .sheet {
   width: min(520px, 100%);
   margin: 0 auto;
