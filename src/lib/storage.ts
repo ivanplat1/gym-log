@@ -49,6 +49,11 @@ export interface FoodEntry {
 }
 
 import { calcMacroTargets, mergeProfile, type UserProfile } from './bodyMetrics'
+import {
+  seedFoodMemoryFromFoods,
+  type FoodMemoryItem,
+  upsertFoodMemory,
+} from './foodMemory'
 
 export interface NutritionGoals {
   kcal: number
@@ -60,6 +65,8 @@ export interface NutritionGoals {
 export interface Store {
   sessions: WorkoutSession[]
   foods: FoodEntry[]
+  /** Запомненные блюда + последняя граммовка */
+  foodMemory: FoodMemoryItem[]
   goals: NutritionGoals
   profile: UserProfile
   /** Незавершённая сессия — живёт при смене вкладок */
@@ -84,6 +91,7 @@ function emptyStore(): Store {
   return {
     sessions: [],
     foods: [],
+    foodMemory: [],
     profile,
     goals: goalsFromProfile(profile),
     activeSession: null,
@@ -97,9 +105,14 @@ export function loadStore(): Store {
     if (!raw) return emptyStore()
     const parsed = JSON.parse(raw) as Partial<Store> & { profile?: Partial<UserProfile> }
     const profile = mergeProfile(parsed.profile)
+    const foods = Array.isArray(parsed.foods) ? parsed.foods : []
+    const foodMemory = Array.isArray(parsed.foodMemory)
+      ? (parsed.foodMemory as FoodMemoryItem[])
+      : seedFoodMemoryFromFoods(foods)
     return {
       sessions: Array.isArray(parsed.sessions) ? parsed.sessions : [],
-      foods: Array.isArray(parsed.foods) ? parsed.foods : [],
+      foods,
+      foodMemory,
       profile,
       goals: goalsFromProfile(profile),
       activeSession: parsed.activeSession ?? null,
@@ -114,6 +127,15 @@ export function loadStore(): Store {
 export function setWeightKg(store: Store, weightKg: number): Store {
   const profile = mergeProfile({ weightKg })
   return { ...store, profile, goals: goalsFromProfile(profile) }
+}
+
+/** Добавить еду и запомнить блюдо/граммовку */
+export function addFoodEntry(store: Store, entry: FoodEntry): Store {
+  return {
+    ...store,
+    foods: [entry, ...store.foods],
+    foodMemory: upsertFoodMemory(store.foodMemory ?? [], entry),
+  }
 }
 
 export function saveStore(store: Store): void {
