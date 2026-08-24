@@ -4,6 +4,7 @@ interface StepperProps {
   step: number
   min?: number
   decimals?: number
+  compact?: boolean
   onChange: (value: number) => void
 }
 
@@ -13,13 +14,14 @@ export function Stepper({
   step,
   min = 0,
   decimals = 0,
+  compact = false,
   onChange,
 }: StepperProps) {
   const shown =
     decimals > 0 ? value.toFixed(decimals).replace(/\.0$/, '') : String(value)
 
   return (
-    <div className="stepper">
+    <div className={`stepper${compact ? ' compact' : ''}`}>
       <label>{label}</label>
       <div className="stepper-controls">
         <button

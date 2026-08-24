@@ -236,7 +236,18 @@ export function WorkoutScreen() {
             ? `Прошлый: ${last.map((s) => formatSet(s, ex.timed)).join('  ')}`
             : 'Первый раз'
           return (
-            <div key={ex.key} className="tile glass">
+            <div key={ex.key} className="tile glass" style={{ position: 'relative' }}>
+              <button
+                type="button"
+                className="tile-remove"
+                aria-label="Убрать упражнение"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  removeExercise(ex.key)
+                }}
+              >
+                ×
+              </button>
               <button
                 type="button"
                 className="tile-head"
@@ -261,26 +272,29 @@ export function WorkoutScreen() {
 
               {open && (
                 <div className="tile-body">
-                  <div className="stepper-row">
+                  <div className="stepper-row compact">
                     {!ex.timed && (
-                      <Stepper label="кг" value={weight} step={2.5} decimals={1} onChange={setWeight} />
+                      <Stepper
+                        label="кг"
+                        value={weight}
+                        step={2.5}
+                        decimals={1}
+                        compact
+                        onChange={setWeight}
+                      />
                     )}
                     <Stepper
                       label={ex.timed ? 'сек' : 'повт'}
                       value={reps}
                       step={ex.timed ? 5 : 1}
                       min={1}
+                      compact
                       onChange={setReps}
                     />
                   </div>
                   <button type="button" className="big-log" onClick={logSet}>
                     Записать подход
                   </button>
-                  <div className="btn-row">
-                    <button type="button" className="secondary" onClick={() => removeExercise(ex.key)}>
-                      Убрать
-                    </button>
-                  </div>
                 </div>
               )}
             </div>

@@ -208,7 +208,7 @@ select {
   justify-content: space-between;
   gap: 12px;
   width: 100%;
-  padding: 14px 16px;
+  padding: 14px 40px 14px 16px;
   text-align: left;
 }
 
@@ -236,9 +236,30 @@ select {
   color: var(--green);
 }
 
+.tile-remove {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  display: grid;
+  place-content: center;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--muted);
+  background: transparent;
+}
+
+.tile-remove:active {
+  color: var(--red);
+  background: rgb(255 107 90 / 0.12);
+}
+
 .tile-body {
   border-top: 1px solid var(--hairline);
-  padding: 14px 16px 16px;
+  padding: 12px 14px 14px;
 }
 
 .logged-sets {
@@ -263,11 +284,20 @@ select {
   margin: 8px 0 14px;
 }
 
+.stepper-row.compact {
+  gap: 8px;
+  margin: 4px 0 10px;
+}
+
 .stepper {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
+}
+
+.stepper.compact {
+  gap: 4px;
 }
 
 .stepper label {
@@ -278,10 +308,18 @@ select {
   text-transform: uppercase;
 }
 
+.stepper.compact label {
+  font-size: 0.68rem;
+}
+
 .stepper-controls {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.stepper.compact .stepper-controls {
+  gap: 6px;
 }
 
 .stepper-controls button {
@@ -292,12 +330,23 @@ select {
   line-height: 1;
 }
 
+.stepper.compact .stepper-controls button {
+  width: 36px;
+  height: 36px;
+  font-size: 1.1rem;
+}
+
 .stepper-controls .val {
   min-width: 64px;
   text-align: center;
   font-size: 1.45rem;
   font-weight: 750;
   letter-spacing: -0.03em;
+}
+
+.stepper.compact .stepper-controls .val {
+  min-width: 44px;
+  font-size: 1.15rem;
 }
 
 .big-log {
