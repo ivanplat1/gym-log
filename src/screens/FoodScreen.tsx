@@ -9,7 +9,8 @@ import {
   type ScaleMode,
 } from '../lib/foodPortion'
 import { effectiveGoals } from '../lib/nutritionGoals'
-import { macrosForDay, setWeightKg, todayKey, type FoodEntry } from '../lib/storage'
+import { suggestFoodMemory, type FoodMemoryItem } from '../lib/foodMemory'
+import { addFoodEntry, macrosForDay, setWeightKg, todayKey, type FoodEntry } from '../lib/storage'
 
 function Ring({
   value,
@@ -84,6 +85,11 @@ export function FoodScreen() {
     return list.slice(0, query ? 80 : 40)
   }, [q])
 
+  const myFoods = useMemo(
+    () => suggestFoodMemory(store.foodMemory ?? [], q, q.trim() ? 8 : 12),
+    [store.foodMemory, q],
+  )
+
   const displayMacros: MacroSet = useMemo(() => {
     if (baseMacros && !manualMacros && amount > 0) {
       return scaleMacros(baseMacros, baseAmount, amount)
@@ -123,7 +129,13 @@ export function FoodScreen() {
     // Стартовое значение в поле — удобный шаг 10 г, база для формулы остаётся как в пресете
     let start = base
     if (mode === 'grams') {
-      start = Math.max(10, Math.round(base / 10) * 10)
+      // если уже ел это блюдо — подставить запомненные граммы
+      const remembered = (store.foodMemory ?? []).find(
+        (m) => m.name.toLowerCase() === p.name.toLowerCase() && m.scaleMode === 'grams',
+      )
+      start = remembered?.amount
+        ? remembered.amount
+        : Math.max(10, Math.round(base / 10) * 10)
     }
     setName(p.name)
     setBaseMacros(macros)
@@ -136,6 +148,20 @@ export function FoodScreen() {
     setProtein(String(m.protein))
     setCarbs(String(m.carbs))
     setFat(String(m.fat))
+  }
+
+  const applyMemory = (item: FoodMemoryItem) => {
+    setName(item.name)
+    setBaseMacros(item.macros)
+    setBaseAmount(item.amount)
+    setScaleMode(item.scaleMode)
+    setAmountText(String(item.amount))
+    setManualMacros(false)
+    setKcal(String(item.macros.kcal))
+    setProtein(String(item.macros.protein))
+    setCarbs(String(item.macros.carbs))
+    setFat(String(item.macros.fat))
+    setQ('')
   }
 
   const applyScaled = (n: number) => {
@@ -193,7 +219,7 @@ export function FoodScreen() {
       fat: displayMacros.fat,
       createdAt: new Date().toISOString(),
     }
-    setStore((s) => ({ ...s, foods: [entry, ...s.foods] }))
+    setStore((s) => addFoodEntry(s, entry))
     resetForm()
     setOpen(false)
   }
@@ -275,6 +301,30 @@ export function FoodScreen() {
       <button type="button" className="primary" style={{ width: '100%' }} onClick={() => setOpen(true)}>
         + Добавить еду
       </button>
+
+      {!!(store.foodMemory ?? []).length && (
+        <div style={{ marginTop: 10 }}>
+          <div style={{ fontSize: '0.75rem', color: 'var(--muted)', marginBottom: 6 }}>Мои блюда</div>
+          <div className="chips">
+            {suggestFoodMemory(store.foodMemory ?? [], '', 6).map((m) => (
+              <button
+                key={m.name}
+                type="button"
+                className="chip"
+                onClick={() => {
+                  setOpen(true)
+                  queueMicrotask(() => applyMemory(m))
+                }}
+              >
+                {m.name}
+                <span className="tnum" style={{ opacity: 0.7, marginLeft: 4 }}>
+                  {m.scaleMode === 'grams' ? `${m.amount}г` : `${m.amount}шт`}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {(Object.keys(MEAL_LABELS) as MealSlot[]).map((slot) => {
         const items = today.filter((f) => f.meal === slot)
@@ -410,7 +460,40 @@ export function FoodScreen() {
               onChange={(e) => setQ(e.target.value)}
               autoFocus
             />
-            <div className="preset-grid">
+
+            {myFoods.length > 0 && (
+              <div style={{ marginTop: 10 }}>
+                <div
+                  style={{
+                    fontSize: '0.75rem',
+                    color: 'var(--muted)',
+                    marginBottom: 6,
+                    letterSpacing: '0.02em',
+                  }}
+                >
+                  {q.trim() ? 'Мои совпадения' : 'Мои блюда'}
+                </div>
+                <div className="preset-grid">
+                  {myFoods.map((m) => (
+                    <button
+                      key={m.name}
+                      type="button"
+                      className="preset"
+                      onClick={() => applyMemory(m)}
+                      style={{ borderColor: 'rgb(61 214 140 / 0.35)' }}
+                    >
+                      <strong>{m.name}</strong>
+                      <span>
+                        {m.portion} · {Math.round(m.macros.kcal)} ккал
+                        {m.count > 1 ? ` · ×${m.count}` : ''}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="preset-grid" style={{ marginTop: myFoods.length ? 12 : 0 }}>
               {presets.map((p) => (
                 <button key={p.id} type="button" className="preset" onClick={() => apply(p.id)}>
                   <strong>{p.name}</strong>
@@ -422,10 +505,10 @@ export function FoodScreen() {
             </div>
             {!q.trim() && (
               <p style={{ marginTop: 8, color: 'var(--muted)', fontSize: '0.82rem' }}>
-                Показаны первые 40 — начни вводить название
+                Сверху — твои блюда с последней граммовкой. Ниже пресеты (первые 40).
               </p>
             )}
-            {q.trim() && !presets.length && (
+            {q.trim() && !presets.length && !myFoods.length && (
               <p className="empty" style={{ padding: 12 }}>
                 Ничего не найдено
               </p>
