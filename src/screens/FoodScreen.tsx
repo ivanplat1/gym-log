@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { NutritionStatsSheet } from '../components/NutritionStatsSheet'
 import { FOOD_PRESETS, MEAL_LABELS, mealByTime, type MealSlot } from '../data/foods'
 import { useStore } from '../lib/store'
 import {
@@ -56,6 +57,7 @@ export function FoodScreen() {
   const goalsToday = effectiveGoals(store, date)
 
   const [goalsOpen, setGoalsOpen] = useState(false)
+  const [statsOpen, setStatsOpen] = useState(false)
   const [open, setOpen] = useState(false)
   const [detailOpen, setDetailOpen] = useState(false)
   const [meal, setMeal] = useState<MealSlot>(() => mealByTime())
@@ -317,7 +319,11 @@ export function FoodScreen() {
         </div>
       </div>
 
-      <button type="button" className="primary" style={{ width: '100%' }} onClick={() => openSheet()}>
+      <button type="button" className="secondary" style={{ width: '100%', marginTop: 10 }} onClick={() => setStatsOpen(true)}>
+        Статистика по дням
+      </button>
+
+      <button type="button" className="primary" style={{ width: '100%', marginTop: 10 }} onClick={() => openSheet()}>
         + Добавить еду
       </button>
 
@@ -353,7 +359,9 @@ export function FoodScreen() {
             <div className="meal-title">
               <span>{MEAL_LABELS[slot]}</span>
               <span className="meal-title-right">
-                <span className="tnum">{items.length ? `${Math.round(mealKcal)} ккал` : 'пусто'}</span>
+                {items.length > 0 && (
+                  <span className="tnum">{Math.round(mealKcal)} ккал</span>
+                )}
                 <button
                   type="button"
                   className="meal-add"
@@ -382,11 +390,6 @@ export function FoodScreen() {
                 </div>
               </div>
             ))}
-            {!items.length && (
-              <div style={{ padding: '8px 0 4px', color: 'var(--muted)', fontSize: '0.85rem' }}>
-                Ничего не записано
-              </div>
-            )}
           </div>
         )
       })}
@@ -458,6 +461,8 @@ export function FoodScreen() {
           </div>
         )}
       </section>
+
+      {statsOpen && <NutritionStatsSheet store={store} onClose={() => setStatsOpen(false)} />}
 
       {open && (
         <div

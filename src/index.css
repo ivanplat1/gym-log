@@ -806,6 +806,134 @@ select {
   background: rgb(240 180 41 / 0.28);
 }
 
+.nutrition-day-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 14px 0 12px;
+}
+
+.nutrition-day-nav .ghost {
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  font-size: 1.4rem;
+}
+
+.nutrition-day-nav .ghost:disabled {
+  opacity: 0.3;
+}
+
+.nutrition-day-label {
+  text-align: center;
+}
+
+.nutrition-day-label strong {
+  display: block;
+  font-size: 1.05rem;
+}
+
+.nutrition-day-label span {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.nutrition-kcal-card {
+  padding: 16px;
+  border-radius: 16px;
+}
+
+.nutrition-stat-row {
+  display: grid;
+  gap: 6px;
+}
+
+.nutrition-stat-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.88rem;
+}
+
+.nutrition-stat-bar {
+  position: relative;
+  height: 8px;
+  border-radius: 999px;
+  background: #2a2a2a;
+  overflow: hidden;
+}
+
+.nutrition-stat-fill {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.nutrition-stat-over {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 3px;
+  height: 100%;
+  opacity: 0.9;
+}
+
+.nutrition-stat-delta {
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.nutrition-stat-delta-ok {
+  color: var(--green);
+}
+
+.nutrition-stat-delta-over {
+  color: var(--accent);
+}
+
+.nutrition-stat-delta-under {
+  color: var(--red);
+}
+
+.nutrition-stat-delta-empty {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.nutrition-week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.nutrition-week-day {
+  display: grid;
+  gap: 2px;
+  justify-items: center;
+  padding: 8px 2px;
+  border-radius: 12px;
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 0.65rem;
+}
+
+.nutrition-week-day.on {
+  border-color: rgb(240 180 41 / 0.55);
+  background: rgb(240 180 41 / 0.12);
+}
+
+.nutrition-week-day strong {
+  font-size: 0.72rem;
+}
+
+.nutrition-week-day em {
+  font-style: normal;
+  font-size: 0.62rem;
+  font-weight: 700;
+}
+
 .food-row {
   display: grid;
   grid-template-columns: 1fr auto;
