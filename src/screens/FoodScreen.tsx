@@ -360,7 +360,7 @@ export function FoodScreen() {
                   aria-label={`Добавить в ${MEAL_LABELS[slot]}`}
                   onClick={() => openSheet(slot)}
                 >
-                  +
+                  + еда
                 </button>
               </span>
             </div>

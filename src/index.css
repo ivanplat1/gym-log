@@ -784,15 +784,18 @@ select {
 }
 
 .meal-add {
-  width: 32px;
-  height: 32px;
-  padding: 0;
+  width: auto;
+  min-width: 36px;
+  height: 34px;
+  padding: 0 10px;
   border-radius: 10px;
-  border: 1px solid var(--hairline);
-  background: var(--surface);
-  color: var(--ink);
-  font-size: 1.25rem;
-  font-weight: 700;
+  border: 1px solid rgb(240 180 41 / 0.45);
+  background: rgb(240 180 41 / 0.16);
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: none;
   line-height: 1;
   display: inline-grid;
   place-items: center;
@@ -800,6 +803,7 @@ select {
 
 .meal-add:active {
   transform: scale(0.96);
+  background: rgb(240 180 41 / 0.28);
 }
 
 .food-row {
