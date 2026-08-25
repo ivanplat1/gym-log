@@ -307,12 +307,13 @@ select {
 
 .tile-remove {
   flex-shrink: 0;
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
   border: 1px solid rgb(255 107 90 / 0.35);
   display: grid;
   place-content: center;
+  align-self: center;
   color: #ff6b5a;
   background: rgb(255 107 90 / 0.12);
 }
@@ -758,7 +759,7 @@ select {
 
 .meal {
   border-radius: var(--radius);
-  padding: 4px 14px 10px;
+  padding: 6px 14px 12px;
   margin-bottom: 10px;
 }
 
@@ -766,11 +767,36 @@ select {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 0 6px;
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--muted);
+  gap: 10px;
+  padding: 10px 0 8px;
+}
+
+.meal-label {
+  position: relative;
+  padding-left: 12px;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-transform: none;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.meal-label::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.15em;
+  bottom: 0.1em;
+  width: 3px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.meal-kcal {
+  color: var(--accent);
+  font-size: 0.78rem;
   font-weight: 750;
 }
 
@@ -935,7 +961,7 @@ select {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 10px;
-  align-items: start;
+  align-items: center;
   padding: 10px 0;
   border-top: 1px solid var(--hairline);
 }

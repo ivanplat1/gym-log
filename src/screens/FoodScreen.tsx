@@ -320,10 +320,6 @@ export function FoodScreen() {
         </div>
       </div>
 
-      <button type="button" className="secondary" style={{ width: '100%', marginTop: 10 }} onClick={() => setStatsOpen(true)}>
-        Статистика по дням
-      </button>
-
       <button type="button" className="primary" style={{ width: '100%', marginTop: 10 }} onClick={() => openSheet()}>
         + Добавить еду
       </button>
@@ -358,10 +354,10 @@ export function FoodScreen() {
         return (
           <div key={slot} className="meal glass" style={{ marginTop: 12 }}>
             <div className="meal-title">
-              <span>{MEAL_LABELS[slot]}</span>
+              <span className="meal-label">{MEAL_LABELS[slot]}</span>
               <span className="meal-title-right">
                 {items.length > 0 && (
-                  <span className="tnum">{Math.round(mealKcal)} ккал</span>
+                  <span className="tnum meal-kcal">{Math.round(mealKcal)} ккал</span>
                 )}
                 <button
                   type="button"
@@ -469,6 +465,15 @@ export function FoodScreen() {
           </div>
         )}
       </section>
+
+      <button
+        type="button"
+        className="secondary"
+        style={{ width: '100%', marginTop: 14, marginBottom: 8 }}
+        onClick={() => setStatsOpen(true)}
+      >
+        Статистика по дням
+      </button>
 
       {statsOpen && <NutritionStatsSheet store={store} onClose={() => setStatsOpen(false)} />}
 
