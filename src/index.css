@@ -777,6 +777,31 @@ select {
   font-weight: 750;
 }
 
+.meal-title-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.meal-add {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 10px;
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+  display: inline-grid;
+  place-items: center;
+}
+
+.meal-add:active {
+  transform: scale(0.96);
+}
+
 .food-row {
   display: grid;
   grid-template-columns: 1fr auto;
