@@ -784,17 +784,17 @@ select {
 }
 
 .meal-add {
-  width: auto;
-  min-width: 36px;
+  width: 34px;
+  min-width: 34px;
   height: 34px;
-  padding: 0 10px;
+  padding: 0;
   border-radius: 10px;
   border: 1px solid rgb(240 180 41 / 0.45);
   background: rgb(240 180 41 / 0.16);
   color: var(--accent);
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.02em;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0;
   text-transform: none;
   line-height: 1;
   display: inline-grid;
