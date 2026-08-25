@@ -5,7 +5,7 @@ export function LoginScreen({
 }: {
   onLogin: (username: string, password: string) => Promise<void>
 }) {
-  const [username, setUsername] = useState('ivan')
+  const [username, setUsername] = useState('ivpl')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
