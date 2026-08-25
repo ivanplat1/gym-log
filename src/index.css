@@ -953,6 +953,56 @@ select {
   color: var(--muted);
 }
 
+.macro-tags {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.macro-tag {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 750;
+  line-height: 1.2;
+}
+
+.macro-tag .tnum {
+  font-weight: 800;
+}
+
+.macro-tag-p {
+  color: #3dd68c;
+  background: rgb(61 214 140 / 0.14);
+}
+
+.macro-tag-c {
+  color: #6ea8fe;
+  background: rgb(110 168 254 / 0.14);
+}
+
+.macro-tag-f {
+  color: #ff6b5a;
+  background: rgb(255 107 90 / 0.14);
+}
+
+.macro-preview-label-p {
+  color: #3dd68c !important;
+}
+
+.macro-preview-label-c {
+  color: #6ea8fe !important;
+}
+
+.macro-preview-label-f {
+  color: #ff6b5a !important;
+}
+
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
