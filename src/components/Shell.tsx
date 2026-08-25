@@ -1,6 +1,7 @@
+import { useEffect, useState, type SVGProps } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
-import type { SVGProps } from 'react'
 import { useStore } from '../lib/store'
+import { LoginScreen } from '../screens/LoginScreen'
 
 function IconTrain(props: SVGProps<SVGSVGElement>) {
   return (
@@ -59,22 +60,32 @@ function IconHistory(props: SVGProps<SVGSVGElement>) {
 }
 
 export function Shell() {
-  const { username, logout, syncing, syncError, serverMode } = useStore()
+  const { username, login, logout, syncing, syncError, serverMode } = useStore()
+  const [loginOpen, setLoginOpen] = useState(false)
+  const loggedIn = Boolean(username && username !== 'local')
+
+  useEffect(() => {
+    if (loggedIn) setLoginOpen(false)
+  }, [loggedIn])
+
+  const status = !serverMode
+    ? 'локально'
+    : !loggedIn
+      ? 'гость · на устройстве'
+      : syncError
+        ? 'ошибка синка'
+        : syncing
+          ? 'сохраняю…'
+          : 'на сервере'
 
   return (
     <div className="app-shell">
       <div className="app-main">
         <div className="shell-top">
           <span className="tnum" style={{ color: 'var(--muted)', fontSize: '0.72rem' }}>
-            {!serverMode
-              ? 'локально'
-              : syncError
-                ? 'ошибка синка'
-                : syncing
-                  ? 'сохраняю…'
-                  : 'на сервере'}
+            {status}
           </span>
-          {serverMode ? (
+          {loggedIn ? (
             <button
               type="button"
               className="ghost"
@@ -83,12 +94,40 @@ export function Shell() {
             >
               {username} · выход
             </button>
+          ) : serverMode ? (
+            <button
+              type="button"
+              className="ghost"
+              style={{ padding: '4px 10px' }}
+              onClick={() => setLoginOpen(true)}
+            >
+              Вход
+            </button>
           ) : (
             <span style={{ color: 'var(--muted)', fontSize: '0.72rem' }}>без логина</span>
           )}
         </div>
         <Outlet />
       </div>
+
+      {loginOpen && (
+        <div className="login-sheet" role="dialog" aria-modal="true" aria-label="Вход">
+          <button
+            type="button"
+            className="login-sheet-backdrop"
+            aria-label="Закрыть"
+            onClick={() => setLoginOpen(false)}
+          />
+          <div className="login-sheet-panel glass">
+            <LoginScreen
+              onLogin={login}
+              onCancel={() => setLoginOpen(false)}
+              compact
+            />
+          </div>
+        </div>
+      )}
+
       <nav className="dock glass dock-4" aria-label="Навигация">
         <NavLink to="/" end>
           <IconTrain />
