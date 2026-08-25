@@ -377,7 +377,18 @@ export function FoodScreen() {
                 <div>
                   <strong>{f.name}</strong>
                   <div className="meta">
-                    {f.portion || 'порция'} · Б{f.protein} У{f.carbs} Ж{f.fat}
+                    {f.portion || 'порция'} ·{' '}
+                    <span className="macro-tags">
+                      <span className="macro-tag macro-tag-p">
+                        Б <span className="tnum">{f.protein}</span>
+                      </span>
+                      <span className="macro-tag macro-tag-c">
+                        У <span className="tnum">{f.carbs}</span>
+                      </span>
+                      <span className="macro-tag macro-tag-f">
+                        Ж <span className="tnum">{f.fat}</span>
+                      </span>
+                    </span>
                   </div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
@@ -684,16 +695,28 @@ export function FoodScreen() {
                   <strong className="tnum">{displayMacros.kcal}</strong>
                 </div>
                 <div>
-                  <div style={{ fontSize: '0.68rem', color: 'var(--muted)' }}>Б</div>
-                  <strong className="tnum">{displayMacros.protein}</strong>
+                  <div className="macro-preview-label-p" style={{ fontSize: '0.68rem' }}>
+                    Б
+                  </div>
+                  <strong className="tnum" style={{ color: '#3dd68c' }}>
+                    {displayMacros.protein}
+                  </strong>
                 </div>
                 <div>
-                  <div style={{ fontSize: '0.68rem', color: 'var(--muted)' }}>У</div>
-                  <strong className="tnum">{displayMacros.carbs}</strong>
+                  <div className="macro-preview-label-c" style={{ fontSize: '0.68rem' }}>
+                    У
+                  </div>
+                  <strong className="tnum" style={{ color: '#6ea8fe' }}>
+                    {displayMacros.carbs}
+                  </strong>
                 </div>
                 <div>
-                  <div style={{ fontSize: '0.68rem', color: 'var(--muted)' }}>Ж</div>
-                  <strong className="tnum">{displayMacros.fat}</strong>
+                  <div className="macro-preview-label-f" style={{ fontSize: '0.68rem' }}>
+                    Ж
+                  </div>
+                  <strong className="tnum" style={{ color: '#ff6b5a' }}>
+                    {displayMacros.fat}
+                  </strong>
                 </div>
               </div>
 
