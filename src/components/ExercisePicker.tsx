@@ -4,6 +4,7 @@ import {
   searchExercises,
   type MuscleGroup,
 } from '../data/exercises'
+import { CloseButton } from './IconButtons'
 
 export function ExercisePicker({
   onPick,
@@ -26,9 +27,7 @@ export function ExercisePicker({
       <div className="sheet" onClick={(e) => e.stopPropagation()}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h2>Упражнение</h2>
-          <button type="button" className="ghost" onClick={onClose}>
-            Закрыть
-          </button>
+          <CloseButton onClick={onClose} />
         </div>
         <input
           className="search"

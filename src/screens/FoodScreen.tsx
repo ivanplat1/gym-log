@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { CloseButton, TrashButton } from '../components/IconButtons'
 import { NutritionStatsSheet } from '../components/NutritionStatsSheet'
 import { FOOD_PRESETS, MEAL_LABELS, mealByTime, type MealSlot } from '../data/foods'
 import { useStore } from '../lib/store'
@@ -377,8 +378,11 @@ export function FoodScreen() {
                 <div>
                   <strong>{f.name}</strong>
                   <div className="meta">
-                    {f.portion || 'порция'} ·{' '}
+                    <span className="portion-chip">{f.portion || 'порция'}</span>
                     <span className="macro-tags">
+                      <span className="macro-tag macro-tag-kcal">
+                        <span className="tnum">{Math.round(f.kcal)}</span> ккал
+                      </span>
                       <span className="macro-tag macro-tag-p">
                         Б <span className="tnum">{f.protein}</span>
                       </span>
@@ -391,14 +395,7 @@ export function FoodScreen() {
                     </span>
                   </div>
                 </div>
-                <div style={{ textAlign: 'right' }}>
-                  <div className="tnum" style={{ fontWeight: 750 }}>
-                    {Math.round(f.kcal)}
-                  </div>
-                  <button type="button" className="ghost" style={{ marginTop: 4 }} onClick={() => remove(f.id)}>
-                    ✕
-                  </button>
-                </div>
+                <TrashButton onClick={() => remove(f.id)} />
               </div>
             ))}
           </div>
@@ -485,9 +482,7 @@ export function FoodScreen() {
           <div className="sheet" onClick={(e) => e.stopPropagation()}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <h2>Еда</h2>
-              <button type="button" className="ghost" onClick={closeAll}>
-                Закрыть
-              </button>
+              <CloseButton onClick={closeAll} />
             </div>
 
             <div className="chips">
@@ -534,8 +529,13 @@ export function FoodScreen() {
                     >
                       <strong>{m.name}</strong>
                       <span>
-                        {m.portion} · {Math.round(m.macros.kcal)} ккал
-                        {m.count > 1 ? ` · ×${m.count}` : ''}
+                        <span className="portion-chip" style={{ marginRight: 6 }}>
+                          {m.portion}
+                          {m.count > 1 ? ` · ×${m.count}` : ''}
+                        </span>
+                        <span className="macro-tag macro-tag-kcal">
+                          <span className="tnum">{Math.round(m.macros.kcal)}</span> ккал
+                        </span>
                       </span>
                     </button>
                   ))}
@@ -548,7 +548,12 @@ export function FoodScreen() {
                 <button key={p.id} type="button" className="preset" onClick={() => apply(p.id)}>
                   <strong>{p.name}</strong>
                   <span>
-                    {p.portion} · {p.kcal} ккал
+                    <span className="portion-chip" style={{ marginRight: 6 }}>
+                      {p.portion}
+                    </span>
+                    <span className="macro-tag macro-tag-kcal">
+                      <span className="tnum">{p.kcal}</span> ккал
+                    </span>
                   </span>
                 </button>
               ))}
@@ -586,9 +591,7 @@ export function FoodScreen() {
                 ← Назад
               </button>
               <h2 style={{ margin: 0, fontSize: '1.15rem' }}>{name.trim() || 'Порция'}</h2>
-              <button type="button" className="ghost" onClick={closeAll}>
-                ✕
-              </button>
+              <CloseButton onClick={closeAll} />
             </div>
 
             <div className="chips" style={{ marginTop: 8 }}>
@@ -691,8 +694,12 @@ export function FoodScreen() {
                 }}
               >
                 <div>
-                  <div style={{ fontSize: '0.68rem', color: 'var(--muted)' }}>ККАЛ</div>
-                  <strong className="tnum">{displayMacros.kcal}</strong>
+                  <div className="macro-preview-label-kcal" style={{ fontSize: '0.68rem' }}>
+                    ККАЛ
+                  </div>
+                  <strong className="tnum" style={{ color: '#f0b429' }}>
+                    {displayMacros.kcal}
+                  </strong>
                 </div>
                 <div>
                   <div className="macro-preview-label-p" style={{ fontSize: '0.68rem' }}>

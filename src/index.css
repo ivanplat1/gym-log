@@ -310,19 +310,16 @@ select {
   width: 34px;
   height: 34px;
   border-radius: 10px;
-  border: 1px solid var(--glass-border);
+  border: 1px solid rgb(255 107 90 / 0.35);
   display: grid;
   place-content: center;
-  font-size: 1.15rem;
-  line-height: 1;
-  color: var(--muted);
-  background: rgb(255 255 255 / 0.06);
+  color: #ff6b5a;
+  background: rgb(255 107 90 / 0.12);
 }
 
 .tile-remove:active {
-  color: var(--red);
-  background: rgb(255 107 90 / 0.14);
-  border-color: rgb(255 107 90 / 0.35);
+  background: rgb(255 107 90 / 0.2);
+  transform: scale(0.96);
 }
 
 .tile-body {
@@ -937,7 +934,8 @@ select {
 .food-row {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 8px;
+  gap: 10px;
+  align-items: start;
   padding: 10px 0;
   border-top: 1px solid var(--hairline);
 }
@@ -948,7 +946,11 @@ select {
 }
 
 .food-row .meta {
-  margin-top: 2px;
+  margin-top: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
   font-size: 0.76rem;
   color: var(--muted);
 }
@@ -958,7 +960,18 @@ select {
   flex-wrap: wrap;
   gap: 6px;
   align-items: center;
-  vertical-align: middle;
+}
+
+.portion-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+  background: rgb(255 255 255 / 0.04);
+  color: var(--ink);
+  font-size: 0.72rem;
+  font-weight: 700;
 }
 
 .macro-tag {
@@ -976,6 +989,11 @@ select {
   font-weight: 800;
 }
 
+.macro-tag-kcal {
+  color: #f0b429;
+  background: rgb(240 180 41 / 0.16);
+}
+
 .macro-tag-p {
   color: #3dd68c;
   background: rgb(61 214 140 / 0.14);
@@ -991,6 +1009,10 @@ select {
   background: rgb(255 107 90 / 0.14);
 }
 
+.macro-preview-label-kcal {
+  color: #f0b429 !important;
+}
+
 .macro-preview-label-p {
   color: #3dd68c !important;
 }
@@ -1001,6 +1023,40 @@ select {
 
 .macro-preview-label-f {
   color: #ff6b5a !important;
+}
+
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 11px;
+  border: 1px solid transparent;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  background: transparent;
+  color: var(--muted);
+}
+
+.icon-btn-close {
+  border-color: var(--hairline);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.icon-btn-close:active {
+  transform: scale(0.96);
+}
+
+.icon-btn-danger {
+  border-color: rgb(255 107 90 / 0.35);
+  background: rgb(255 107 90 / 0.12);
+  color: #ff6b5a;
+}
+
+.icon-btn-danger:active {
+  transform: scale(0.96);
+  background: rgb(255 107 90 / 0.2);
 }
 
 .form-grid {

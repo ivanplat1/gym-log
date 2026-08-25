@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { CloseButton } from './IconButtons'
 import { effectiveGoals } from '../lib/nutritionGoals'
 import { macrosForDay, todayKey, type Store } from '../lib/storage'
 
@@ -104,9 +105,7 @@ export function NutritionStatsSheet({
       <div className="sheet" onClick={(e) => e.stopPropagation()}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h2>Статистика</h2>
-          <button type="button" className="ghost" onClick={onClose}>
-            Закрыть
-          </button>
+          <CloseButton onClick={onClose} />
         </div>
 
         <div className="nutrition-day-nav">
