@@ -145,8 +145,6 @@ export function NutritionStatsSheet({
         <div style={{ marginTop: 14, display: 'grid', gap: 12 }}>
           <StatRow label="Ккал" color="#f0b429" eaten={totals.kcal} goal={goals.kcal} unit="" />
           <StatRow label="Белок" color="#3dd68c" eaten={totals.protein} goal={goals.protein} unit="г" />
-          <StatRow label="Углеводы" color="#6ea8fe" eaten={totals.carbs} goal={goals.carbs} unit="г" />
-          <StatRow label="Жиры" color="#ff6b5a" eaten={totals.fat} goal={goals.fat} unit="г" />
         </div>
 
         <div style={{ marginTop: 18 }}>

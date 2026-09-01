@@ -296,24 +296,6 @@ export function FoodScreen() {
               {Math.round(totals.protein)} / {goalsToday.protein}г
             </strong>
           </div>
-          <div className="macro-line">
-            <span>
-              <i className="dot" style={{ background: '#6ea8fe' }} />
-              Углев.
-            </span>
-            <strong className="tnum">
-              {Math.round(totals.carbs)} / {goalsToday.carbs}г
-            </strong>
-          </div>
-          <div className="macro-line">
-            <span>
-              <i className="dot" style={{ background: '#ff6b5a' }} />
-              Жиры
-            </span>
-            <strong className="tnum">
-              {Math.round(totals.fat)} / {goalsToday.fat}г
-            </strong>
-          </div>
           <p style={{ margin: '6px 0 0', color: 'var(--muted)', fontSize: '0.75rem' }}>
             {goalsToday.trainingDay
               ? `Тренировка · цель ${goalsToday.kcal} ккал`
@@ -411,12 +393,6 @@ export function FoodScreen() {
                         <span className="macro-tag macro-tag-p">
                           Б <span className="tnum">{f.protein}</span>
                         </span>
-                        <span className="macro-tag macro-tag-c">
-                          У <span className="tnum">{f.carbs}</span>
-                        </span>
-                        <span className="macro-tag macro-tag-f">
-                          Ж <span className="tnum">{f.fat}</span>
-                        </span>
                       </span>
                     </div>
                   </div>
@@ -476,13 +452,11 @@ export function FoodScreen() {
                 }}
               />
             </div>
-            <div className="span2" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
+            <div className="span2" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8 }}>
               {(
                 [
                   ['Ккал', goalsToday.kcal],
                   ['Б', goalsToday.protein],
-                  ['У', goalsToday.carbs],
-                  ['Ж', goalsToday.fat],
                 ] as const
               ).map(([label, value]) => (
                 <div key={label} style={{ textAlign: 'center' }}>
@@ -727,7 +701,7 @@ export function FoodScreen() {
                   padding: '12px 14px',
                   borderRadius: 14,
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(4, 1fr)',
+                  gridTemplateColumns: 'repeat(2, 1fr)',
                   gap: 8,
                   textAlign: 'center',
                 }}
@@ -748,22 +722,6 @@ export function FoodScreen() {
                     {displayMacros.protein}
                   </strong>
                 </div>
-                <div>
-                  <div className="macro-preview-label-c" style={{ fontSize: '0.68rem' }}>
-                    У
-                  </div>
-                  <strong className="tnum" style={{ color: '#6ea8fe' }}>
-                    {displayMacros.carbs}
-                  </strong>
-                </div>
-                <div>
-                  <div className="macro-preview-label-f" style={{ fontSize: '0.68rem' }}>
-                    Ж
-                  </div>
-                  <strong className="tnum" style={{ color: '#ff6b5a' }}>
-                    {displayMacros.fat}
-                  </strong>
-                </div>
               </div>
 
               {!manualMacros ? (
@@ -773,7 +731,7 @@ export function FoodScreen() {
                   style={{ gridColumn: '1 / -1' }}
                   onClick={enableManual}
                 >
-                  Править ккал / БЖУ вручную
+                  Править ккал / белок вручную
                 </button>
               ) : (
                 <>
@@ -784,14 +742,6 @@ export function FoodScreen() {
                   <div className="field">
                     <label>Белок</label>
                     <input type="number" value={protein} onChange={(e) => setProtein(e.target.value)} />
-                  </div>
-                  <div className="field">
-                    <label>Углеводы</label>
-                    <input type="number" value={carbs} onChange={(e) => setCarbs(e.target.value)} />
-                  </div>
-                  <div className="field">
-                    <label>Жиры</label>
-                    <input type="number" value={fat} onChange={(e) => setFat(e.target.value)} />
                   </div>
                 </>
               )}
