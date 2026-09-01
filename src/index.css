@@ -85,6 +85,36 @@ select {
   margin-bottom: 8px;
 }
 
+.login-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  align-items: end;
+  justify-items: center;
+  padding: 12px 12px calc(12px + env(safe-area-inset-bottom));
+  pointer-events: none;
+}
+
+.login-sheet-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgb(0 0 0 / 0.55);
+  pointer-events: auto;
+}
+
+.login-sheet-panel {
+  position: relative;
+  z-index: 1;
+  width: min(520px, 100%);
+  max-height: min(85vh, 640px);
+  overflow: auto;
+  padding: 18px 16px 16px;
+  border-radius: 20px 20px 16px 16px;
+  pointer-events: auto;
+}
+
 /* glass */
 .glass {
   background: var(--glass);

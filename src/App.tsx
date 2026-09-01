@@ -3,7 +3,6 @@ import { Shell } from './components/Shell'
 import { StoreProvider, useStore } from './lib/store'
 import { FoodScreen } from './screens/FoodScreen'
 import { HistoryScreen } from './screens/HistoryScreen'
-import { LoginScreen } from './screens/LoginScreen'
 import { ProgressScreen } from './screens/ProgressScreen'
 import { WorkoutScreen } from './screens/WorkoutScreen'
 
@@ -11,7 +10,7 @@ const rawBase = import.meta.env.BASE_URL
 const basename = rawBase === '/' ? undefined : rawBase.replace(/\/$/, '')
 
 function AuthedApp() {
-  const { authReady, username, login, serverMode } = useStore()
+  const { authReady } = useStore()
 
   if (!authReady) {
     return (
@@ -21,10 +20,6 @@ function AuthedApp() {
         </div>
       </div>
     )
-  }
-
-  if (serverMode && !username) {
-    return <LoginScreen onLogin={login} />
   }
 
   return (
