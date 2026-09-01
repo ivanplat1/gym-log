@@ -1155,12 +1155,27 @@ select {
 }
 
 .food-row {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 10px;
+  display: flex;
+  gap: 8px;
   align-items: center;
   padding: 10px 0;
   border-top: 1px solid var(--hairline);
+}
+
+.food-row-main {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: inherit;
+}
+
+.food-row-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
 }
 
 .food-row strong {

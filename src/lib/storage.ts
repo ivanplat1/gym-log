@@ -225,6 +225,15 @@ export function addFoodEntry(store: Store, entry: FoodEntry): Store {
   }
 }
 
+/** Обновить запись еды и обновить память блюда */
+export function updateFoodEntry(store: Store, entry: FoodEntry): Store {
+  return {
+    ...store,
+    foods: store.foods.map((f) => (f.id === entry.id ? entry : f)),
+    foodMemory: upsertFoodMemory(store.foodMemory ?? [], entry),
+  }
+}
+
 /** Добавить своё упражнение или вернуть уже существующее с тем же именем */
 export function addCustomExercise(
   store: Store,
