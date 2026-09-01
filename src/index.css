@@ -377,6 +377,11 @@ select {
   margin: 4px 0 10px;
 }
 
+.stepper-row.single {
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
 .stepper {
   display: flex;
   flex-direction: column;
@@ -435,6 +440,30 @@ select {
 .stepper.compact .stepper-controls .val {
   min-width: 44px;
   font-size: 1.15rem;
+}
+
+.stepper-controls .stepper-input {
+  flex: 1;
+  min-width: 44px;
+  max-width: 72px;
+  min-height: 36px;
+  padding: 0 4px;
+  text-align: center;
+  font-size: 1.15rem;
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  border-radius: 10px;
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  color: inherit;
+}
+
+.stepper:not(.compact) .stepper-controls .stepper-input {
+  min-width: 64px;
+  max-width: 88px;
+  min-height: 48px;
+  font-size: 1.45rem;
+  border-radius: 12px;
 }
 
 .big-log {
