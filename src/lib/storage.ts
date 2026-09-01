@@ -16,6 +16,8 @@ export interface LoggedSet {
   weight: number | null
   reps: number | null
   durationSec: number | null
+  /** Дистанция для ходьбы / бега, метры */
+  distanceM: number | null
   done: boolean
 }
 
@@ -78,6 +80,8 @@ export interface Store {
   /** Незавершённая сессия — живёт при смене вкладок */
   activeSession: WorkoutSession | null
   health: HealthDay[]
+  /** Ручной ввод сожжённых активных ккал по датам YYYY-MM-DD */
+  manualBurnKcal: Record<string, number>
 }
 
 const STORAGE_KEY = 'gym-log:v2'
@@ -103,6 +107,7 @@ function emptyStore(): Store {
     goals: goalsFromProfile(profile),
     activeSession: null,
     health: [],
+    manualBurnKcal: {},
   }
 }
 
@@ -127,6 +132,10 @@ export function loadStore(): Store {
       goals: goalsFromProfile(profile),
       activeSession: parsed.activeSession ?? null,
       health: Array.isArray(parsed.health) ? parsed.health : [],
+      manualBurnKcal:
+        parsed.manualBurnKcal && typeof parsed.manualBurnKcal === 'object'
+          ? (parsed.manualBurnKcal as Record<string, number>)
+          : {},
     }
   } catch {
     return emptyStore()
@@ -185,6 +194,7 @@ export function emptySet(timed: boolean): LoggedSet {
     weight: null,
     reps: timed ? null : null,
     durationSec: timed ? null : null,
+    distanceM: null,
     done: false,
   }
 }
@@ -213,6 +223,13 @@ export function lastSetsForExercise(
     }
   }
   return null
+}
+
+export function setManualBurnKcal(store: Store, date: string, kcal: number): Store {
+  const next = { ...(store.manualBurnKcal ?? {}) }
+  if (kcal <= 0) delete next[date]
+  else next[date] = Math.round(kcal)
+  return { ...store, manualBurnKcal: next }
 }
 
 export function macrosForDay(foods: FoodEntry[], date: string) {

@@ -68,23 +68,17 @@ export function Shell() {
     if (loggedIn) setLoginOpen(false)
   }, [loggedIn])
 
-  const status = !serverMode
-    ? 'локально'
-    : !loggedIn
-      ? 'гость · на устройстве'
-      : syncError
-        ? 'ошибка синка'
-        : syncing
-          ? 'сохраняю…'
-          : 'на сервере'
+  const status = syncError ? 'ошибка синка' : syncing ? 'сохраняю…' : null
 
   return (
     <div className="app-shell">
       <div className="app-main">
         <div className="shell-top">
-          <span className="tnum" style={{ color: 'var(--muted)', fontSize: '0.72rem' }}>
-            {status}
-          </span>
+          {status && (
+            <span className="tnum" style={{ color: 'var(--muted)', fontSize: '0.72rem' }}>
+              {status}
+            </span>
+          )}
           {loggedIn ? (
             <button
               type="button"

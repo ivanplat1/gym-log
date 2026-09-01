@@ -14,6 +14,30 @@ export function isCardioExercise(exerciseId: string, custom: Exercise[] = []): b
   return getExercise(exerciseId, custom)?.group === 'cardio'
 }
 
+export function isDistanceCardio(exerciseId: string, custom: Exercise[] = []): boolean {
+  if (!isCardioExercise(exerciseId, custom)) return false
+  return exerciseId === 'walk' || exerciseId === 'run'
+}
+
+export function formatDistance(meters: number): string {
+  if (meters <= 0) return '0 м'
+  if (meters >= 1000) {
+    const km = meters / 1000
+    return Number.isInteger(km) ? `${km} км` : `${km.toFixed(1)} км`
+  }
+  return `${Math.round(meters)} м`
+}
+
+export function getDistanceStepperConfig() {
+  return {
+    label: 'м',
+    step: 100,
+    min: 0,
+    editable: true,
+    defaultMeters: 3000,
+  }
+}
+
 export function getTimedStepperConfig(exerciseId: string, custom: Exercise[] = []) {
   if (isCardioExercise(exerciseId, custom)) {
     return {

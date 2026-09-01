@@ -5,7 +5,13 @@ import { IconTrash } from '../components/IconButtons'
 import { RestTimer } from '../components/RestTimer'
 import { Stepper } from '../components/Stepper'
 import { TimedDurationStepper } from '../components/TimedDurationStepper'
-import { getTimedStepperConfig } from '../lib/cardio'
+import { DistanceStepper } from '../components/DistanceStepper'
+import { Brand } from '../components/Brand'
+import {
+  getDistanceStepperConfig,
+  getTimedStepperConfig,
+  isDistanceCardio,
+} from '../lib/cardio'
 import { useStore } from '../lib/store'
 import {
   addCustomExercise,
@@ -30,15 +36,29 @@ function suggestFromLast(
   custom: Exercise[],
 ) {
   const timedCfg = getTimedStepperConfig(exerciseId, custom)
+  const distCfg = getDistanceStepperConfig()
+  const withDistance = isDistanceCardio(exerciseId, custom)
   if (!last?.length) {
-    if (timed) return { weight: 0, reps: timedCfg.defaultSeconds }
-    if (bodyweight) return { weight: 0, reps: 10 }
-    return { weight: 20, reps: 10 }
+    if (timed) {
+      return {
+        weight: 0,
+        reps: timedCfg.defaultSeconds,
+        distanceM: withDistance ? distCfg.defaultMeters : 0,
+      }
+    }
+    if (bodyweight) return { weight: 0, reps: 10, distanceM: 0 }
+    return { weight: 20, reps: 10, distanceM: 0 }
   }
   const latest = last[last.length - 1]
-  if (timed) return { weight: 0, reps: latest.durationSec ?? timedCfg.defaultSeconds }
-  if (bodyweight) return { weight: 0, reps: latest.reps ?? 10 }
-  return { weight: latest.weight ?? 20, reps: latest.reps ?? 10 }
+  if (timed) {
+    return {
+      weight: 0,
+      reps: latest.durationSec ?? timedCfg.defaultSeconds,
+      distanceM: withDistance ? (latest.distanceM ?? distCfg.defaultMeters) : 0,
+    }
+  }
+  if (bodyweight) return { weight: 0, reps: latest.reps ?? 10, distanceM: 0 }
+  return { weight: latest.weight ?? 20, reps: latest.reps ?? 10, distanceM: 0 }
 }
 
 export function WorkoutScreen() {
@@ -48,6 +68,7 @@ export function WorkoutScreen() {
   const [picker, setPicker] = useState(false)
   const [weight, setWeight] = useState(20)
   const [reps, setReps] = useState(10)
+  const [distanceM, setDistanceM] = useState(0)
   const [restSec, setRestSec] = useState(() => {
     const v = Number(localStorage.getItem(REST_KEY))
     return Number.isFinite(v) && v >= 15 ? v : 90
@@ -86,6 +107,7 @@ export function WorkoutScreen() {
     const s = suggestFromLast(last, active.timed, bw, active.exerciseId, store.customExercises ?? [])
     setWeight(s.weight)
     setReps(s.reps)
+    setDistanceM(s.distanceM)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeKey])
 
@@ -130,11 +152,19 @@ export function WorkoutScreen() {
   const logSet = () => {
     if (!session || !active) return
     const bw = exerciseBodyweight(active)
+    const custom = store.customExercises ?? []
     const set: LoggedSet = active.timed
-      ? { weight: null, reps: null, durationSec: reps, done: true }
+      ? {
+          weight: null,
+          reps: null,
+          durationSec: reps,
+          distanceM:
+            isDistanceCardio(active.exerciseId, custom) && distanceM > 0 ? distanceM : null,
+          done: true,
+        }
       : bw
-        ? { weight: null, reps, durationSec: null, done: true }
-        : { weight, reps, durationSec: null, done: true }
+        ? { weight: null, reps, durationSec: null, distanceM: null, done: true }
+        : { weight, reps, durationSec: null, distanceM: null, done: true }
     setSession({
       ...session,
       exercises: session.exercises.map((e) =>
@@ -191,9 +221,7 @@ export function WorkoutScreen() {
     return (
       <>
         <header className="page-head">
-          <div className="brand">
-            <i>G</i> gym-log
-          </div>
+          <Brand title="GymLog" />
           <h1>Тренировка</h1>
           <p>Добавь упражнения, укажи вес и повторы, запиши подход — пойдёт отдых.</p>
         </header>
@@ -239,9 +267,7 @@ export function WorkoutScreen() {
     <>
       <header className="page-head">
         <div className="page-head-top">
-          <div className="brand">
-            <i>G</i> сессия
-          </div>
+          <Brand title="сессия" />
           <button type="button" className="ghost page-head-action" onClick={cancel}>
             Отмена
           </button>
@@ -315,13 +341,22 @@ export function WorkoutScreen() {
                       />
                     )}
                     {ex.timed ? (
-                      <TimedDurationStepper
-                        exerciseId={ex.exerciseId}
-                        durationSec={reps}
-                        customExercises={store.customExercises ?? []}
-                        compact
-                        onChangeSec={setReps}
-                      />
+                      <>
+                        <TimedDurationStepper
+                          exerciseId={ex.exerciseId}
+                          durationSec={reps}
+                          customExercises={store.customExercises ?? []}
+                          compact
+                          onChangeSec={setReps}
+                        />
+                        {isDistanceCardio(ex.exerciseId, store.customExercises ?? []) && (
+                          <DistanceStepper
+                            meters={distanceM}
+                            compact
+                            onChangeMeters={setDistanceM}
+                          />
+                        )}
+                      </>
                     ) : (
                       <Stepper
                         label="повт"

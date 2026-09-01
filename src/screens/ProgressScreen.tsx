@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { isCardioExercise } from '../lib/cardio'
+import { Brand } from '../components/Brand'
 import { useStore } from '../lib/store'
 import type { ExerciseTrackKind } from '../lib/workoutFormat'
 import {
@@ -236,9 +237,7 @@ export function ProgressScreen() {
   return (
     <>
       <header className="page-head">
-        <div className="brand">
-          <i>G</i> gym-log
-        </div>
+        <Brand />
         <h1>Прогресс</h1>
         <p>Сила и повторы по каждому упражнению</p>
       </header>

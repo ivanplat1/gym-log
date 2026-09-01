@@ -11,8 +11,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.png', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png'],
       manifest: {
-        name: 'gym-log',
-        short_name: 'gym-log',
+        name: 'GymLog',
+        short_name: 'GymLog',
         description: 'Трекер тренировок и питания',
         theme_color: '#0a0a0a',
         background_color: '#0a0a0a',
