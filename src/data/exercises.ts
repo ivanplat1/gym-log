@@ -13,6 +13,8 @@ export interface Exercise {
   group: MuscleGroup
   /** секунды вместо повторов (планка и т.п.) */
   timed?: boolean
+  /** без внешнего веса — только повторы */
+  bodyweight?: boolean
 }
 
 export const GROUP_LABELS: Record<MuscleGroup, string> = {
@@ -32,16 +34,16 @@ export const EXERCISES: Exercise[] = [
   { id: 'incline-db', name: 'Жим гантелей на наклонной', group: 'chest' },
   { id: 'fly-db', name: 'Разведение гантелей', group: 'chest' },
   { id: 'peck-deck', name: 'Peck-deck / бабочка', group: 'chest' },
-  { id: 'pushup', name: 'Отжимания', group: 'chest' },
-  { id: 'dips', name: 'Отжимания на брусьях', group: 'chest' },
+  { id: 'pushup', name: 'Отжимания', group: 'chest', bodyweight: true },
+  { id: 'dips', name: 'Отжимания на брусьях', group: 'chest', bodyweight: true },
   // Спина
-  { id: 'pullup', name: 'Подтягивания', group: 'back' },
+  { id: 'pullup', name: 'Подтягивания', group: 'back', bodyweight: true },
   { id: 'lat-pulldown', name: 'Тяга верхнего блока', group: 'back' },
   { id: 'row-bar', name: 'Тяга штанги в наклоне', group: 'back' },
   { id: 'row-db', name: 'Тяга гантели в наклоне', group: 'back' },
   { id: 'row-cable', name: 'Горизонтальная тяга блока', group: 'back' },
   { id: 'rdl', name: 'Румынская тяга', group: 'back' },
-  { id: 'hyperext', name: 'Гиперэкстензия', group: 'back' },
+  { id: 'hyperext', name: 'Гиперэкстензия', group: 'back', bodyweight: true },
   { id: 'face-pull', name: 'Face pull', group: 'back' },
   // Ноги
   { id: 'squat', name: 'Присед со штангой', group: 'legs' },
@@ -68,10 +70,10 @@ export const EXERCISES: Exercise[] = [
   { id: 'close-grip', name: 'Жим узким хватом', group: 'arms' },
   // Кор
   { id: 'plank', name: 'Планка', group: 'core', timed: true },
-  { id: 'dead-bug', name: 'Dead bug', group: 'core' },
-  { id: 'crunch', name: 'Скручивания', group: 'core' },
-  { id: 'hanging-leg', name: 'Подъём ног в висе', group: 'core' },
-  { id: 'ab-wheel', name: 'Ролик для пресса', group: 'core' },
+  { id: 'dead-bug', name: 'Dead bug', group: 'core', bodyweight: true },
+  { id: 'crunch', name: 'Скручивания', group: 'core', bodyweight: true },
+  { id: 'hanging-leg', name: 'Подъём ног в висе', group: 'core', bodyweight: true },
+  { id: 'ab-wheel', name: 'Ролик для пресса', group: 'core', bodyweight: true },
   // Кардио
   { id: 'run', name: 'Бег', group: 'cardio', timed: true },
   { id: 'bike', name: 'Велотренажёр', group: 'cardio', timed: true },

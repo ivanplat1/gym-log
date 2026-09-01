@@ -10,20 +10,27 @@ import {
   type LoggedSet,
   type SessionExercise,
 } from '../lib/storage'
+import { formatLoggedSet, isBodyweightExercise } from '../lib/workoutFormat'
 
 const REST_KEY = 'gym-log:rest-sec'
 
-function formatSet(s: LoggedSet, timed: boolean) {
-  if (timed) return `${s.durationSec ?? 0}с`
-  return `${s.weight ?? 0}×${s.reps ?? 0}`
+function exerciseBodyweight(ex: SessionExercise): boolean {
+  return ex.bodyweight ?? isBodyweightExercise(ex.exerciseId)
 }
 
-function suggestFromLast(last: LoggedSet[] | null, timed: boolean) {
+function suggestFromLast(
+  last: LoggedSet[] | null,
+  timed: boolean,
+  bodyweight: boolean,
+) {
   if (!last?.length) {
-    return timed ? { weight: 0, reps: 30 } : { weight: 20, reps: 10 }
+    if (timed) return { weight: 0, reps: 30 }
+    if (bodyweight) return { weight: 0, reps: 10 }
+    return { weight: 20, reps: 10 }
   }
   const latest = last[last.length - 1]
   if (timed) return { weight: 0, reps: latest.durationSec ?? 30 }
+  if (bodyweight) return { weight: 0, reps: latest.reps ?? 10 }
   return { weight: latest.weight ?? 20, reps: latest.reps ?? 10 }
 }
 
@@ -68,7 +75,8 @@ export function WorkoutScreen() {
   useEffect(() => {
     if (!active) return
     const last = lastSetsForExercise(store.sessions, active.exerciseId)
-    const s = suggestFromLast(last, active.timed)
+    const bw = exerciseBodyweight(active)
+    const s = suggestFromLast(last, active.timed, bw)
     setWeight(s.weight)
     setReps(s.reps)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -98,6 +106,7 @@ export function WorkoutScreen() {
       exerciseId: ex.id,
       name: ex.name,
       timed: !!ex.timed,
+      bodyweight: !!ex.bodyweight,
       sets: [],
     }
     setSession({ ...session, exercises: [...session.exercises, item] })
@@ -107,9 +116,12 @@ export function WorkoutScreen() {
 
   const logSet = () => {
     if (!session || !active) return
+    const bw = exerciseBodyweight(active)
     const set: LoggedSet = active.timed
       ? { weight: null, reps: null, durationSec: reps, done: true }
-      : { weight, reps, durationSec: null, done: true }
+      : bw
+        ? { weight: null, reps, durationSec: null, done: true }
+        : { weight, reps, durationSec: null, done: true }
     setSession({
       ...session,
       exercises: session.exercises.map((e) =>
@@ -170,7 +182,7 @@ export function WorkoutScreen() {
             <i>G</i> gym-log
           </div>
           <h1>Тренировка</h1>
-          <p>Добавь упражнения, крути вес и повторы степперами, пиши подход — пойдёт отдых.</p>
+          <p>Добавь упражнения, укажи вес и повторы, запиши подход — пойдёт отдых.</p>
         </header>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
@@ -231,9 +243,10 @@ export function WorkoutScreen() {
       <div className="stack">
         {session.exercises.map((ex) => {
           const open = ex.key === activeKey
+          const bw = exerciseBodyweight(ex)
           const last = lastSetsForExercise(store.sessions, ex.exerciseId)
           const lastSummary = last?.length
-            ? `Прошлый: ${last.map((s) => formatSet(s, ex.timed)).join('  ')}`
+            ? `Прошлый: ${last.map((s) => formatLoggedSet(s, { timed: ex.timed, bodyweight: bw })).join('  ')}`
             : 'Первый раз'
           return (
             <div key={ex.key} className="tile glass">
@@ -266,7 +279,7 @@ export function WorkoutScreen() {
                   {ex.sets.map((s, i) => (
                     <span key={i} className="logged-set">
                       <i>{i + 1}</i>
-                      {formatSet(s, ex.timed)}
+                      {formatLoggedSet(s, { timed: ex.timed, bodyweight: bw })}
                     </span>
                   ))}
                 </div>
@@ -274,14 +287,17 @@ export function WorkoutScreen() {
 
               {open && (
                 <div className="tile-body">
-                  <div className="stepper-row compact">
-                    {!ex.timed && (
+                  <div
+                    className={`stepper-row compact${!ex.timed && !bw ? '' : ' single'}`}
+                  >
+                    {!ex.timed && !bw && (
                       <Stepper
                         label="кг"
                         value={weight}
                         step={2.5}
                         decimals={1}
                         compact
+                        editable
                         onChange={setWeight}
                       />
                     )}
@@ -291,9 +307,15 @@ export function WorkoutScreen() {
                       step={ex.timed ? 5 : 1}
                       min={1}
                       compact
+                      editable={!ex.timed && bw}
                       onChange={setReps}
                     />
                   </div>
+                  {!ex.timed && bw && (
+                    <p className="meta" style={{ margin: '0 0 8px', textAlign: 'center' }}>
+                      Собственный вес — укажи только повторы
+                    </p>
+                  )}
                   <button type="button" className="big-log" onClick={logSet}>
                     Записать подход
                   </button>

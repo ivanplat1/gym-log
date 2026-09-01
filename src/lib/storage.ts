@@ -24,6 +24,8 @@ export interface SessionExercise {
   exerciseId: string
   name: string
   timed: boolean
+  /** без внешнего веса — только повторы */
+  bodyweight?: boolean
   sets: LoggedSet[]
 }
 
