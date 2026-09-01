@@ -132,8 +132,19 @@ mount.use('/api', api)
 
 const dist = process.env.STATIC_DIR || path.join(ROOT, '..', 'dist')
 if (fs.existsSync(dist)) {
-  mount.use(express.static(dist, { redirect: false }))
+  mount.use(
+    express.static(dist, {
+      redirect: false,
+      setHeaders(res, filePath) {
+        const base = path.basename(filePath)
+        if (base === 'index.html' || base === 'sw.js' || base === 'registerSW.js') {
+          res.setHeader('Cache-Control', 'no-store')
+        }
+      },
+    }),
+  )
   mount.get(/^(?!\/api).*/, (_req, res) => {
+    res.setHeader('Cache-Control', 'no-store')
     res.sendFile(path.join(dist, 'index.html'))
   })
 }
