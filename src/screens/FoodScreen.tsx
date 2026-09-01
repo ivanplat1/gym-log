@@ -487,7 +487,7 @@ export function FoodScreen() {
             />
 
             {myFoods.length > 0 && (
-              <div style={{ marginTop: 10 }}>
+              <div style={{ marginBottom: 12 }}>
                 <div
                   style={{
                     fontSize: '0.75rem',
@@ -498,7 +498,7 @@ export function FoodScreen() {
                 >
                   {q.trim() ? 'Мои совпадения' : 'Мои блюда'}
                 </div>
-                <div className="preset-grid">
+                <div className="preset-grid" style={{ marginTop: 0 }}>
                   {myFoods.map((m) => (
                     <button
                       key={m.name}
@@ -518,7 +518,7 @@ export function FoodScreen() {
               </div>
             )}
 
-            <div className="preset-grid" style={{ marginTop: myFoods.length ? 12 : 0 }}>
+            <div className="preset-grid" style={{ marginTop: 0 }}>
               {presets.map((p) => (
                 <button key={p.id} type="button" className="preset" onClick={() => apply(p.id)}>
                   <strong>{p.name}</strong>
