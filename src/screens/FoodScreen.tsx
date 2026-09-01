@@ -60,6 +60,7 @@ export function FoodScreen() {
 
   const [goalsOpen, setGoalsOpen] = useState(false)
   const [statsOpen, setStatsOpen] = useState(false)
+  const [mealOpen, setMealOpen] = useState<Partial<Record<MealSlot, boolean>>>({})
   const [open, setOpen] = useState(false)
   const [detailOpen, setDetailOpen] = useState(false)
   const [meal, setMeal] = useState<MealSlot>(() => mealByTime())
@@ -349,49 +350,76 @@ export function FoodScreen() {
       {(Object.keys(MEAL_LABELS) as MealSlot[]).map((slot) => {
         const items = today.filter((f) => f.meal === slot)
         const mealKcal = items.reduce((n, f) => n + f.kcal, 0)
+        const expanded = mealOpen[slot] ?? items.length > 0
         return (
           <div key={slot} className="meal glass" style={{ marginTop: 12 }}>
-            <div className="meal-title">
-              <span className="meal-label">{MEAL_LABELS[slot]}</span>
+            <button
+              type="button"
+              className="meal-title"
+              onClick={() => setMealOpen((prev) => ({ ...prev, [slot]: !expanded }))}
+            >
+              <span className="meal-label">
+                <span className="meal-chevron" aria-hidden>
+                  {expanded ? '▾' : '▸'}
+                </span>{' '}
+                {MEAL_LABELS[slot]}
+                {!expanded && items.length > 0 && (
+                  <span className="meta tnum" style={{ marginLeft: 8, fontSize: '0.78rem', fontWeight: 600 }}>
+                    {items.length} · {Math.round(mealKcal)} ккал
+                  </span>
+                )}
+              </span>
               <span className="meal-title-right">
-                {items.length > 0 && (
+                {expanded && items.length > 0 && (
                   <span className="tnum meal-kcal">{Math.round(mealKcal)} ккал</span>
                 )}
-                <button
-                  type="button"
+                <span
+                  role="button"
+                  tabIndex={0}
                   className="meal-add"
                   aria-label={`Добавить в ${MEAL_LABELS[slot]}`}
-                  onClick={() => openSheet(slot)}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    openSheet(slot)
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      openSheet(slot)
+                    }
+                  }}
                 >
                   +
-                </button>
+                </span>
               </span>
-            </div>
-            {items.map((f) => (
-              <div key={f.id} className="food-row">
-                <div>
-                  <strong>{f.name}</strong>
-                  <div className="meta">
-                    <span className="portion-chip">{f.portion || 'порция'}</span>
-                    <span className="macro-tags">
-                      <span className="macro-tag macro-tag-kcal">
-                        <span className="tnum">{Math.round(f.kcal)}</span> ккал
+            </button>
+            {expanded &&
+              items.map((f) => (
+                <div key={f.id} className="food-row">
+                  <div>
+                    <strong>{f.name}</strong>
+                    <div className="meta">
+                      <span className="portion-chip">{f.portion || 'порция'}</span>
+                      <span className="macro-tags">
+                        <span className="macro-tag macro-tag-kcal">
+                          <span className="tnum">{Math.round(f.kcal)}</span> ккал
+                        </span>
+                        <span className="macro-tag macro-tag-p">
+                          Б <span className="tnum">{f.protein}</span>
+                        </span>
+                        <span className="macro-tag macro-tag-c">
+                          У <span className="tnum">{f.carbs}</span>
+                        </span>
+                        <span className="macro-tag macro-tag-f">
+                          Ж <span className="tnum">{f.fat}</span>
+                        </span>
                       </span>
-                      <span className="macro-tag macro-tag-p">
-                        Б <span className="tnum">{f.protein}</span>
-                      </span>
-                      <span className="macro-tag macro-tag-c">
-                        У <span className="tnum">{f.carbs}</span>
-                      </span>
-                      <span className="macro-tag macro-tag-f">
-                        Ж <span className="tnum">{f.fat}</span>
-                      </span>
-                    </span>
+                    </div>
                   </div>
+                  <TrashButton onClick={() => remove(f.id)} />
                 </div>
-                <TrashButton onClick={() => remove(f.id)} />
-              </div>
-            ))}
+              ))}
           </div>
         )
       })}

@@ -226,11 +226,11 @@ export function WorkoutScreen() {
   return (
     <>
       <header className="page-head">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div className="page-head-top">
           <div className="brand">
             <i>G</i> сессия
           </div>
-          <button type="button" className="ghost" onClick={cancel}>
+          <button type="button" className="ghost page-head-action" onClick={cancel}>
             Отмена
           </button>
         </div>

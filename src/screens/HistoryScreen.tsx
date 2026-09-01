@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { getExercise } from '../data/exercises'
 import { ExercisePicker } from '../components/ExercisePicker'
 import { IconTrash } from '../components/IconButtons'
@@ -40,42 +40,65 @@ function SessionDetail({
   const { setStore } = useStore()
   const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState<WorkoutSession>(() => structuredClone(session))
+  const [editBaseline, setEditBaseline] = useState<WorkoutSession | null>(null)
   const [picker, setPicker] = useState(false)
+  const [activeKey, setActiveKey] = useState<string | null>(null)
   const [addKey, setAddKey] = useState<string | null>(null)
   const [weight, setWeight] = useState(20)
   const [reps, setReps] = useState(10)
 
+  const persist = useCallback(
+    (next: WorkoutSession) => {
+      setStore((s) => ({
+        ...s,
+        sessions: s.sessions.map((x) => (x.id === next.id ? next : x)),
+      }))
+    },
+    [setStore],
+  )
+
   useEffect(() => {
     setDraft(structuredClone(session))
     setEditing(false)
+    setEditBaseline(null)
     setAddKey(null)
-  }, [session.id, session])
+    setActiveKey(null)
+  }, [session.id])
+
+  useEffect(() => {
+    if (!editing) setDraft(structuredClone(session))
+  }, [session, editing])
+
+  useEffect(() => {
+    if (!editing) return
+    persist(draft)
+  }, [draft, editing, persist])
 
   const view = editing ? draft : session
   const { volume, sets, durationMin } = sessionStats(view)
 
-  const persist = (next: WorkoutSession) => {
-    setStore((s) => ({
-      ...s,
-      sessions: s.sessions.map((x) => (x.id === next.id ? next : x)),
-    }))
-  }
-
   const startEdit = () => {
-    setDraft(structuredClone(session))
+    const copy = structuredClone(session)
+    setEditBaseline(copy)
+    setDraft(copy)
     setEditing(true)
+    setActiveKey(null)
   }
 
   const cancelEdit = () => {
+    if (editBaseline) persist(editBaseline)
     setDraft(structuredClone(session))
     setEditing(false)
+    setEditBaseline(null)
     setAddKey(null)
+    setActiveKey(null)
   }
 
-  const saveEdit = () => {
-    persist(draft)
+  const finishEdit = () => {
     setEditing(false)
+    setEditBaseline(null)
     setAddKey(null)
+    setActiveKey(null)
   }
 
   const deleteSession = () => {
@@ -160,6 +183,7 @@ function SessionDetail({
     }
     setDraft((prev) => ({ ...prev, exercises: [...prev.exercises, item] }))
     setPicker(false)
+    setActiveKey(item.key)
     setAddKey(item.key)
     openAddSet(item)
   }
@@ -167,22 +191,21 @@ function SessionDetail({
   return (
     <>
       <header className="page-head">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <button type="button" className="ghost" onClick={editing ? cancelEdit : onBack}>
+        <div className="page-head-top">
+          <button type="button" className="ghost page-head-action" onClick={editing ? cancelEdit : onBack}>
             {editing ? 'Отмена' : '← Назад'}
           </button>
-          {!editing && (
-            <button type="button" className="ghost" onClick={startEdit}>
+          {!editing ? (
+            <button type="button" className="ghost page-head-action" onClick={startEdit}>
               Изменить
             </button>
-          )}
-          {editing && (
-            <button type="button" className="ghost" onClick={saveEdit}>
-              Сохранить
+          ) : (
+            <button type="button" className="ghost page-head-action" onClick={finishEdit}>
+              Готово
             </button>
           )}
         </div>
-        <h1 style={{ marginTop: 12 }}>
+        <h1>
           {new Date(session.finishedAt!).toLocaleDateString('ru-RU', {
             day: 'numeric',
             month: 'long',
@@ -198,28 +221,35 @@ function SessionDetail({
       <div className="stack">
         {view.exercises.map((ex) => {
           const bw = exerciseBodyweight(ex)
+          const open = editing && ex.key === activeKey
+          const summary = ex.sets.length
+            ? ex.sets.map((s) => formatLoggedSet(s, { timed: ex.timed, bodyweight: bw })).join('  ·  ')
+            : 'нет подходов'
           return (
             <div key={ex.key} className="tile glass">
               <div className="tile-head">
-                <div className="tile-head-main" style={{ cursor: 'default' }}>
+                <button
+                  type="button"
+                  className="tile-head-main"
+                  style={{ cursor: editing ? 'pointer' : 'default' }}
+                  onClick={() => {
+                    if (!editing) return
+                    setActiveKey(open ? null : ex.key)
+                    if (open) setAddKey(null)
+                  }}
+                >
                   <div>
                     <strong>{ex.name}</strong>
-                    {!editing && (
+                    {(!editing || !open) && (
                       <div className="meta tnum" style={{ marginTop: 6 }}>
-                        {ex.sets.length
-                          ? ex.sets
-                              .map((s) =>
-                                formatLoggedSet(s, { timed: ex.timed, bodyweight: bw }),
-                              )
-                              .join('  ·  ')
-                          : 'нет подходов'}
+                        {summary}
                       </div>
                     )}
                   </div>
                   <div className={`badge${ex.sets.length >= 3 ? ' done' : ''}`}>
                     {ex.sets.length || '—'}
                   </div>
-                </div>
+                </button>
                 {editing && (
                   <button
                     type="button"
@@ -232,7 +262,7 @@ function SessionDetail({
                 )}
               </div>
 
-              {editing && (
+              {editing && open && (
                 <div className="tile-body session-edit">
                   {ex.sets.map((set, i) => (
                     <div key={i} className="set-edit-row">
@@ -318,7 +348,10 @@ function SessionDetail({
                       type="button"
                       className="ghost"
                       style={{ width: '100%', marginTop: ex.sets.length ? 8 : 0 }}
-                      onClick={() => openAddSet(ex)}
+                      onClick={() => {
+                        setActiveKey(ex.key)
+                        openAddSet(ex)
+                      }}
                     >
                       + Подход
                     </button>

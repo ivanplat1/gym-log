@@ -1,5 +1,6 @@
 import type { LoggedSet, WorkoutSession } from './storage'
 import { todayKey } from './storage'
+import { exerciseTrackKind, type ExerciseTrackKind } from './workoutFormat'
 
 export type SessionPoint = {
   sessionId: string
@@ -13,7 +14,10 @@ export type ExercisePoint = {
   sessionId: string
   date: string
   label: string
+  kind: ExerciseTrackKind
   maxWeight: number
+  maxReps: number
+  maxDuration: number
   volume: number
   e1rm: number
 }
@@ -27,9 +31,10 @@ export type WeekPoint = {
 export type TrackedExercise = {
   exerciseId: string
   name: string
+  kind: ExerciseTrackKind
   sessions: number
-  lastMax: number
-  bestMax: number
+  lastBest: number
+  bestBest: number
 }
 
 function sessionDate(s: WorkoutSession): string {
@@ -63,20 +68,43 @@ function epley1rm(weight: number, reps: number): number {
   return weight * (1 + reps / 30)
 }
 
-function bestSetMetrics(sets: LoggedSet[]): { maxWeight: number; volume: number; e1rm: number } {
+function bestSetMetrics(
+  sets: LoggedSet[],
+  kind: ExerciseTrackKind,
+): { maxWeight: number; maxReps: number; maxDuration: number; volume: number; e1rm: number } {
   let maxWeight = 0
+  let maxReps = 0
+  let maxDuration = 0
   let volume = 0
   let e1rm = 0
   for (const s of sets) {
     const w = s.weight ?? 0
     const r = s.reps ?? 0
+    const d = s.durationSec ?? 0
+    if (kind === 'timed') {
+      if (d > maxDuration) maxDuration = d
+      continue
+    }
+    if (kind === 'reps') {
+      if (r > maxReps) maxReps = r
+      volume += r
+      continue
+    }
     if (w <= 0 && r <= 0) continue
     volume += w * r
     if (w > maxWeight) maxWeight = w
     const est = epley1rm(w, r)
     if (est > e1rm) e1rm = est
   }
-  return { maxWeight, volume, e1rm }
+  return { maxWeight, maxReps, maxDuration, volume, e1rm }
+}
+
+export function primaryMetricValue(
+  point: Pick<ExercisePoint, 'kind' | 'maxWeight' | 'maxReps' | 'maxDuration' | 'volume'>,
+): number {
+  if (point.kind === 'timed') return point.maxDuration
+  if (point.kind === 'reps') return point.maxReps
+  return point.maxWeight
 }
 
 export function finishedSessions(sessions: WorkoutSession[]): WorkoutSession[] {
@@ -101,23 +129,27 @@ export function trackedExercises(sessions: WorkoutSession[]): TrackedExercise[] 
   const map = new Map<string, TrackedExercise>()
   for (const s of finishedSessions(sessions)) {
     for (const ex of s.exercises) {
-      if (ex.timed) continue
-      const { maxWeight } = bestSetMetrics(ex.sets)
-      if (maxWeight <= 0) continue
+      const kind = exerciseTrackKind(ex)
+      const m = bestSetMetrics(ex.sets, kind)
+      const best =
+        kind === 'timed' ? m.maxDuration : kind === 'reps' ? m.maxReps : m.maxWeight
+      if (best <= 0) continue
       const prev = map.get(ex.exerciseId)
       if (!prev) {
         map.set(ex.exerciseId, {
           exerciseId: ex.exerciseId,
           name: ex.name,
+          kind,
           sessions: 1,
-          lastMax: maxWeight,
-          bestMax: maxWeight,
+          lastBest: best,
+          bestBest: best,
         })
       } else {
         prev.sessions += 1
-        prev.lastMax = maxWeight
-        prev.bestMax = Math.max(prev.bestMax, maxWeight)
+        prev.lastBest = best
+        prev.bestBest = Math.max(prev.bestBest, best)
         prev.name = ex.name
+        prev.kind = kind
       }
     }
   }
@@ -134,15 +166,21 @@ export function exerciseSeries(
   const points: ExercisePoint[] = []
   for (const s of finishedSessions(sessions)) {
     const match = [...s.exercises].reverse().find((e) => e.exerciseId === exerciseId)
-    if (!match || match.timed) continue
-    const m = bestSetMetrics(match.sets)
-    if (m.maxWeight <= 0 && m.volume <= 0) continue
+    if (!match) continue
+    const kind = exerciseTrackKind(match)
+    const m = bestSetMetrics(match.sets, kind)
+    const primary =
+      kind === 'timed' ? m.maxDuration : kind === 'reps' ? m.maxReps : m.maxWeight
+    if (primary <= 0) continue
     const date = sessionDate(s)
     points.push({
       sessionId: s.id,
       date,
       label: formatShort(date),
+      kind,
       maxWeight: Math.round(m.maxWeight * 10) / 10,
+      maxReps: m.maxReps,
+      maxDuration: m.maxDuration,
       volume: Math.round(m.volume),
       e1rm: Math.round(m.e1rm * 10) / 10,
     })

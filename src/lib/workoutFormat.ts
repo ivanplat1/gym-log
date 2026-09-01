@@ -1,8 +1,20 @@
 import { getExercise } from '../data/exercises'
 import type { LoggedSet } from './storage'
 
+export type ExerciseTrackKind = 'weight' | 'reps' | 'timed'
+
 export function isBodyweightExercise(exerciseId: string): boolean {
   return !!getExercise(exerciseId)?.bodyweight
+}
+
+export function exerciseTrackKind(ex: {
+  exerciseId: string
+  timed: boolean
+  bodyweight?: boolean
+}): ExerciseTrackKind {
+  if (ex.timed) return 'timed'
+  if (ex.bodyweight ?? isBodyweightExercise(ex.exerciseId)) return 'reps'
+  return 'weight'
 }
 
 export function formatLoggedSet(

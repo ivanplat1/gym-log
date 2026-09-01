@@ -28,3 +28,4 @@ server/data
 *.sln
 *.sw?
 *.webp
+.deploy-keys/
