@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { CloseButton } from '../components/IconButtons'
 import { useStore } from '../lib/store'
 import {
   formatSleep,
@@ -291,9 +292,7 @@ export function HealthScreen() {
           <div className="sheet" onClick={(e) => e.stopPropagation()}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <h2>Автоимпорт</h2>
-              <button type="button" className="ghost" onClick={() => setSetupOpen(false)}>
-                Закрыть
-              </button>
+              <CloseButton onClick={() => setSetupOpen(false)} />
             </div>
 
             <div className="stack" style={{ marginTop: 14, gap: 14 }}>

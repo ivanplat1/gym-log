@@ -307,22 +307,20 @@ select {
 
 .tile-remove {
   flex-shrink: 0;
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  border: 1px solid var(--glass-border);
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  border: 1px solid rgb(255 107 90 / 0.35);
   display: grid;
   place-content: center;
-  font-size: 1.15rem;
-  line-height: 1;
-  color: var(--muted);
-  background: rgb(255 255 255 / 0.06);
+  align-self: center;
+  color: #ff6b5a;
+  background: rgb(255 107 90 / 0.12);
 }
 
 .tile-remove:active {
-  color: var(--red);
-  background: rgb(255 107 90 / 0.14);
-  border-color: rgb(255 107 90 / 0.35);
+  background: rgb(255 107 90 / 0.2);
+  transform: scale(0.96);
 }
 
 .tile-body {
@@ -761,7 +759,7 @@ select {
 
 .meal {
   border-radius: var(--radius);
-  padding: 4px 14px 10px;
+  padding: 6px 14px 12px;
   margin-bottom: 10px;
 }
 
@@ -769,11 +767,36 @@ select {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 0 6px;
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--muted);
+  gap: 10px;
+  padding: 10px 0 8px;
+}
+
+.meal-label {
+  position: relative;
+  padding-left: 12px;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-transform: none;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.meal-label::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.15em;
+  bottom: 0.1em;
+  width: 3px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.meal-kcal {
+  color: var(--accent);
+  font-size: 0.78rem;
   font-weight: 750;
 }
 
@@ -784,17 +807,17 @@ select {
 }
 
 .meal-add {
-  width: auto;
-  min-width: 36px;
+  width: 34px;
+  min-width: 34px;
   height: 34px;
-  padding: 0 10px;
+  padding: 0;
   border-radius: 10px;
   border: 1px solid rgb(240 180 41 / 0.45);
   background: rgb(240 180 41 / 0.16);
   color: var(--accent);
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.02em;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0;
   text-transform: none;
   line-height: 1;
   display: inline-grid;
@@ -806,10 +829,139 @@ select {
   background: rgb(240 180 41 / 0.28);
 }
 
+.nutrition-day-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 14px 0 12px;
+}
+
+.nutrition-day-nav .ghost {
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  font-size: 1.4rem;
+}
+
+.nutrition-day-nav .ghost:disabled {
+  opacity: 0.3;
+}
+
+.nutrition-day-label {
+  text-align: center;
+}
+
+.nutrition-day-label strong {
+  display: block;
+  font-size: 1.05rem;
+}
+
+.nutrition-day-label span {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.nutrition-kcal-card {
+  padding: 16px;
+  border-radius: 16px;
+}
+
+.nutrition-stat-row {
+  display: grid;
+  gap: 6px;
+}
+
+.nutrition-stat-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.88rem;
+}
+
+.nutrition-stat-bar {
+  position: relative;
+  height: 8px;
+  border-radius: 999px;
+  background: #2a2a2a;
+  overflow: hidden;
+}
+
+.nutrition-stat-fill {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.nutrition-stat-over {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 3px;
+  height: 100%;
+  opacity: 0.9;
+}
+
+.nutrition-stat-delta {
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.nutrition-stat-delta-ok {
+  color: var(--green);
+}
+
+.nutrition-stat-delta-over {
+  color: var(--accent);
+}
+
+.nutrition-stat-delta-under {
+  color: var(--red);
+}
+
+.nutrition-stat-delta-empty {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.nutrition-week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.nutrition-week-day {
+  display: grid;
+  gap: 2px;
+  justify-items: center;
+  padding: 8px 2px;
+  border-radius: 12px;
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 0.65rem;
+}
+
+.nutrition-week-day.on {
+  border-color: rgb(240 180 41 / 0.55);
+  background: rgb(240 180 41 / 0.12);
+}
+
+.nutrition-week-day strong {
+  font-size: 0.72rem;
+}
+
+.nutrition-week-day em {
+  font-style: normal;
+  font-size: 0.62rem;
+  font-weight: 700;
+}
+
 .food-row {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 8px;
+  gap: 10px;
+  align-items: center;
   padding: 10px 0;
   border-top: 1px solid var(--hairline);
 }
@@ -820,9 +972,118 @@ select {
 }
 
 .food-row .meta {
-  margin-top: 2px;
+  margin-top: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
   font-size: 0.76rem;
   color: var(--muted);
+}
+
+.macro-tags {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.portion-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+  background: rgb(255 255 255 / 0.04);
+  color: var(--ink);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.macro-tag {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 750;
+  line-height: 1.2;
+}
+
+.macro-tag .tnum {
+  font-weight: 800;
+}
+
+.macro-tag-kcal {
+  color: #f0b429;
+  background: rgb(240 180 41 / 0.16);
+}
+
+.macro-tag-p {
+  color: #3dd68c;
+  background: rgb(61 214 140 / 0.14);
+}
+
+.macro-tag-c {
+  color: #6ea8fe;
+  background: rgb(110 168 254 / 0.14);
+}
+
+.macro-tag-f {
+  color: #ff6b5a;
+  background: rgb(255 107 90 / 0.14);
+}
+
+.macro-preview-label-kcal {
+  color: #f0b429 !important;
+}
+
+.macro-preview-label-p {
+  color: #3dd68c !important;
+}
+
+.macro-preview-label-c {
+  color: #6ea8fe !important;
+}
+
+.macro-preview-label-f {
+  color: #ff6b5a !important;
+}
+
+.icon-btn {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 9px;
+  border: 1px solid transparent;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  align-self: center;
+  background: transparent;
+  color: var(--muted);
+}
+
+.icon-btn-close {
+  border-color: var(--hairline);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.icon-btn-close:active {
+  transform: scale(0.96);
+}
+
+.icon-btn-danger {
+  border-color: rgb(255 107 90 / 0.35);
+  background: rgb(255 107 90 / 0.12);
+  color: #ff6b5a;
+}
+
+.icon-btn-danger:active {
+  transform: scale(0.96);
+  background: rgb(255 107 90 / 0.2);
 }
 
 .form-grid {

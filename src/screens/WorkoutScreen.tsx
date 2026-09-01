@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { EXERCISES, getExercise } from '../data/exercises'
 import { ExercisePicker } from '../components/ExercisePicker'
+import { IconTrash } from '../components/IconButtons'
 import { RestTimer } from '../components/RestTimer'
 import { Stepper } from '../components/Stepper'
 import { useStore } from '../lib/store'
@@ -257,7 +258,7 @@ export function WorkoutScreen() {
                   aria-label="Убрать упражнение"
                   onClick={() => removeExercise(ex.key)}
                 >
-                  ×
+                  <IconTrash width={16} height={16} />
                 </button>
               </div>
 

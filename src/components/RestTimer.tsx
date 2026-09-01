@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { CloseButton } from './IconButtons'
 
 const SIZE = 42
 const R = 18
@@ -72,9 +73,7 @@ export function RestTimer({ runId, duration, onAdjust, onDismiss }: RestTimerPro
       <button type="button" className="ghost" onClick={() => adjust(15)}>
         +15
       </button>
-      <button type="button" className="ghost" aria-label="Закрыть" onClick={onDismiss}>
-        ✕
-      </button>
+      <CloseButton onClick={onDismiss} />
     </div>
   )
 }
