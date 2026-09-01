@@ -83,7 +83,7 @@ export function Shell() {
             <button
               type="button"
               className="ghost"
-              style={{ padding: '4px 10px' }}
+              style={{ padding: '4px 10px', marginLeft: 'auto' }}
               onClick={() => void logout()}
             >
               {username} · выход
@@ -92,13 +92,15 @@ export function Shell() {
             <button
               type="button"
               className="ghost"
-              style={{ padding: '4px 10px' }}
+              style={{ padding: '4px 10px', marginLeft: 'auto' }}
               onClick={() => setLoginOpen(true)}
             >
               Вход
             </button>
           ) : (
-            <span style={{ color: 'var(--muted)', fontSize: '0.72rem' }}>без логина</span>
+            <span style={{ color: 'var(--muted)', fontSize: '0.72rem', marginLeft: 'auto' }}>
+              без логина
+            </span>
           )}
         </div>
         <Outlet />
