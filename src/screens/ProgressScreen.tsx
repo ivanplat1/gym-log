@@ -12,6 +12,7 @@ import {
   type ExercisePoint,
   type TrackedExercise,
 } from '../lib/progressStats'
+import { weightDelta, weightSeries } from '../lib/weightStats'
 
 type Metric = 'primary' | 'e1rm' | 'volume'
 
@@ -219,6 +220,8 @@ export function ProgressScreen() {
 
   const sessions = useMemo(() => volumeSeries(store.sessions), [store.sessions])
   const weeks = useMemo(() => weeklyVolume(store.sessions, 8), [store.sessions])
+  const weightPoints = useMemo(() => weightSeries(store.weightHistory ?? [], 20), [store.weightHistory])
+  const weightChange = useMemo(() => weightDelta(store.weightHistory ?? []), [store.weightHistory])
   const exPoints = useMemo(
     () => (activeId ? exerciseSeries(store.sessions, activeId) : []),
     [store.sessions, activeId],
@@ -239,8 +242,26 @@ export function ProgressScreen() {
       <header className="page-head">
         <Brand />
         <h1>Прогресс</h1>
-        <p>Сила и повторы по каждому упражнению</p>
+        <p>Сила, вес и повторы по упражнениям</p>
       </header>
+
+      {weightPoints.length > 0 && (
+        <section className="glass progress-card" style={{ marginBottom: 12 }}>
+          <div className="progress-card-head">
+            <h2>Вес тела</h2>
+            <span className="tnum muted">
+              {store.profile.weightKg} кг
+              {weightChange != null ? ` · Δ ${weightChange > 0 ? '+' : ''}${weightChange} кг` : ''}
+            </span>
+          </div>
+          <LineChart
+            labels={weightPoints.map((p) => p.label)}
+            values={weightPoints.map((p) => p.weightKg)}
+            color="#c9a227"
+            unit=" кг"
+          />
+        </section>
+      )}
 
       {!sessions.length ? (
         <div className="empty">Заверши несколько тренировок — здесь появятся графики</div>

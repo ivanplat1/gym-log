@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react'
 import { CloseButton } from './IconButtons'
 import { effectiveGoals } from '../lib/nutritionGoals'
-import { macrosForDay, todayKey, type Store } from '../lib/storage'
+import { weightDelta, weightSeries } from '../lib/weightStats'
+import { macrosForDay, todayKey, weightKgForDate, type Store } from '../lib/storage'
 
 function shiftDate(date: string, delta: number): string {
   const d = new Date(`${date}T12:00:00`)
@@ -78,6 +79,54 @@ function StatRow({
   )
 }
 
+function WeightLineChart({
+  labels,
+  values,
+}: {
+  labels: string[]
+  values: number[]
+}) {
+  const max = Math.max(...values, 1)
+  const min = Math.min(...values, max)
+  const span = Math.max(max - min, 0.5)
+  const w = 320
+  const h = 100
+  const padL = 10
+  const padR = 10
+  const padT = 14
+  const padB = 22
+  const innerW = w - padL - padR
+  const innerH = h - padT - padB
+
+  if (values.length < 1) {
+    return <p className="empty" style={{ padding: 12, fontSize: '0.82rem' }}>Нет взвешиваний</p>
+  }
+
+  const pts = values.map((v, i) => {
+    const x = padL + (values.length === 1 ? innerW / 2 : (i / (values.length - 1)) * innerW)
+    const y = padT + innerH - ((v - min) / span) * innerH
+    return { x, y, v, label: labels[i] }
+  })
+
+  const d = pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ')
+
+  return (
+    <svg viewBox={`0 0 ${w} ${h}`} className="progress-chart" role="img" aria-label="График веса">
+      <path d={d} fill="none" stroke="#c9a227" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round" />
+      {pts.map((p, i) => (
+        <g key={`${p.label}-${i}`}>
+          <circle cx={p.x} cy={p.y} r="3" fill="#c9a227" />
+          {(pts.length <= 8 || i === 0 || i === pts.length - 1) && (
+            <text x={p.x} y={h - 6} textAnchor="middle" fill="currentColor" opacity={0.45} fontSize="8">
+              {p.label}
+            </text>
+          )}
+        </g>
+      ))}
+    </svg>
+  )
+}
+
 export function NutritionStatsSheet({
   store,
   onClose,
@@ -89,7 +138,13 @@ export function NutritionStatsSheet({
   const today = todayKey()
   const totals = useMemo(() => macrosForDay(store.foods, date), [store.foods, date])
   const goals = useMemo(() => effectiveGoals(store, date), [store, date])
+  const weight = useMemo(
+    () => weightKgForDate(store.weightHistory ?? [], store.profile, date),
+    [store.weightHistory, store.profile, date],
+  )
   const kcalDelta = deltaLabel(totals.kcal, goals.kcal, ' ккал')
+  const weightPoints = useMemo(() => weightSeries(store.weightHistory ?? [], 14), [store.weightHistory])
+  const totalWeightDelta = useMemo(() => weightDelta(store.weightHistory ?? []), [store.weightHistory])
 
   const week = useMemo(() => {
     return Array.from({ length: 7 }, (_, i) => {
@@ -138,9 +193,41 @@ export function NutritionStatsSheet({
             {kcalDelta.text}
           </div>
           <p style={{ margin: '8px 0 0', color: 'var(--muted)', fontSize: '0.78rem' }}>
-            {goals.trainingDay ? 'День тренировки' : 'День отдыха'} · цель по BMR
+            {goals.trainingDay ? 'День тренировки' : 'День отдыха'} · BMR{' '}
+            <span className="tnum">{goals.bmr}</span> · вес <span className="tnum">{weight}</span> кг
           </p>
         </div>
+
+        {weightPoints.length > 0 && (
+          <div style={{ marginTop: 14 }}>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'baseline',
+                marginBottom: 8,
+              }}
+            >
+              <div style={{ fontSize: '0.75rem', color: 'var(--muted)', fontWeight: 700 }}>Вес</div>
+              {totalWeightDelta != null && (
+                <span
+                  className="tnum"
+                  style={{
+                    fontSize: '0.75rem',
+                    color: totalWeightDelta <= 0 ? 'var(--green)' : 'var(--muted)',
+                  }}
+                >
+                  {totalWeightDelta > 0 ? '+' : ''}
+                  {totalWeightDelta} кг
+                </span>
+              )}
+            </div>
+            <WeightLineChart
+              labels={weightPoints.map((p) => p.label)}
+              values={weightPoints.map((p) => p.weightKg)}
+            />
+          </div>
+        )}
 
         <div style={{ marginTop: 14, display: 'grid', gap: 12 }}>
           <StatRow label="Ккал" color="#f0b429" eaten={totals.kcal} goal={goals.kcal} unit="" />

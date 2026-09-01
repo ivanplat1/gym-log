@@ -16,7 +16,7 @@ import { cardioBurnForDay } from '../lib/cardio'
 import { suggestFoodMemory, type FoodMemoryItem } from '../lib/foodMemory'
 import { searchFoodPresets } from '../lib/foodSearch'
 import { useVisualViewportSheet } from '../lib/useVisualViewportSheet'
-import { addFoodEntry, macrosForDay, setManualBurnKcal, setWeightKg, todayKey, type FoodEntry } from '../lib/storage'
+import { addFoodEntry, logWeight, macrosForDay, setManualBurnKcal, todayKey, weightKgForDate, type FoodEntry } from '../lib/storage'
 
 function Ring({
   value,
@@ -60,16 +60,17 @@ export function FoodScreen() {
   const totals = macrosForDay(store.foods, date)
   const today = store.foods.filter((f) => f.date === date)
   const goalsToday = effectiveGoals(store, date)
+  const weightToday = weightKgForDate(store.weightHistory ?? [], store.profile, date)
   const cardioBurn = useMemo(
     () =>
       cardioBurnForDay(
         store.sessions,
         store.activeSession,
         date,
-        store.profile.weightKg,
+        weightToday,
         store.customExercises ?? [],
       ),
-    [store.sessions, store.activeSession, store.profile.weightKg, store.customExercises, date],
+    [store.sessions, store.activeSession, weightToday, store.customExercises, date],
   )
   const manualBurn = store.manualBurnKcal?.[date] ?? 0
   const activityBurn = cardioBurn + manualBurn
@@ -78,6 +79,9 @@ export function FoodScreen() {
   const [burnText, setBurnText] = useState('')
 
   const [goalsOpen, setGoalsOpen] = useState(false)
+  const [weighOpen, setWeighOpen] = useState(false)
+  const [weighDate, setWeighDate] = useState(() => todayKey())
+  const [weighText, setWeighText] = useState('')
   const [statsOpen, setStatsOpen] = useState(false)
   const [mealOpen, setMealOpen] = useState<Partial<Record<MealSlot, boolean>>>({})
   const [open, setOpen] = useState(false)
@@ -559,9 +563,9 @@ export function FoodScreen() {
           }}
         >
           <span>
-            <strong style={{ display: 'block', fontSize: '0.95rem' }}>Вес и цели</strong>
+            <strong style={{ display: 'block', fontSize: '0.95rem' }}>Цели</strong>
             <span style={{ color: 'var(--muted)', fontSize: '0.78rem' }}>
-              {store.profile.weightKg} кг · сегодня {goalsToday.kcal} ккал
+              сегодня {goalsToday.kcal} ккал
               {goalsToday.trainingDay ? ' · тренировка' : ' · отдых'}
             </span>
           </span>
@@ -574,23 +578,9 @@ export function FoodScreen() {
           <div className="form-grid glass" style={{ padding: 14, borderRadius: 18, marginTop: 10 }}>
             <p className="span2" style={{ margin: 0, color: 'var(--muted)', fontSize: '0.82rem' }}>
               КБЖУ считается сам: BMR × {goalsToday.trainingDay ? '1.55' : '1.4'}
-              {goalsToday.trainingDay ? ' (тренировка)' : ' (отдых)'}. Меняется только вес.
+              {goalsToday.trainingDay ? ' (тренировка)' : ' (отдых)'} · вес{' '}
+              <span className="tnum">{weightToday}</span> кг
             </p>
-            <div className="field span2">
-              <label>Вес, кг</label>
-              <input
-                type="number"
-                min={30}
-                max={250}
-                step={0.1}
-                value={store.profile.weightKg}
-                onChange={(e) => {
-                  const w = Number(e.target.value)
-                  if (!Number.isFinite(w)) return
-                  setStore((s) => setWeightKg(s, w))
-                }}
-              />
-            </div>
             <div className="span2" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
               {(
                 [
@@ -606,6 +596,114 @@ export function FoodScreen() {
                 </div>
               ))}
             </div>
+            <p className="span2" style={{ margin: 0, color: 'var(--muted)', fontSize: '0.78rem' }}>
+              BMR <span className="tnum">{goalsToday.bmr}</span> ккал
+            </p>
+          </div>
+        )}
+      </section>
+
+      <section className="goals" style={{ marginTop: 10 }}>
+        <button
+          type="button"
+          className="glass"
+          onClick={() => {
+            setWeighOpen((v) => !v)
+            if (!weighOpen) {
+              setWeighDate(date)
+              setWeighText(String(store.profile.weightKg))
+            }
+          }}
+          style={{
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: 12,
+            padding: '14px 16px',
+            borderRadius: 18,
+            textAlign: 'left',
+          }}
+        >
+          <span>
+            <strong style={{ display: 'block', fontSize: '0.95rem' }}>Взвешивание</strong>
+            <span style={{ color: 'var(--muted)', fontSize: '0.78rem' }}>
+              сейчас <span className="tnum">{store.profile.weightKg}</span> кг
+              {(store.weightHistory ?? []).length > 1 && (
+                <>
+                  {' '}
+                  · {(store.weightHistory ?? []).length} записей
+                </>
+              )}
+            </span>
+          </span>
+          <span style={{ color: 'var(--muted)', fontSize: '1.1rem' }} aria-hidden>
+            {weighOpen ? '▾' : '▸'}
+          </span>
+        </button>
+
+        {weighOpen && (
+          <div className="form-grid glass" style={{ padding: 14, borderRadius: 18, marginTop: 10 }}>
+            <div className="field">
+              <label>Дата</label>
+              <input
+                type="date"
+                value={weighDate}
+                max={date}
+                onChange={(e) => {
+                  const d = e.target.value
+                  setWeighDate(d)
+                  const existing = (store.weightHistory ?? []).find((w) => w.date === d)
+                  setWeighText(existing ? String(existing.weightKg) : '')
+                }}
+              />
+            </div>
+            <div className="field">
+              <label>Вес, кг</label>
+              <input
+                type="number"
+                min={30}
+                max={250}
+                step={0.1}
+                inputMode="decimal"
+                value={weighText}
+                placeholder="76.0"
+                onChange={(e) => setWeighText(e.target.value)}
+              />
+            </div>
+            <button
+              type="button"
+              className="primary span2"
+              onClick={() => {
+                const w = Number(weighText.replace(',', '.'))
+                if (!Number.isFinite(w) || w <= 0) return
+                setStore((s) => logWeight(s, weighDate, w))
+                setWeighText(String(w))
+              }}
+            >
+              Сохранить взвешивание
+            </button>
+
+            {(store.weightHistory ?? []).length > 0 && (
+              <div className="span2 weight-history">
+                <div style={{ fontSize: '0.75rem', color: 'var(--muted)', marginBottom: 8, fontWeight: 700 }}>
+                  История
+                </div>
+                <ul className="weight-history-list">
+                  {(store.weightHistory ?? []).slice(0, 10).map((entry) => (
+                    <li key={entry.date} className="weight-history-row">
+                      <span>
+                        {new Date(`${entry.date}T12:00:00`).toLocaleDateString('ru-RU', {
+                          day: 'numeric',
+                          month: 'short',
+                        })}
+                      </span>
+                      <strong className="tnum">{entry.weightKg} кг</strong>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         )}
       </section>
