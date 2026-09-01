@@ -1,11 +1,13 @@
 import { useMemo, useRef, useState } from 'react'
 import { Brand } from '../components/Brand'
-import { CloseButton, TrashButton } from '../components/IconButtons'
+import { CloseButton, EditButton, TrashButton } from '../components/IconButtons'
 import { NutritionStatsSheet } from '../components/NutritionStatsSheet'
 import { FOOD_PRESETS, MEAL_LABELS, mealByTime, type MealSlot } from '../data/foods'
 import { useStore } from '../lib/store'
 import {
   formatAmountLabel,
+  parsePortionCount,
+  parsePortionGrams,
   resolveScaleMode,
   scaleMacros,
   type MacroSet,
@@ -17,7 +19,7 @@ import { suggestFoodMemory, type FoodMemoryItem } from '../lib/foodMemory'
 import { searchFoodPresets } from '../lib/foodSearch'
 import { useVisualViewportSheet } from '../lib/useVisualViewportSheet'
 import { useInputEndCursor } from '../lib/inputEndCursor'
-import { addFoodEntry, logWeight, macrosForDay, setManualBurnKcal, todayKey, weightKgForDate, type FoodEntry } from '../lib/storage'
+import { addFoodEntry, logWeight, macrosForDay, setManualBurnKcal, todayKey, updateFoodEntry, weightKgForDate, type FoodEntry } from '../lib/storage'
 import {
   bodyWeightFromParts,
   formatBodyWeightGramsInput,
@@ -99,6 +101,7 @@ export function FoodScreen() {
   const [mealOpen, setMealOpen] = useState<Partial<Record<MealSlot, boolean>>>({})
   const [open, setOpen] = useState(false)
   const [detailOpen, setDetailOpen] = useState(false)
+  const [editingId, setEditingId] = useState<string | null>(null)
   const [meal, setMeal] = useState<MealSlot>(() => mealByTime())
   const [name, setName] = useState('')
   const [q, setQ] = useState('')
@@ -108,8 +111,39 @@ export function FoodScreen() {
   useVisualViewportSheet(burnSheetBgRef)
 
   const openSheet = (slot?: MealSlot) => {
+    setEditingId(null)
     setMeal(slot ?? mealByTime())
     setOpen(true)
+  }
+
+  const openEdit = (entry: FoodEntry) => {
+    setEditingId(entry.id)
+    setMeal(entry.meal)
+    setName(entry.name)
+    setQ('')
+    setOpen(false)
+
+    const { mode } = resolveScaleMode(entry.portion)
+    const parsedAmount =
+      mode === 'grams'
+        ? (parsePortionGrams(entry.portion) ?? 100)
+        : (parsePortionCount(entry.portion) ?? 1)
+
+    setScaleMode(mode)
+    setBaseAmount(parsedAmount)
+    setAmountText(String(parsedAmount))
+    setBaseMacros({
+      kcal: entry.kcal,
+      protein: entry.protein,
+      carbs: entry.carbs,
+      fat: entry.fat,
+    })
+    setManualMacros(false)
+    setKcal(String(entry.kcal))
+    setProtein(String(entry.protein))
+    setCarbs(String(entry.carbs))
+    setFat(String(entry.fat))
+    setDetailOpen(true)
   }
 
   // база пресета (макросы на baseAmount)
@@ -156,6 +190,7 @@ export function FoodScreen() {
   }, [baseMacros, baseAmount, amount, manualMacros, kcal, protein, carbs, fat])
 
   const resetForm = () => {
+    setEditingId(null)
     setName('')
     setBaseMacros(null)
     setBaseAmount(100)
@@ -177,11 +212,13 @@ export function FoodScreen() {
 
   const openCustom = () => {
     resetForm()
+    setEditingId(null)
     setOpen(true)
     setDetailOpen(true)
   }
 
   const apply = (id: string) => {
+    setEditingId(null)
     const p = FOOD_PRESETS.find((x) => x.id === id)
     if (!p) return
     const { mode, baseAmount: base } = resolveScaleMode(p.portion)
@@ -217,6 +254,7 @@ export function FoodScreen() {
   }
 
   const applyMemory = (item: FoodMemoryItem) => {
+    setEditingId(null)
     setName(item.name)
     setBaseMacros(item.macros)
     setBaseAmount(item.amount)
@@ -268,25 +306,45 @@ export function FoodScreen() {
     setFat(String(displayMacros.fat))
   }
 
-  const add = () => {
+  const save = () => {
     if (!name.trim()) return
     const portion =
       scaleMode === 'grams'
         ? formatAmountLabel('grams', amount)
         : formatAmountLabel('servings', amount)
-    const entry: FoodEntry = {
-      id: crypto.randomUUID(),
-      date,
-      meal,
-      name: name.trim(),
-      portion,
+    const macros = {
       kcal: displayMacros.kcal,
       protein: displayMacros.protein,
       carbs: displayMacros.carbs,
       fat: displayMacros.fat,
-      createdAt: new Date().toISOString(),
     }
-    setStore((s) => addFoodEntry(s, entry))
+
+    if (editingId) {
+      const existing = store.foods.find((f) => f.id === editingId)
+      if (!existing) {
+        closeAll()
+        return
+      }
+      const entry: FoodEntry = {
+        ...existing,
+        meal,
+        name: name.trim(),
+        portion,
+        ...macros,
+      }
+      setStore((s) => updateFoodEntry(s, entry))
+    } else {
+      const entry: FoodEntry = {
+        id: crypto.randomUUID(),
+        date,
+        meal,
+        name: name.trim(),
+        portion,
+        ...macros,
+        createdAt: new Date().toISOString(),
+      }
+      setStore((s) => addFoodEntry(s, entry))
+    }
     closeAll()
   }
 
@@ -539,7 +597,7 @@ export function FoodScreen() {
             {expanded &&
               items.map((f) => (
                 <div key={f.id} className="food-row">
-                  <div>
+                  <button type="button" className="food-row-main" onClick={() => openEdit(f)}>
                     <strong>{f.name}</strong>
                     <div className="meta">
                       <span className="portion-chip">{f.portion || 'порция'}</span>
@@ -558,8 +616,11 @@ export function FoodScreen() {
                         </span>
                       </span>
                     </div>
+                  </button>
+                  <div className="food-row-actions">
+                    <EditButton onClick={() => openEdit(f)} />
+                    <TrashButton onClick={() => remove(f.id)} />
                   </div>
-                  <TrashButton onClick={() => remove(f.id)} />
                 </div>
               ))}
           </div>
@@ -883,10 +944,16 @@ export function FoodScreen() {
         >
           <div className="sheet" onClick={(e) => e.stopPropagation()}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <button type="button" className="ghost" onClick={() => setDetailOpen(false)}>
-                ← Назад
+              <button
+                type="button"
+                className="ghost"
+                onClick={() => (editingId ? closeAll() : setDetailOpen(false))}
+              >
+                ← {editingId ? 'Отмена' : 'Назад'}
               </button>
-              <h2 style={{ margin: 0, fontSize: '1.15rem' }}>{name.trim() || 'Порция'}</h2>
+              <h2 style={{ margin: 0, fontSize: '1.15rem' }}>
+                {editingId ? 'Редактировать' : name.trim() || 'Порция'}
+              </h2>
               <CloseButton onClick={closeAll} />
             </div>
 
@@ -1058,8 +1125,9 @@ export function FoodScreen() {
             </div>
 
             <div className="btn-row">
-              <button type="button" className="primary" style={{ width: '100%' }} onClick={add}>
-                Сохранить · {formatAmountLabel(scaleMode, amount)} · {displayMacros.kcal} ккал
+              <button type="button" className="primary" style={{ width: '100%' }} onClick={save}>
+                {editingId ? 'Сохранить изменения' : 'Сохранить'} · {formatAmountLabel(scaleMode, amount)} ·{' '}
+                {displayMacros.kcal} ккал
               </button>
             </div>
           </div>

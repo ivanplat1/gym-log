@@ -34,6 +34,20 @@ export function IconPlus(props: SVGProps<SVGSVGElement>) {
   )
 }
 
+export function IconEdit(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" aria-hidden {...props}>
+      <path
+        d="M4 20h4l10.5-10.5a2.1 2.1 0 0 0 0-3L16.5 4.5a2.1 2.1 0 0 0-3 0L3 15v5Z"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinejoin="round"
+      />
+      <path d="M13.5 6.5l4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  )
+}
+
 export function CloseButton({
   className = '',
   ...props
@@ -68,6 +82,17 @@ export function TrashButton({
   return (
     <button type="button" className={`icon-btn icon-btn-danger ${className}`.trim()} aria-label="Удалить" {...props}>
       <IconTrash />
+    </button>
+  )
+}
+
+export function EditButton({
+  className = '',
+  ...props
+}: ButtonHTMLAttributes<HTMLButtonElement>) {
+  return (
+    <button type="button" className={`icon-btn ${className}`.trim()} aria-label="Редактировать" {...props}>
+      <IconEdit />
     </button>
   )
 }
