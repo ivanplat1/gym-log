@@ -16,6 +16,7 @@ import { cardioBurnForDay } from '../lib/cardio'
 import { suggestFoodMemory, type FoodMemoryItem } from '../lib/foodMemory'
 import { searchFoodPresets } from '../lib/foodSearch'
 import { useVisualViewportSheet } from '../lib/useVisualViewportSheet'
+import { useInputEndCursor } from '../lib/inputEndCursor'
 import { addFoodEntry, logWeight, macrosForDay, setManualBurnKcal, todayKey, weightKgForDate, type FoodEntry } from '../lib/storage'
 import {
   bodyWeightFromParts,
@@ -124,6 +125,11 @@ export function FoodScreen() {
   const [protein, setProtein] = useState('')
   const [carbs, setCarbs] = useState('')
   const [fat, setFat] = useState('')
+
+  const amountInput = useInputEndCursor(amountText)
+  const weighKgInput = useInputEndCursor(weighKgText)
+  const weighGramsInput = useInputEndCursor(weighGramsText)
+  const burnInput = useInputEndCursor(burnText)
 
   const amount = Number(amountText.replace(',', '.')) || 0
 
@@ -433,7 +439,9 @@ export function FoodScreen() {
                   min={0}
                   inputMode="numeric"
                   value={burnText}
-                  onChange={(e) => setBurnText(e.target.value)}
+                  onChange={burnInput.wrapChange(setBurnText)}
+                  onFocus={burnInput.onFocus}
+                  onBlur={burnInput.onBlur}
                   placeholder="350"
                   autoFocus
                 />
@@ -684,7 +692,9 @@ export function FoodScreen() {
                 inputMode="numeric"
                 value={weighKgText}
                 placeholder="76"
-                onChange={(e) => setWeighKgText(e.target.value)}
+                onChange={weighKgInput.wrapChange(setWeighKgText)}
+                onFocus={weighKgInput.onFocus}
+                onBlur={weighKgInput.onBlur}
               />
             </div>
             <div className="field">
@@ -697,7 +707,9 @@ export function FoodScreen() {
                 inputMode="numeric"
                 value={weighGramsText}
                 placeholder="350"
-                onChange={(e) => setWeighGramsText(e.target.value)}
+                onChange={weighGramsInput.wrapChange(setWeighGramsText)}
+                onFocus={weighGramsInput.onFocus}
+                onBlur={weighGramsInput.onBlur}
               />
             </div>
             <button
@@ -910,6 +922,7 @@ export function FoodScreen() {
                     −
                   </button>
                   <input
+                    ref={amountInput.ref}
                     className="tnum"
                     type="text"
                     inputMode="numeric"
@@ -918,8 +931,10 @@ export function FoodScreen() {
                     autoComplete="off"
                     placeholder={scaleMode === 'grams' ? '100' : '1'}
                     value={amountText}
-                    onChange={(e) => onAmountTextChange(e.target.value)}
+                    onChange={amountInput.wrapChange(onAmountTextChange)}
+                    onFocus={amountInput.onFocus}
                     onBlur={() => {
+                      amountInput.onBlur()
                       if (!amountText) setAmountText('0')
                     }}
                     style={{

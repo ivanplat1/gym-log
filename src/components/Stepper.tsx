@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { placeInputCursorAtEnd } from '../lib/inputEndCursor'
 
 interface StepperProps {
   label: string
@@ -29,10 +30,16 @@ export function Stepper({
 }: StepperProps) {
   const shown = formatShown(value, decimals)
   const [text, setText] = useState(shown)
+  const [focused, setFocused] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    setText(shown)
-  }, [shown])
+    if (!focused) setText(shown)
+  }, [shown, focused])
+
+  useLayoutEffect(() => {
+    if (focused) placeInputCursorAtEnd(inputRef.current)
+  }, [text, focused])
 
   const applyText = (raw: string) => {
     const normalized = raw.trim().replace(',', '.')
@@ -65,6 +72,7 @@ export function Stepper({
         </button>
         {editable ? (
           <input
+            ref={inputRef}
             className="stepper-input tnum"
             type="text"
             inputMode={decimals > 0 ? 'decimal' : 'numeric'}
@@ -73,7 +81,14 @@ export function Stepper({
             aria-label={label}
             value={text}
             onChange={(e) => setText(e.target.value)}
-            onBlur={() => applyText(text)}
+            onFocus={(e) => {
+              setFocused(true)
+              placeInputCursorAtEnd(e.currentTarget)
+            }}
+            onBlur={() => {
+              setFocused(false)
+              applyText(text)
+            }}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 e.currentTarget.blur()
