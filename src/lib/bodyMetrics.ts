@@ -1,5 +1,7 @@
 /** Статичные параметры тела + редактируемый вес */
 
+import { normalizeBodyWeightKg } from './bodyWeight'
+
 export type Sex = 'male' | 'female'
 export type GoalIntent = 'cut' | 'maintain' | 'bulk'
 
@@ -93,7 +95,7 @@ export function mergeProfile(raw: Partial<UserProfile> | undefined): UserProfile
     ...STATIC_BODY,
     weightKg:
       typeof raw?.weightKg === 'number' && raw.weightKg > 0
-        ? raw.weightKg
+        ? normalizeBodyWeightKg(raw.weightKg)
         : DEFAULT_PROFILE.weightKg,
   }
 }

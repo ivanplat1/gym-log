@@ -17,6 +17,12 @@ import { suggestFoodMemory, type FoodMemoryItem } from '../lib/foodMemory'
 import { searchFoodPresets } from '../lib/foodSearch'
 import { useVisualViewportSheet } from '../lib/useVisualViewportSheet'
 import { addFoodEntry, logWeight, macrosForDay, setManualBurnKcal, todayKey, weightKgForDate, type FoodEntry } from '../lib/storage'
+import {
+  bodyWeightFromParts,
+  formatBodyWeightGramsInput,
+  formatBodyWeightKg,
+  formatBodyWeightKgInput,
+} from '../lib/bodyWeight'
 
 function Ring({
   value,
@@ -81,8 +87,14 @@ export function FoodScreen() {
   const [goalsOpen, setGoalsOpen] = useState(false)
   const [weighOpen, setWeighOpen] = useState(false)
   const [weighDate, setWeighDate] = useState(() => todayKey())
-  const [weighText, setWeighText] = useState('')
+  const [weighKgText, setWeighKgText] = useState('')
+  const [weighGramsText, setWeighGramsText] = useState('')
   const [statsOpen, setStatsOpen] = useState(false)
+
+  const setWeighFields = (kg: number) => {
+    setWeighKgText(formatBodyWeightKgInput(kg))
+    setWeighGramsText(formatBodyWeightGramsInput(kg))
+  }
   const [mealOpen, setMealOpen] = useState<Partial<Record<MealSlot, boolean>>>({})
   const [open, setOpen] = useState(false)
   const [detailOpen, setDetailOpen] = useState(false)
@@ -579,7 +591,7 @@ export function FoodScreen() {
             <p className="span2" style={{ margin: 0, color: 'var(--muted)', fontSize: '0.82rem' }}>
               КБЖУ считается сам: BMR × {goalsToday.trainingDay ? '1.55' : '1.4'}
               {goalsToday.trainingDay ? ' (тренировка)' : ' (отдых)'} · вес{' '}
-              <span className="tnum">{weightToday}</span> кг
+              <span className="tnum">{formatBodyWeightKg(weightToday)}</span>
             </p>
             <div className="span2" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
               {(
@@ -611,7 +623,7 @@ export function FoodScreen() {
             setWeighOpen((v) => !v)
             if (!weighOpen) {
               setWeighDate(date)
-              setWeighText(String(store.profile.weightKg))
+              setWeighFields(store.profile.weightKg)
             }
           }}
           style={{
@@ -628,7 +640,7 @@ export function FoodScreen() {
           <span>
             <strong style={{ display: 'block', fontSize: '0.95rem' }}>Взвешивание</strong>
             <span style={{ color: 'var(--muted)', fontSize: '0.78rem' }}>
-              сейчас <span className="tnum">{store.profile.weightKg}</span> кг
+              сейчас <span className="tnum">{formatBodyWeightKg(store.profile.weightKg)}</span>
               {(store.weightHistory ?? []).length > 1 && (
                 <>
                   {' '}
@@ -654,31 +666,51 @@ export function FoodScreen() {
                   const d = e.target.value
                   setWeighDate(d)
                   const existing = (store.weightHistory ?? []).find((w) => w.date === d)
-                  setWeighText(existing ? String(existing.weightKg) : '')
+                  if (existing) setWeighFields(existing.weightKg)
+                  else {
+                    setWeighKgText('')
+                    setWeighGramsText('')
+                  }
                 }}
               />
             </div>
             <div className="field">
-              <label>Вес, кг</label>
+              <label>Килограммы</label>
               <input
                 type="number"
                 min={30}
                 max={250}
-                step={0.1}
-                inputMode="decimal"
-                value={weighText}
-                placeholder="76.0"
-                onChange={(e) => setWeighText(e.target.value)}
+                step={1}
+                inputMode="numeric"
+                value={weighKgText}
+                placeholder="76"
+                onChange={(e) => setWeighKgText(e.target.value)}
+              />
+            </div>
+            <div className="field">
+              <label>Граммы</label>
+              <input
+                type="number"
+                min={0}
+                max={999}
+                step={1}
+                inputMode="numeric"
+                value={weighGramsText}
+                placeholder="350"
+                onChange={(e) => setWeighGramsText(e.target.value)}
               />
             </div>
             <button
               type="button"
               className="primary span2"
               onClick={() => {
-                const w = Number(weighText.replace(',', '.'))
-                if (!Number.isFinite(w) || w <= 0) return
+                const kg = Number(weighKgText.replace(',', '.'))
+                const grams = Number(weighGramsText.replace(',', '.')) || 0
+                if (!Number.isFinite(kg) || kg <= 0) return
+                const w = bodyWeightFromParts(kg, grams)
+                if (w <= 0) return
                 setStore((s) => logWeight(s, weighDate, w))
-                setWeighText(String(w))
+                setWeighFields(w)
               }}
             >
               Сохранить взвешивание
@@ -698,7 +730,7 @@ export function FoodScreen() {
                           month: 'short',
                         })}
                       </span>
-                      <strong className="tnum">{entry.weightKg} кг</strong>
+                      <strong className="tnum">{formatBodyWeightKg(entry.weightKg)}</strong>
                     </li>
                   ))}
                 </ul>

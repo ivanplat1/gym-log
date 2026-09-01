@@ -59,6 +59,7 @@ export interface FoodEntry {
 }
 
 import { calcMacroTargets, mergeProfile, type UserProfile } from './bodyMetrics'
+import { normalizeBodyWeightKg } from './bodyWeight'
 import type { Exercise, MuscleGroup } from '../data/exercises'
 import { createCustomExercise } from '../data/exercises'
 import {
@@ -197,8 +198,8 @@ function latestWeightKg(history: WeightEntry[], fallback: number): number {
 
 /** Записать взвешивание и пересчитать текущий вес + цели */
 export function logWeight(store: Store, date: string, weightKg: number): Store {
-  if (!Number.isFinite(weightKg) || weightKg <= 0) return store
-  const w = Math.round(weightKg * 10) / 10
+  const w = normalizeBodyWeightKg(weightKg)
+  if (w <= 0) return store
   const entry: WeightEntry = {
     date,
     weightKg: w,
