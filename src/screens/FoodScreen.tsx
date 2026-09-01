@@ -62,8 +62,8 @@ export function FoodScreen() {
   const [name, setName] = useState('')
   const [q, setQ] = useState('')
 
-  const openSheet = () => {
-    setMeal(mealByTime())
+  const openSheet = (slot?: MealSlot) => {
+    setMeal(slot ?? mealByTime())
     setOpen(true)
   }
 
@@ -130,7 +130,6 @@ export function FoodScreen() {
 
   const openCustom = () => {
     resetForm()
-    setMeal(mealByTime())
     setOpen(true)
     setDetailOpen(true)
   }
@@ -318,7 +317,7 @@ export function FoodScreen() {
         </div>
       </div>
 
-      <button type="button" className="primary" style={{ width: '100%' }} onClick={openSheet}>
+      <button type="button" className="primary" style={{ width: '100%' }} onClick={() => openSheet()}>
         + Добавить еду
       </button>
 
@@ -353,7 +352,17 @@ export function FoodScreen() {
           <div key={slot} className="meal glass" style={{ marginTop: 12 }}>
             <div className="meal-title">
               <span>{MEAL_LABELS[slot]}</span>
-              <span className="tnum">{items.length ? `${Math.round(mealKcal)} ккал` : 'пусто'}</span>
+              <span className="meal-title-right">
+                <span className="tnum">{items.length ? `${Math.round(mealKcal)} ккал` : 'пусто'}</span>
+                <button
+                  type="button"
+                  className="meal-add"
+                  aria-label={`Добавить в ${MEAL_LABELS[slot]}`}
+                  onClick={() => openSheet(slot)}
+                >
+                  + еда
+                </button>
+              </span>
             </div>
             {items.map((f) => (
               <div key={f.id} className="food-row">
