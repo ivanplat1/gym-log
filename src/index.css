@@ -155,12 +155,19 @@ select {
   color: var(--muted);
 }
 
-.page-head .brand i {
-  display: grid;
-  place-items: center;
+.page-head .brand i,
+.page-head .brand-icon {
+  display: block;
   width: 22px;
   height: 22px;
   border-radius: 6px;
+  object-fit: cover;
+  flex: 0 0 auto;
+}
+
+.page-head .brand i {
+  display: grid;
+  place-items: center;
   background: var(--accent);
   color: #111;
   font-style: normal;

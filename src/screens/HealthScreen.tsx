@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { Brand } from '../components/Brand'
 import { CloseButton } from '../components/IconButtons'
 import { useStore } from '../lib/store'
 import {
@@ -125,9 +126,7 @@ export function HealthScreen() {
   return (
     <>
       <header className="page-head">
-        <div className="brand">
-          <i>G</i> gym-log
-        </div>
+        <Brand />
         <h1>Здоровье</h1>
         <p>Сон с Mi Band и активность с iPhone — через Apple Health и Ярлыки.</p>
       </header>
@@ -325,7 +324,7 @@ export function HealthScreen() {
                   {shortcutBaseUrl()}?date=ДАТА&amp;sleepMin=МИНУТЫ&amp;steps=ШАГИ&amp;activeKcal=ККАЛ&amp;source=shortcut
                 </code>
                 <p style={{ margin: '10px 0 0', color: 'var(--muted)', fontSize: '0.88rem', lineHeight: 1.45 }}>
-                  Автоматизация: «Время суток» утром → запуск Ярлыка. Safari откроет gym-log и
+                  Автоматизация: «Время суток» утром → запуск Ярлыка. Safari откроет GymLog и
                   данные запишутся в журнал.
                 </p>
                 <button
@@ -346,7 +345,7 @@ export function HealthScreen() {
                 <p style={{ margin: '8px 0 0', color: 'var(--muted)', fontSize: '0.88rem', lineHeight: 1.45 }}>
                   Сайт не может читать HealthKit и BLE браслета — так устроен iOS. Полный фон без
                   Ярлыков = нативное приложение (Capacitor) или платный агрегатор (Terra и т.п.).
-                  Схема Mi Band → Health → Ярлык → gym-log — самый простой автомат без бэкенда.
+                  Схема Mi Band → Health → Ярлык → GymLog — самый простой автомат без бэкенда.
                 </p>
               </div>
             </div>

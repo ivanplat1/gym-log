@@ -1,4 +1,5 @@
 import { useMemo, useRef, useState } from 'react'
+import { Brand } from '../components/Brand'
 import { CloseButton, TrashButton } from '../components/IconButtons'
 import { NutritionStatsSheet } from '../components/NutritionStatsSheet'
 import { FOOD_PRESETS, MEAL_LABELS, mealByTime, type MealSlot } from '../data/foods'
@@ -15,7 +16,7 @@ import { cardioBurnForDay } from '../lib/cardio'
 import { suggestFoodMemory, type FoodMemoryItem } from '../lib/foodMemory'
 import { searchFoodPresets } from '../lib/foodSearch'
 import { useVisualViewportSheet } from '../lib/useVisualViewportSheet'
-import { addFoodEntry, macrosForDay, setWeightKg, todayKey, type FoodEntry } from '../lib/storage'
+import { addFoodEntry, macrosForDay, setManualBurnKcal, setWeightKg, todayKey, type FoodEntry } from '../lib/storage'
 
 function Ring({
   value,
@@ -70,7 +71,11 @@ export function FoodScreen() {
       ),
     [store.sessions, store.activeSession, store.profile.weightKg, store.customExercises, date],
   )
-  const kcalBudget = goalsToday.kcal + cardioBurn
+  const manualBurn = store.manualBurnKcal?.[date] ?? 0
+  const activityBurn = cardioBurn + manualBurn
+  const kcalBudget = goalsToday.kcal + activityBurn
+  const [burnOpen, setBurnOpen] = useState(false)
+  const [burnText, setBurnText] = useState('')
 
   const [goalsOpen, setGoalsOpen] = useState(false)
   const [statsOpen, setStatsOpen] = useState(false)
@@ -268,9 +273,7 @@ export function FoodScreen() {
   return (
     <>
       <header className="page-head">
-        <div className="brand">
-          <i>G</i> gym-log
-        </div>
+        <Brand />
         <h1>Питание</h1>
         <p>Дневник на сегодня — пресет + граммовка, ккал пересчитаются.</p>
       </header>
@@ -304,13 +307,29 @@ export function FoodScreen() {
               {Math.round(totals.kcal)} / {kcalBudget}
             </strong>
           </div>
-          {cardioBurn > 0 && (
+          {activityBurn > 0 && (
             <p style={{ margin: 0, fontSize: '0.78rem', color: 'var(--muted)' }}>
-              Цель {goalsToday.kcal} +{' '}
-              <span className="tnum" style={{ color: '#ff9f43' }}>
-                {cardioBurn}
-              </span>{' '}
-              кардио
+              Цель {goalsToday.kcal}
+              {cardioBurn > 0 && (
+                <>
+                  {' '}
+                  +{' '}
+                  <span className="tnum" style={{ color: '#ff9f43' }}>
+                    {cardioBurn}
+                  </span>{' '}
+                  кардио
+                </>
+              )}
+              {manualBurn > 0 && (
+                <>
+                  {' '}
+                  +{' '}
+                  <span className="tnum" style={{ color: '#ff9f43' }}>
+                    {manualBurn}
+                  </span>{' '}
+                  активность
+                </>
+              )}
             </p>
           )}
           <div className="macro-line">
@@ -344,10 +363,10 @@ export function FoodScreen() {
             {goalsToday.trainingDay
               ? `Тренировка · бюджет ${kcalBudget} ккал`
               : `Отдых · бюджет ${kcalBudget} ккал`}
-            {cardioBurn > 0 && (
+            {activityBurn > 0 && (
               <>
                 {' '}
-                · сожжено кардио ~<span className="tnum">{cardioBurn}</span>
+                · сожжено ~<span className="tnum">{activityBurn}</span>
               </>
             )}
           </p>
@@ -357,6 +376,58 @@ export function FoodScreen() {
       <button type="button" className="primary" style={{ width: '100%', marginTop: 10 }} onClick={() => openSheet()}>
         + Добавить еду
       </button>
+
+      <button
+        type="button"
+        className="secondary"
+        style={{ width: '100%', marginTop: 8 }}
+        onClick={() => {
+          setBurnText(manualBurn > 0 ? String(manualBurn) : '')
+          setBurnOpen(true)
+        }}
+      >
+        Внести сожжённые калории
+      </button>
+
+      {burnOpen && (
+        <div className="sheet-bg" role="dialog" aria-modal onClick={() => setBurnOpen(false)}>
+          <div className="sheet" onClick={(e) => e.stopPropagation()}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h2>Активные калории</h2>
+              <CloseButton onClick={() => setBurnOpen(false)} />
+            </div>
+            <p style={{ margin: '8px 0 0', color: 'var(--muted)', fontSize: '0.85rem' }}>
+              Сожжённые ккал за сегодня (ходьба, быт, Apple Watch — что не попало в кардио в зале).
+            </p>
+            <div className="field" style={{ marginTop: 14 }}>
+              <label>Ккал</label>
+              <input
+                type="number"
+                min={0}
+                inputMode="numeric"
+                value={burnText}
+                onChange={(e) => setBurnText(e.target.value)}
+                placeholder="350"
+                autoFocus
+              />
+            </div>
+            <div className="btn-row" style={{ marginTop: 14 }}>
+              <button
+                type="button"
+                className="primary"
+                style={{ width: '100%' }}
+                onClick={() => {
+                  const kcal = Number(burnText.replace(',', '.')) || 0
+                  setStore((s) => setManualBurnKcal(s, date, kcal))
+                  setBurnOpen(false)
+                }}
+              >
+                Сохранить
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {!!(store.foodMemory ?? []).length && (
         <div style={{ marginTop: 10 }}>

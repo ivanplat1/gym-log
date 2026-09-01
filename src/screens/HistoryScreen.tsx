@@ -4,7 +4,13 @@ import { ExercisePicker } from '../components/ExercisePicker'
 import { IconTrash } from '../components/IconButtons'
 import { Stepper } from '../components/Stepper'
 import { TimedDurationStepper } from '../components/TimedDurationStepper'
-import { getTimedStepperConfig } from '../lib/cardio'
+import { DistanceStepper } from '../components/DistanceStepper'
+import { Brand } from '../components/Brand'
+import {
+  getDistanceStepperConfig,
+  getTimedStepperConfig,
+  isDistanceCardio,
+} from '../lib/cardio'
 import { useStore } from '../lib/store'
 import { addCustomExercise, type LoggedSet, type SessionExercise, type WorkoutSession } from '../lib/storage'
 import { formatLoggedSet, isBodyweightExercise } from '../lib/workoutFormat'
@@ -48,6 +54,7 @@ function SessionDetail({
   const [addKey, setAddKey] = useState<string | null>(null)
   const [weight, setWeight] = useState(20)
   const [reps, setReps] = useState(10)
+  const [distanceM, setDistanceM] = useState(0)
 
   const persist = useCallback(
     (next: WorkoutSession) => {
@@ -145,9 +152,15 @@ function SessionDetail({
     const bw = exerciseBodyweight(ex)
     const last = ex.sets[ex.sets.length - 1]
     const timedCfg = getTimedStepperConfig(ex.exerciseId, store.customExercises ?? [])
+    const distCfg = getDistanceStepperConfig()
     if (ex.timed) {
       setWeight(0)
       setReps(last?.durationSec ?? timedCfg.defaultSeconds)
+      setDistanceM(
+        isDistanceCardio(ex.exerciseId, store.customExercises ?? [])
+          ? (last?.distanceM ?? distCfg.defaultMeters)
+          : 0,
+      )
     } else if (bw) {
       setWeight(0)
       setReps(last?.reps ?? 10)
@@ -160,11 +173,19 @@ function SessionDetail({
 
   const appendSet = (ex: SessionExercise) => {
     const bw = exerciseBodyweight(ex)
+    const custom = store.customExercises ?? []
     const set: LoggedSet = ex.timed
-      ? { weight: null, reps: null, durationSec: reps, done: true }
+      ? {
+          weight: null,
+          reps: null,
+          durationSec: reps,
+          distanceM:
+            isDistanceCardio(ex.exerciseId, custom) && distanceM > 0 ? distanceM : null,
+          done: true,
+        }
       : bw
-        ? { weight: null, reps, durationSec: null, done: true }
-        : { weight, reps, durationSec: null, done: true }
+        ? { weight: null, reps, durationSec: null, distanceM: null, done: true }
+        : { weight, reps, durationSec: null, distanceM: null, done: true }
     updateExercise(ex.key, (e) => ({ ...e, sets: [...e.sets, set] }))
     setAddKey(null)
   }
@@ -288,13 +309,22 @@ function SessionDetail({
                         />
                       )}
                       {ex.timed ? (
-                        <TimedDurationStepper
-                          exerciseId={ex.exerciseId}
-                          durationSec={set.durationSec ?? 0}
-                          customExercises={store.customExercises ?? []}
-                          compact
-                          onChangeSec={(v) => updateSet(ex.key, i, { durationSec: v })}
-                        />
+                        <>
+                          <TimedDurationStepper
+                            exerciseId={ex.exerciseId}
+                            durationSec={set.durationSec ?? 0}
+                            customExercises={store.customExercises ?? []}
+                            compact
+                            onChangeSec={(v) => updateSet(ex.key, i, { durationSec: v })}
+                          />
+                          {isDistanceCardio(ex.exerciseId, store.customExercises ?? []) && (
+                            <DistanceStepper
+                              meters={set.distanceM ?? 0}
+                              compact
+                              onChangeMeters={(v) => updateSet(ex.key, i, { distanceM: v })}
+                            />
+                          )}
+                        </>
                       ) : (
                         <Stepper
                           label="повт"
@@ -334,13 +364,22 @@ function SessionDetail({
                           />
                         )}
                         {ex.timed ? (
-                          <TimedDurationStepper
-                            exerciseId={ex.exerciseId}
-                            durationSec={reps}
-                            customExercises={store.customExercises ?? []}
-                            compact
-                            onChangeSec={setReps}
-                          />
+                          <>
+                            <TimedDurationStepper
+                              exerciseId={ex.exerciseId}
+                              durationSec={reps}
+                              customExercises={store.customExercises ?? []}
+                              compact
+                              onChangeSec={setReps}
+                            />
+                            {isDistanceCardio(ex.exerciseId, store.customExercises ?? []) && (
+                              <DistanceStepper
+                                meters={distanceM}
+                                compact
+                                onChangeMeters={setDistanceM}
+                              />
+                            )}
+                          </>
                         ) : (
                           <Stepper
                             label="повт"
@@ -437,9 +476,7 @@ export function HistoryScreen() {
   return (
     <>
       <header className="page-head">
-        <div className="brand">
-          <i>G</i> gym-log
-        </div>
+        <Brand />
         <h1>Журнал</h1>
         <p>Завершённые тренировки</p>
       </header>

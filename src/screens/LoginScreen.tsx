@@ -1,5 +1,7 @@
 import { useState, type FormEvent } from 'react'
 
+import { Brand } from '../components/Brand'
+
 export function LoginScreen({
   onLogin,
   onCancel,
@@ -32,9 +34,7 @@ export function LoginScreen({
       <div className={compact ? undefined : 'app-main'} style={compact ? undefined : { maxWidth: 420 }}>
         <header className="page-head" style={compact ? { marginBottom: 12 } : undefined}>
           {!compact && (
-            <div className="brand">
-              <i>G</i> gym-log
-            </div>
+            <Brand />
           )}
           <h1 style={compact ? { fontSize: '1.35rem' } : undefined}>Вход</h1>
           <p>
