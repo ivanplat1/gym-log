@@ -1,3 +1,9 @@
+export interface WeightEntry {
+  date: string // YYYY-MM-DD
+  weightKg: number
+  loggedAt: string
+}
+
 export interface HealthDay {
   date: string // YYYY-MM-DD
   /** Общая длительность сна, минуты */
@@ -82,6 +88,8 @@ export interface Store {
   health: HealthDay[]
   /** Ручной ввод сожжённых активных ккал по датам YYYY-MM-DD */
   manualBurnKcal: Record<string, number>
+  /** История взвешиваний */
+  weightHistory: WeightEntry[]
 }
 
 const STORAGE_KEY = 'gym-log:v2'
@@ -108,6 +116,7 @@ function emptyStore(): Store {
     activeSession: null,
     health: [],
     manualBurnKcal: {},
+    weightHistory: [],
   }
 }
 
@@ -121,6 +130,18 @@ export function loadStore(): Store {
     const foodMemory = Array.isArray(parsed.foodMemory)
       ? (parsed.foodMemory as FoodMemoryItem[])
       : seedFoodMemoryFromFoods(foods)
+    let weightHistory = Array.isArray(parsed.weightHistory)
+      ? (parsed.weightHistory as WeightEntry[])
+      : []
+    if (!weightHistory.length && profile.weightKg > 0) {
+      weightHistory = [
+        {
+          date: todayKey(),
+          weightKg: profile.weightKg,
+          loggedAt: new Date().toISOString(),
+        },
+      ]
+    }
     return {
       sessions: Array.isArray(parsed.sessions) ? parsed.sessions : [],
       foods,
@@ -136,16 +157,62 @@ export function loadStore(): Store {
         parsed.manualBurnKcal && typeof parsed.manualBurnKcal === 'object'
           ? (parsed.manualBurnKcal as Record<string, number>)
           : {},
+      weightHistory,
     }
   } catch {
     return emptyStore()
   }
 }
 
-/** Обновить вес и пересчитать базовые цели */
+/** Вес на дату: последнее взвешивание на эту дату или раньше */
+export function weightKgForDate(
+  history: WeightEntry[],
+  profile: UserProfile,
+  date: string,
+): number {
+  const fallback = mergeProfile(profile).weightKg
+  if (!history.length) return fallback
+  const sorted = [...history]
+    .filter((e) => e.weightKg > 0)
+    .sort((a, b) => a.date.localeCompare(b.date))
+  let last = fallback
+  for (const e of sorted) {
+    if (e.date > date) break
+    last = e.weightKg
+  }
+  return last
+}
+
+function upsertWeightEntry(existing: WeightEntry[], incoming: WeightEntry): WeightEntry[] {
+  const map = new Map(existing.map((e) => [e.date, e]))
+  map.set(incoming.date, incoming)
+  return [...map.values()].sort((a, b) => b.date.localeCompare(a.date))
+}
+
+function latestWeightKg(history: WeightEntry[], fallback: number): number {
+  if (!history.length) return fallback
+  const sorted = [...history].sort((a, b) => b.date.localeCompare(a.date))
+  return sorted[0]?.weightKg > 0 ? sorted[0].weightKg : fallback
+}
+
+/** Записать взвешивание и пересчитать текущий вес + цели */
+export function logWeight(store: Store, date: string, weightKg: number): Store {
+  if (!Number.isFinite(weightKg) || weightKg <= 0) return store
+  const w = Math.round(weightKg * 10) / 10
+  const entry: WeightEntry = {
+    date,
+    weightKg: w,
+    loggedAt: new Date().toISOString(),
+  }
+  const weightHistory = upsertWeightEntry(store.weightHistory ?? [], entry)
+  const current = latestWeightKg(weightHistory, mergeProfile(store.profile).weightKg)
+  const profile = mergeProfile({ weightKg: current })
+  return { ...store, weightHistory, profile, goals: goalsFromProfile(profile) }
+}
+
+/** @deprecated используй logWeight */
 export function setWeightKg(store: Store, weightKg: number): Store {
-  const profile = mergeProfile({ weightKg })
-  return { ...store, profile, goals: goalsFromProfile(profile) }
+  return logWeight(store, todayKey(), weightKg)
 }
 
 /** Добавить еду и запомнить блюдо/граммовку */

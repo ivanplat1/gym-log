@@ -1,6 +1,6 @@
 import { calcMacroTargets, mergeProfile } from './bodyMetrics'
 import type { Store, WorkoutSession } from './storage'
-import { todayKey } from './storage'
+import { todayKey, weightKgForDate } from './storage'
 
 function sessionOnDate(session: WorkoutSession, date: string): boolean {
   const start = todayKey(new Date(session.startedAt))
@@ -32,10 +32,11 @@ export type EffectiveGoals = {
 
 /** Цель на день считается сама: вес + тренировка / отдых */
 export function effectiveGoals(
-  store: Pick<Store, 'profile' | 'sessions' | 'activeSession'>,
+  store: Pick<Store, 'profile' | 'sessions' | 'activeSession' | 'weightHistory'>,
   date: string,
 ): EffectiveGoals {
-  const profile = mergeProfile(store.profile)
+  const weightKg = weightKgForDate(store.weightHistory ?? [], store.profile, date)
+  const profile = mergeProfile({ ...store.profile, weightKg })
   const trainingDay = hasWorkoutOnDate(store, date)
   const t = calcMacroTargets(profile, { trainingDay })
   return {
