@@ -1,15 +1,17 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { getExercise } from '../data/exercises'
+import { ExercisePicker } from '../components/ExercisePicker'
+import { IconTrash } from '../components/IconButtons'
+import { Stepper } from '../components/Stepper'
 import { useStore } from '../lib/store'
-import type { WorkoutSession } from '../lib/storage'
+import type { LoggedSet, SessionExercise, WorkoutSession } from '../lib/storage'
 import { formatLoggedSet, isBodyweightExercise } from '../lib/workoutFormat'
 
-function SessionDetail({
-  session,
-  onBack,
-}: {
-  session: WorkoutSession
-  onBack: () => void
-}) {
+function exerciseBodyweight(ex: SessionExercise): boolean {
+  return ex.bodyweight ?? isBodyweightExercise(ex.exerciseId)
+}
+
+function sessionStats(session: WorkoutSession) {
   const volume = session.exercises.reduce(
     (sum, e) => sum + e.sets.reduce((s, set) => s + (set.weight ?? 0) * (set.reps ?? 0), 0),
     0,
@@ -25,13 +27,161 @@ function SessionDetail({
           ),
         )
       : null
+  return { volume, sets, durationMin }
+}
+
+function SessionDetail({
+  session,
+  onBack,
+}: {
+  session: WorkoutSession
+  onBack: () => void
+}) {
+  const { setStore } = useStore()
+  const [editing, setEditing] = useState(false)
+  const [draft, setDraft] = useState<WorkoutSession>(() => structuredClone(session))
+  const [picker, setPicker] = useState(false)
+  const [addKey, setAddKey] = useState<string | null>(null)
+  const [weight, setWeight] = useState(20)
+  const [reps, setReps] = useState(10)
+
+  useEffect(() => {
+    setDraft(structuredClone(session))
+    setEditing(false)
+    setAddKey(null)
+  }, [session.id, session])
+
+  const view = editing ? draft : session
+  const { volume, sets, durationMin } = sessionStats(view)
+
+  const persist = (next: WorkoutSession) => {
+    setStore((s) => ({
+      ...s,
+      sessions: s.sessions.map((x) => (x.id === next.id ? next : x)),
+    }))
+  }
+
+  const startEdit = () => {
+    setDraft(structuredClone(session))
+    setEditing(true)
+  }
+
+  const cancelEdit = () => {
+    setDraft(structuredClone(session))
+    setEditing(false)
+    setAddKey(null)
+  }
+
+  const saveEdit = () => {
+    persist(draft)
+    setEditing(false)
+    setAddKey(null)
+  }
+
+  const deleteSession = () => {
+    if (!window.confirm('Удалить эту тренировку из журнала?')) return
+    setStore((s) => ({
+      ...s,
+      sessions: s.sessions.filter((x) => x.id !== session.id),
+    }))
+    onBack()
+  }
+
+  const updateExercise = (exKey: string, updater: (ex: SessionExercise) => SessionExercise) => {
+    setDraft((prev) => ({
+      ...prev,
+      exercises: prev.exercises.map((e) => (e.key === exKey ? updater(e) : e)),
+    }))
+  }
+
+  const updateSet = (exKey: string, setIdx: number, patch: Partial<LoggedSet>) => {
+    updateExercise(exKey, (ex) => ({
+      ...ex,
+      sets: ex.sets.map((set, i) => (i === setIdx ? { ...set, ...patch } : set)),
+    }))
+  }
+
+  const removeSet = (exKey: string, setIdx: number) => {
+    updateExercise(exKey, (ex) => ({
+      ...ex,
+      sets: ex.sets.filter((_, i) => i !== setIdx),
+    }))
+  }
+
+  const removeExercise = (exKey: string) => {
+    setDraft((prev) => ({
+      ...prev,
+      exercises: prev.exercises.filter((e) => e.key !== exKey),
+    }))
+    if (addKey === exKey) setAddKey(null)
+  }
+
+  const openAddSet = (ex: SessionExercise) => {
+    const bw = exerciseBodyweight(ex)
+    const last = ex.sets[ex.sets.length - 1]
+    if (ex.timed) {
+      setWeight(0)
+      setReps(last?.durationSec ?? 30)
+    } else if (bw) {
+      setWeight(0)
+      setReps(last?.reps ?? 10)
+    } else {
+      setWeight(last?.weight ?? 20)
+      setReps(last?.reps ?? 10)
+    }
+    setAddKey(ex.key)
+  }
+
+  const appendSet = (ex: SessionExercise) => {
+    const bw = exerciseBodyweight(ex)
+    const set: LoggedSet = ex.timed
+      ? { weight: null, reps: null, durationSec: reps, done: true }
+      : bw
+        ? { weight: null, reps, durationSec: null, done: true }
+        : { weight, reps, durationSec: null, done: true }
+    updateExercise(ex.key, (e) => ({ ...e, sets: [...e.sets, set] }))
+    setAddKey(null)
+  }
+
+  const addExercise = (id: string) => {
+    const ex = getExercise(id)
+    if (!ex) return
+    if (draft.exercises.some((e) => e.exerciseId === id)) {
+      setPicker(false)
+      return
+    }
+    const item: SessionExercise = {
+      key: crypto.randomUUID(),
+      exerciseId: ex.id,
+      name: ex.name,
+      timed: !!ex.timed,
+      bodyweight: !!ex.bodyweight,
+      sets: [],
+    }
+    setDraft((prev) => ({ ...prev, exercises: [...prev.exercises, item] }))
+    setPicker(false)
+    setAddKey(item.key)
+    openAddSet(item)
+  }
 
   return (
     <>
       <header className="page-head">
-        <button type="button" className="ghost" onClick={onBack}>
-          ← Назад
-        </button>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <button type="button" className="ghost" onClick={editing ? cancelEdit : onBack}>
+            {editing ? 'Отмена' : '← Назад'}
+          </button>
+          {!editing && (
+            <button type="button" className="ghost" onClick={startEdit}>
+              Изменить
+            </button>
+          )}
+          {editing && (
+            <button type="button" className="ghost" onClick={saveEdit}>
+              Сохранить
+            </button>
+          )}
+        </div>
         <h1 style={{ marginTop: 12 }}>
           {new Date(session.finishedAt!).toLocaleDateString('ru-RU', {
             day: 'numeric',
@@ -41,35 +191,178 @@ function SessionDetail({
         <p className="tnum">
           {durationMin != null ? `${durationMin} мин · ` : ''}
           {sets} подх. · {Math.round(volume)} кг
+          {editing ? ' · редактирование' : ''}
         </p>
       </header>
 
       <div className="stack">
-        {session.exercises.map((ex) => (
-          <div key={ex.key} className="tile glass" style={{ padding: '14px 16px' }}>
-            <strong style={{ display: 'block', fontSize: '1.02rem' }}>{ex.name}</strong>
-            <div className="tnum" style={{ marginTop: 8, color: 'var(--muted)', fontSize: '0.9rem' }}>
-              {ex.sets.length
-                ? ex.sets
-                    .map((s) =>
-                      formatLoggedSet(s, {
-                        timed: ex.timed,
-                        bodyweight: ex.bodyweight ?? isBodyweightExercise(ex.exerciseId),
-                      }),
-                    )
-                    .join('  ·  ')
-                : 'нет подходов'}
+        {view.exercises.map((ex) => {
+          const bw = exerciseBodyweight(ex)
+          return (
+            <div key={ex.key} className="tile glass">
+              <div className="tile-head">
+                <div className="tile-head-main" style={{ cursor: 'default' }}>
+                  <div>
+                    <strong>{ex.name}</strong>
+                    {!editing && (
+                      <div className="meta tnum" style={{ marginTop: 6 }}>
+                        {ex.sets.length
+                          ? ex.sets
+                              .map((s) =>
+                                formatLoggedSet(s, { timed: ex.timed, bodyweight: bw }),
+                              )
+                              .join('  ·  ')
+                          : 'нет подходов'}
+                      </div>
+                    )}
+                  </div>
+                  <div className={`badge${ex.sets.length >= 3 ? ' done' : ''}`}>
+                    {ex.sets.length || '—'}
+                  </div>
+                </div>
+                {editing && (
+                  <button
+                    type="button"
+                    className="tile-remove"
+                    aria-label="Убрать упражнение"
+                    onClick={() => removeExercise(ex.key)}
+                  >
+                    <IconTrash width={16} height={16} />
+                  </button>
+                )}
+              </div>
+
+              {editing && (
+                <div className="tile-body session-edit">
+                  {ex.sets.map((set, i) => (
+                    <div key={i} className="set-edit-row">
+                      <span className="set-edit-num tnum">{i + 1}</span>
+                      {!ex.timed && !bw && (
+                        <Stepper
+                          label="кг"
+                          value={set.weight ?? 0}
+                          step={2.5}
+                          decimals={1}
+                          compact
+                          editable
+                          onChange={(v) => updateSet(ex.key, i, { weight: v })}
+                        />
+                      )}
+                      <Stepper
+                        label={ex.timed ? 'сек' : 'повт'}
+                        value={ex.timed ? (set.durationSec ?? 0) : (set.reps ?? 0)}
+                        step={ex.timed ? 5 : 1}
+                        min={1}
+                        compact
+                        editable={!ex.timed && bw}
+                        onChange={(v) =>
+                          updateSet(
+                            ex.key,
+                            i,
+                            ex.timed ? { durationSec: v } : { reps: v },
+                          )
+                        }
+                      />
+                      <button
+                        type="button"
+                        className="tile-remove"
+                        aria-label="Удалить подход"
+                        onClick={() => removeSet(ex.key, i)}
+                      >
+                        <IconTrash width={14} height={14} />
+                      </button>
+                    </div>
+                  ))}
+
+                  {addKey === ex.key ? (
+                    <div className="set-edit-add">
+                      <div
+                        className={`stepper-row compact${!ex.timed && !bw ? '' : ' single'}`}
+                      >
+                        {!ex.timed && !bw && (
+                          <Stepper
+                            label="кг"
+                            value={weight}
+                            step={2.5}
+                            decimals={1}
+                            compact
+                            editable
+                            onChange={setWeight}
+                          />
+                        )}
+                        <Stepper
+                          label={ex.timed ? 'сек' : 'повт'}
+                          value={reps}
+                          step={ex.timed ? 5 : 1}
+                          min={1}
+                          compact
+                          editable={!ex.timed && bw}
+                          onChange={setReps}
+                        />
+                      </div>
+                      <div className="btn-row" style={{ marginTop: 8 }}>
+                        <button
+                          type="button"
+                          className="secondary"
+                          onClick={() => setAddKey(null)}
+                        >
+                          Отмена
+                        </button>
+                        <button type="button" className="primary" onClick={() => appendSet(ex)}>
+                          Добавить
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      className="ghost"
+                      style={{ width: '100%', marginTop: ex.sets.length ? 8 : 0 }}
+                      onClick={() => openAddSet(ex)}
+                    >
+                      + Подход
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
+
+      {editing && (
+        <>
+          <div className="btn-row">
+            <button type="button" className="secondary" onClick={() => setPicker(true)}>
+              + Упражнение
+            </button>
+          </div>
+          <div className="btn-row">
+            <button type="button" className="ghost" style={{ color: '#ff6b5a' }} onClick={deleteSession}>
+              Удалить тренировку
+            </button>
+          </div>
+          {picker && (
+            <ExercisePicker
+              onPick={addExercise}
+              onClose={() => setPicker(false)}
+              excludeIds={draft.exercises.map((e) => e.exerciseId)}
+            />
+          )}
+        </>
+      )}
     </>
   )
 }
 
 export function HistoryScreen() {
   const { store } = useStore()
-  const [opened, setOpened] = useState<WorkoutSession | null>(null)
+  const [openedId, setOpenedId] = useState<string | null>(null)
+
+  const opened = useMemo(
+    () => store.sessions.find((s) => s.id === openedId) ?? null,
+    [store.sessions, openedId],
+  )
 
   const list = useMemo(
     () =>
@@ -80,7 +373,7 @@ export function HistoryScreen() {
   )
 
   if (opened) {
-    return <SessionDetail session={opened} onBack={() => setOpened(null)} />
+    return <SessionDetail session={opened} onBack={() => setOpenedId(null)} />
   }
 
   return (
@@ -98,18 +391,13 @@ export function HistoryScreen() {
       ) : (
         <div className="stack">
           {list.map((s) => {
-            const sets = s.exercises.reduce((n, e) => n + e.sets.length, 0)
-            const volume = s.exercises.reduce(
-              (sum, e) =>
-                sum + e.sets.reduce((acc, set) => acc + (set.weight ?? 0) * (set.reps ?? 0), 0),
-              0,
-            )
+            const { sets, volume } = sessionStats(s)
             return (
               <button
                 key={s.id}
                 type="button"
                 className="tile glass tile-head"
-                onClick={() => setOpened(s)}
+                onClick={() => setOpenedId(s.id)}
               >
                 <div>
                   <strong>
