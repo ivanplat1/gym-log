@@ -2,18 +2,23 @@ import { useMemo, useRef, useState } from 'react'
 import {
   GROUP_LABELS,
   searchExercises,
+  type Exercise,
   type MuscleGroup,
 } from '../data/exercises'
 import { useVisualViewportSheet } from '../lib/useVisualViewportSheet'
-import { CloseButton } from './IconButtons'
+import { CloseButton, PlusButton } from './IconButtons'
 
 export function ExercisePicker({
   onPick,
+  onAddCustom,
   onClose,
+  customExercises = [],
   excludeIds = [],
 }: {
   onPick: (id: string) => void
+  onAddCustom: (name: string, group: MuscleGroup) => void
   onClose: () => void
+  customExercises?: Exercise[]
   excludeIds?: string[]
 }) {
   const [q, setQ] = useState('')
@@ -22,9 +27,16 @@ export function ExercisePicker({
   useVisualViewportSheet(sheetBgRef)
 
   const list = useMemo(
-    () => searchExercises(q, group).filter((e) => !excludeIds.includes(e.id)),
-    [q, group, excludeIds],
+    () => searchExercises(q, group, customExercises).filter((e) => !excludeIds.includes(e.id)),
+    [q, group, customExercises, excludeIds],
   )
+
+  const addCustom = () => {
+    const name = q.trim()
+    if (!name) return
+    const targetGroup = group === 'all' ? 'chest' : group
+    onAddCustom(name, targetGroup)
+  }
 
   return (
     <div
@@ -38,7 +50,10 @@ export function ExercisePicker({
         <div className="sheet-picker-head">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <h2>Упражнение</h2>
-            <CloseButton onClick={onClose} />
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              <PlusButton onClick={addCustom} disabled={!q.trim()} title="Добавить своё" />
+              <CloseButton onClick={onClose} />
+            </div>
           </div>
           <input
             className="search"
@@ -82,7 +97,20 @@ export function ExercisePicker({
               <span className="plus">+</span>
             </button>
           ))}
-          {!list.length && <div className="empty">Ничего не найдено</div>}
+          {!list.length && (
+            <div className="empty">
+              {q.trim() ? (
+                <>
+                  Ничего не найдено
+                  <div style={{ marginTop: 8, fontSize: '0.82rem' }}>
+                    Нажми <strong>+</strong> справа, чтобы добавить «{q.trim()}»
+                  </div>
+                </>
+              ) : (
+                'Ничего не найдено'
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

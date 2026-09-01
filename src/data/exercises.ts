@@ -81,13 +81,26 @@ export const EXERCISES: Exercise[] = [
   { id: 'walk', name: 'Ходьба', group: 'cardio', timed: true },
 ]
 
-export function getExercise(id: string): Exercise | undefined {
-  return EXERCISES.find((e) => e.id === id)
+export function getExercise(id: string, custom: Exercise[] = []): Exercise | undefined {
+  return custom.find((e) => e.id === id) ?? EXERCISES.find((e) => e.id === id)
 }
 
-export function searchExercises(query: string, group?: MuscleGroup | 'all'): Exercise[] {
+export function createCustomExercise(name: string, group: MuscleGroup): Exercise {
+  return {
+    id: `custom-${crypto.randomUUID()}`,
+    name: name.trim(),
+    group,
+  }
+}
+
+export function searchExercises(
+  query: string,
+  group?: MuscleGroup | 'all',
+  custom: Exercise[] = [],
+): Exercise[] {
   const q = query.trim().toLowerCase()
-  return EXERCISES.filter((e) => {
+  const all = [...custom, ...EXERCISES]
+  return all.filter((e) => {
     if (group && group !== 'all' && e.group !== group) return false
     if (!q) return true
     return e.name.toLowerCase().includes(q)

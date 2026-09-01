@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { getExercise } from '../data/exercises'
+import { getExercise, type MuscleGroup } from '../data/exercises'
 import { ExercisePicker } from '../components/ExercisePicker'
 import { IconTrash } from '../components/IconButtons'
 import { Stepper } from '../components/Stepper'
 import { useStore } from '../lib/store'
-import type { LoggedSet, SessionExercise, WorkoutSession } from '../lib/storage'
+import { addCustomExercise, type LoggedSet, type SessionExercise, type WorkoutSession } from '../lib/storage'
 import { formatLoggedSet, isBodyweightExercise } from '../lib/workoutFormat'
 
 function exerciseBodyweight(ex: SessionExercise): boolean {
@@ -37,7 +37,7 @@ function SessionDetail({
   session: WorkoutSession
   onBack: () => void
 }) {
-  const { setStore } = useStore()
+  const { store, setStore } = useStore()
   const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState<WorkoutSession>(() => structuredClone(session))
   const [editBaseline, setEditBaseline] = useState<WorkoutSession | null>(null)
@@ -166,8 +166,8 @@ function SessionDetail({
     setAddKey(null)
   }
 
-  const addExercise = (id: string) => {
-    const ex = getExercise(id)
+  const addExercise = (id: string, custom = store.customExercises ?? []) => {
+    const ex = getExercise(id, custom)
     if (!ex) return
     if (draft.exercises.some((e) => e.exerciseId === id)) {
       setPicker(false)
@@ -186,6 +186,12 @@ function SessionDetail({
     setActiveKey(item.key)
     setAddKey(item.key)
     openAddSet(item)
+  }
+
+  const addCustom = (name: string, group: MuscleGroup) => {
+    const { store: next, exercise } = addCustomExercise(store, name, group)
+    setStore(next)
+    addExercise(exercise.id, next.customExercises ?? [])
   }
 
   return (
@@ -378,7 +384,9 @@ function SessionDetail({
           {picker && (
             <ExercisePicker
               onPick={addExercise}
+              onAddCustom={addCustom}
               onClose={() => setPicker(false)}
+              customExercises={store.customExercises ?? []}
               excludeIds={draft.exercises.map((e) => e.exerciseId)}
             />
           )}

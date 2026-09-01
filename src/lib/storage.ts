@@ -51,6 +51,8 @@ export interface FoodEntry {
 }
 
 import { calcMacroTargets, mergeProfile, type UserProfile } from './bodyMetrics'
+import type { Exercise, MuscleGroup } from '../data/exercises'
+import { createCustomExercise } from '../data/exercises'
 import {
   seedFoodMemoryFromFoods,
   type FoodMemoryItem,
@@ -69,6 +71,8 @@ export interface Store {
   foods: FoodEntry[]
   /** Запомненные блюда + последняя граммовка */
   foodMemory: FoodMemoryItem[]
+  /** Свои упражнения, добавленные вручную */
+  customExercises: Exercise[]
   goals: NutritionGoals
   profile: UserProfile
   /** Незавершённая сессия — живёт при смене вкладок */
@@ -94,6 +98,7 @@ function emptyStore(): Store {
     sessions: [],
     foods: [],
     foodMemory: [],
+    customExercises: [],
     profile,
     goals: goalsFromProfile(profile),
     activeSession: null,
@@ -115,6 +120,9 @@ export function loadStore(): Store {
       sessions: Array.isArray(parsed.sessions) ? parsed.sessions : [],
       foods,
       foodMemory,
+      customExercises: Array.isArray(parsed.customExercises)
+        ? (parsed.customExercises as Exercise[])
+        : [],
       profile,
       goals: goalsFromProfile(profile),
       activeSession: parsed.activeSession ?? null,
@@ -137,6 +145,27 @@ export function addFoodEntry(store: Store, entry: FoodEntry): Store {
     ...store,
     foods: [entry, ...store.foods],
     foodMemory: upsertFoodMemory(store.foodMemory ?? [], entry),
+  }
+}
+
+/** Добавить своё упражнение или вернуть уже существующее с тем же именем */
+export function addCustomExercise(
+  store: Store,
+  name: string,
+  group: MuscleGroup,
+): { store: Store; exercise: Exercise } {
+  const trimmed = name.trim()
+  const existing = (store.customExercises ?? []).find(
+    (e) => e.name.toLowerCase() === trimmed.toLowerCase(),
+  )
+  if (existing) return { store, exercise: existing }
+  const exercise = createCustomExercise(trimmed, group)
+  return {
+    store: {
+      ...store,
+      customExercises: [...(store.customExercises ?? []), exercise],
+    },
+    exercise,
   }
 }
 
