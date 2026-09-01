@@ -12,6 +12,7 @@ import {
 } from '../lib/foodPortion'
 import { effectiveGoals } from '../lib/nutritionGoals'
 import { suggestFoodMemory, type FoodMemoryItem } from '../lib/foodMemory'
+import { searchFoodPresets } from '../lib/foodSearch'
 import { addFoodEntry, macrosForDay, setWeightKg, todayKey, type FoodEntry } from '../lib/storage'
 
 function Ring({
@@ -87,11 +88,8 @@ export function FoodScreen() {
   const amount = Number(amountText.replace(',', '.')) || 0
 
   const presets = useMemo(() => {
-    const query = q.trim().toLowerCase()
-    const list = query
-      ? FOOD_PRESETS.filter((p) => p.name.toLowerCase().includes(query))
-      : FOOD_PRESETS
-    return list.slice(0, query ? 80 : 40)
+    const query = q.trim()
+    return searchFoodPresets(FOOD_PRESETS, query, query ? 80 : 40)
   }, [q])
 
   const myFoods = useMemo(

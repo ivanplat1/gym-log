@@ -16,6 +16,7 @@ type Row = {
 
 const rows: Row[] = []
 const seen = new Set<string>()
+const seenNames = new Set<string>()
 
 function add(id: string, name: string, portion: string, kcal: number, protein: number, carbs: number, fat: number) {
   if (seen.has(id)) return
@@ -286,7 +287,7 @@ grainsCooked.forEach(([id, n, k, p, c, f]) => per100(id, n, k, p, c, f))
   ['rice-150', 'Рис варёный', '150 г', 195, 4, 42, 0.4],
   ['buckwheat-150', 'Гречка варёная', '150 г', 165, 6, 32, 1],
   ['pasta-150', 'Макароны варёные', '150 г', 198, 7, 39, 1.2],
-  ['potato-150', 'Картофель варёный', '150 г', 130, 3, 30, 0.2],
+  ['potato-150', 'Картофель варёный (150 г)', '150 г', 130, 3, 30, 0.2],
   ['bread-whole', 'Хлеб цельнозерновой', '1 ломтик', 80, 3.5, 14, 1],
   ['bread-white', 'Хлеб белый', '1 ломтик', 75, 2.5, 14, 1],
   ['bread-rye', 'Хлеб ржаной', '1 ломтик', 70, 2.5, 13, 0.5],
@@ -795,7 +796,7 @@ for (const [base, name, k, p, c, f] of ladders) {
   for (const grams of [50, 75, 120, 150, 200, 250, 300]) {
     const id = `${base}-g${grams}`
     const m = grams / 100
-    add(id, name, `${grams} г`, k * m, p * m, c * m, f * m)
+    add(id, `${name} (${grams} г)`, `${grams} г`, k * m, p * m, c * m, f * m)
   }
 }
 
@@ -1190,10 +1191,12 @@ pantry100.forEach(([id, n, k, p, c, f]) => per100(id, n, k, p, c, f))
   ['grechka-grib', 'Гречка с грибами', '250 г', 240, 10, 36, 8],
   ['kartoshka-zhare', 'Картошка жареная', '200 г', 280, 4, 36, 14],
   ['kartoshka-tush', 'Картошка тушёная с мясом', '300 г', 320, 16, 32, 14],
+  ['potato-beef-stew', 'Картофель тушёный с говядиной', '300 г', 340, 18, 30, 15],
   ['lapsha-kurinaya', 'Лапша куриная (суп)', '350 мл', 140, 10, 16, 4],
   ['bulion-kuriny', 'Бульон куриный', '300 мл', 40, 6, 1, 1],
   ['buterbrod-kolbasa', 'Бутерброд с колбасой', '1 шт', 220, 10, 18, 12],
   ['buterbrod-syr', 'Бутерброд с сыром', '1 шт', 200, 10, 18, 10],
+  ['buterbrod-kolbasa-syr', 'Бутерброд с колбасой и сыром', '1 шт', 260, 12, 20, 14],
   ['buterbrod-ikra', 'Бутерброд с икрой', '1 шт', 180, 8, 16, 9],
   ['yaichnica-kolbasa', 'Яичница с колбасой', '1 порция', 320, 18, 4, 26],
   ['grechka-butter', 'Гречка с маслом', '250 г', 280, 9, 42, 10],
@@ -1247,12 +1250,11 @@ for (const [base, name, k, p, c, f] of moreLadders) {
   for (const grams of [30, 40, 60, 80, 90, 110, 125, 175, 225, 275, 350, 400]) {
     const id = `${base}-x${grams}`
     const m = grams / 100
-    add(id, name, `${grams} г`, k * m, p * m, c * m, f * m)
+    add(id, `${name} (${grams} г)`, `${grams} г`, k * m, p * m, c * m, f * m)
   }
 }
 
-// Meal combos — richer filler set to reach 2000
-let i = 1
+// Комбо-блюда — по одному разу, без дублей названий
 const fillers: [string, number, number, number, number][] = [
   ['Рис с курицей', 180, 14, 20, 5],
   ['Гречка с говядиной', 190, 15, 16, 7],
@@ -1295,12 +1297,32 @@ const fillers: [string, number, number, number, number][] = [
   ['Боул киноа курица', 180, 16, 18, 5],
   ['Боул рис тунец', 170, 18, 18, 4],
 ]
-while (rows.length < 2000) {
-  const [name, k, p, c, f] = fillers[(i - 1) % fillers.length]
-  add(`combo-${i}`, name, '200 г', k, p, c, f)
-  i++
-  if (i > 2000) break
+let comboIdx = 1
+for (const [name, k, p, c, f] of fillers) {
+  if (seenNames.has(name)) continue
+  seenNames.add(name)
+  const slug = name
+    .toLowerCase()
+    .replace(/[^a-zа-яё0-9]+/gi, '-')
+    .replace(/^-|-$/g, '')
+    .slice(0, 40)
+  add(`combo-${slug || comboIdx}`, name, '200 г', k, p, c, f)
+  comboIdx++
 }
+
+// Доп. порции популярных блюд (уникальные названия)
+const extraPortions: [string, string, string, number, number, number, number][] = [
+  ['potato-beef-stew-250', 'Картофель тушёный с говядиной (250 г)', '250 г', 285, 15, 25, 12],
+  ['potato-beef-stew-350', 'Картофель тушёный с говядиной (350 г)', '350 г', 395, 21, 35, 17],
+  ['buterbrod-kolbasa-syr-2', 'Бутерброд с колбасой и сыром (2 шт)', '2 шт', 520, 24, 40, 28],
+  ['sandwich-ham-cheese', 'Сэндвич ветчина и сыр', '1 шт', 270, 14, 22, 13],
+  ['sandwich-chicken', 'Сэндвич с курицей', '1 шт', 290, 18, 24, 11],
+  ['potato-pork-stew', 'Картофель тушёный со свининой', '300 г', 360, 16, 32, 18],
+  ['potato-chicken-stew', 'Картофель тушёный с курицей', '300 г', 300, 20, 30, 10],
+  ['grechka-meat', 'Гречка с мясом', '300 г', 310, 18, 34, 12],
+  ['rice-pork', 'Рис со свининой', '300 г', 340, 16, 38, 14],
+]
+extraPortions.forEach(([id, n, por, k, p, c, f]) => add(id, n, por, k, p, c, f))
 
 const out = `export interface FoodPreset {
   id: string
