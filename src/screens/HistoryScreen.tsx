@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState, type CSSProperties } from 'react'
 import { getExercise, type MuscleGroup } from '../data/exercises'
 import { ExercisePicker } from '../components/ExercisePicker'
 import { IconTrash } from '../components/IconButtons'
@@ -13,7 +13,39 @@ import {
 } from '../lib/cardio'
 import { useStore } from '../lib/store'
 import { addCustomExercise, type LoggedSet, type SessionExercise, type WorkoutSession } from '../lib/storage'
+import { exerciseColor, buildExerciseColorMap, type ExerciseColor } from '../lib/exerciseColors'
 import { formatLoggedSet, isBodyweightExercise } from '../lib/workoutFormat'
+
+function exerciseCardStyle(color: ExerciseColor): CSSProperties {
+  return {
+    borderColor: color.border,
+    background: color.bg,
+  }
+}
+
+function JournalSetList({
+  ex,
+  bw,
+}: {
+  ex: SessionExercise
+  bw: boolean
+}) {
+  if (!ex.sets.length) {
+    return <p className="journal-no-sets">нет подходов</p>
+  }
+  return (
+    <ul className="journal-set-list">
+      {ex.sets.map((s, i) => (
+        <li key={i} className="journal-set-row">
+          <span className="journal-set-idx tnum">{i + 1}</span>
+          <span className="journal-set-val tnum">
+            {formatLoggedSet(s, { timed: ex.timed, bodyweight: bw, exerciseId: ex.exerciseId })}
+          </span>
+        </li>
+      ))}
+    </ul>
+  )
+}
 
 function exerciseBodyweight(ex: SessionExercise): boolean {
   return ex.bodyweight ?? isBodyweightExercise(ex.exerciseId)
@@ -40,9 +72,11 @@ function sessionStats(session: WorkoutSession) {
 
 function SessionDetail({
   session,
+  colorMap,
   onBack,
 }: {
   session: WorkoutSession
+  colorMap: Map<string, ExerciseColor>
   onBack: () => void
 }) {
   const { store, setStore } = useStore()
@@ -248,38 +282,33 @@ function SessionDetail({
         </p>
       </header>
 
-      <div className="stack">
+      <div className="stack journal-stack">
         {view.exercises.map((ex) => {
           const bw = exerciseBodyweight(ex)
           const open = editing && ex.key === activeKey
-          const summary = ex.sets.length
-            ? ex.sets.map((s) => formatLoggedSet(s, { timed: ex.timed, bodyweight: bw, exerciseId: ex.exerciseId })).join('  ·  ')
-            : 'нет подходов'
+          const color = exerciseColor(ex.exerciseId, colorMap)
           return (
-            <div key={ex.key} className="tile glass">
-              <div className="tile-head">
-                <button
-                  type="button"
-                  className="tile-head-main"
-                  style={{ cursor: editing ? 'pointer' : 'default' }}
-                  onClick={() => {
-                    if (!editing) return
-                    setActiveKey(open ? null : ex.key)
-                    if (open) setAddKey(null)
-                  }}
-                >
-                  <div>
+            <div
+              key={ex.key}
+              className="journal-exercise"
+              style={exerciseCardStyle(color)}
+            >
+              <div className="journal-exercise-head">
+                {editing ? (
+                  <button
+                    type="button"
+                    className="journal-exercise-title-btn"
+                    onClick={() => {
+                      setActiveKey(open ? null : ex.key)
+                      if (open) setAddKey(null)
+                    }}
+                  >
                     <strong>{ex.name}</strong>
-                    {(!editing || !open) && (
-                      <div className="meta tnum" style={{ marginTop: 6 }}>
-                        {summary}
-                      </div>
-                    )}
-                  </div>
-                  <div className={`badge${ex.sets.length >= 3 ? ' done' : ''}`}>
-                    {ex.sets.length || '—'}
-                  </div>
-                </button>
+                    <span className="meta">{open ? '▾' : '▸'}</span>
+                  </button>
+                ) : (
+                  <strong className="journal-exercise-title">{ex.name}</strong>
+                )}
                 {editing && (
                   <button
                     type="button"
@@ -292,8 +321,10 @@ function SessionDetail({
                 )}
               </div>
 
+              {(!editing || !open) && <JournalSetList ex={ex} bw={bw} />}
+
               {editing && open && (
-                <div className="tile-body session-edit">
+                <div className="tile-body session-edit journal-edit">
                   {ex.sets.map((set, i) => (
                     <div key={i} className="set-edit-row">
                       <span className="set-edit-num tnum">{i + 1}</span>
@@ -456,6 +487,11 @@ export function HistoryScreen() {
   const { store } = useStore()
   const [openedId, setOpenedId] = useState<string | null>(null)
 
+  const colorMap = useMemo(
+    () => buildExerciseColorMap(store.sessions, store.activeSession),
+    [store.sessions, store.activeSession],
+  )
+
   const opened = useMemo(
     () => store.sessions.find((s) => s.id === openedId) ?? null,
     [store.sessions, openedId],
@@ -470,7 +506,7 @@ export function HistoryScreen() {
   )
 
   if (opened) {
-    return <SessionDetail session={opened} onBack={() => setOpenedId(null)} />
+    return <SessionDetail session={opened} colorMap={colorMap} onBack={() => setOpenedId(null)} />
   }
 
   return (
@@ -484,17 +520,17 @@ export function HistoryScreen() {
       {!list.length ? (
         <div className="empty">Пока пусто — заверши первую сессию</div>
       ) : (
-        <div className="stack">
+        <div className="stack journal-stack">
           {list.map((s) => {
-            const { sets, volume } = sessionStats(s)
+            const { sets, volume, durationMin } = sessionStats(s)
             return (
               <button
                 key={s.id}
                 type="button"
-                className="tile glass tile-head"
+                className="journal-session-card glass"
                 onClick={() => setOpenedId(s.id)}
               >
-                <div>
+                <div className="journal-session-top">
                   <strong>
                     {new Date(s.finishedAt!).toLocaleString('ru-RU', {
                       day: 'numeric',
@@ -503,16 +539,35 @@ export function HistoryScreen() {
                       minute: '2-digit',
                     })}
                   </strong>
-                  <div className="meta">
-                    {s.exercises
-                      .map((e) => e.name)
-                      .slice(0, 3)
-                      .join(' · ')}
-                    {s.exercises.length > 3 ? '…' : ''}
-                  </div>
+                  <span className="meta tnum journal-session-meta">
+                    {durationMin != null ? `${durationMin} мин · ` : ''}
+                    {sets} подх.
+                    {volume > 0 ? ` · ${Math.round(volume)} кг` : ''}
+                  </span>
                 </div>
-                <div className="badge tnum">
-                  {sets} · {Math.round(volume)}кг
+                <div className="journal-exercise-chips">
+                  {s.exercises.map((ex) => {
+                    const color = exerciseColor(ex.exerciseId, colorMap)
+                    return (
+                      <span
+                        key={ex.key}
+                        className="journal-ex-chip"
+                        style={{
+                          borderColor: color.border,
+                          background: color.bg,
+                          color: color.accent,
+                        }}
+                      >
+                        {ex.name}
+                        {ex.sets.length > 0 && (
+                          <span className="tnum" style={{ opacity: 0.75 }}>
+                            {' '}
+                            · {ex.sets.length}
+                          </span>
+                        )}
+                      </span>
+                    )
+                  })}
                 </div>
               </button>
             )
