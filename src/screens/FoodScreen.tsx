@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { CloseButton, TrashButton } from '../components/IconButtons'
 import { NutritionStatsSheet } from '../components/NutritionStatsSheet'
 import { FOOD_PRESETS, MEAL_LABELS, mealByTime, type MealSlot } from '../data/foods'
@@ -13,6 +13,7 @@ import {
 import { effectiveGoals } from '../lib/nutritionGoals'
 import { suggestFoodMemory, type FoodMemoryItem } from '../lib/foodMemory'
 import { searchFoodPresets } from '../lib/foodSearch'
+import { useVisualViewportSheet } from '../lib/useVisualViewportSheet'
 import { addFoodEntry, macrosForDay, setWeightKg, todayKey, type FoodEntry } from '../lib/storage'
 
 function Ring({
@@ -66,6 +67,8 @@ export function FoodScreen() {
   const [meal, setMeal] = useState<MealSlot>(() => mealByTime())
   const [name, setName] = useState('')
   const [q, setQ] = useState('')
+  const foodSheetBgRef = useRef<HTMLDivElement>(null)
+  useVisualViewportSheet(foodSheetBgRef)
 
   const openSheet = (slot?: MealSlot) => {
     setMeal(slot ?? mealByTime())
@@ -505,102 +508,107 @@ export function FoodScreen() {
 
       {open && (
         <div
+          ref={foodSheetBgRef}
           className="sheet-bg"
           role="dialog"
           aria-modal
           onClick={() => (detailOpen ? setDetailOpen(false) : closeAll())}
         >
-          <div className="sheet" onClick={(e) => e.stopPropagation()}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h2>Еда</h2>
-              <CloseButton onClick={closeAll} />
-            </div>
-
-            <div className="chips">
-              {(Object.keys(MEAL_LABELS) as MealSlot[]).map((m) => (
-                <button
-                  key={m}
-                  type="button"
-                  className={`chip${meal === m ? ' on' : ''}`}
-                  onClick={() => setMeal(m)}
-                >
-                  {MEAL_LABELS[m]}
-                </button>
-              ))}
-            </div>
-
-            <input
-              className="search"
-              placeholder={`Поиск среди ${FOOD_PRESETS.length} продуктов…`}
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              autoFocus
-            />
-
-            {myFoods.length > 0 && (
-              <div style={{ marginBottom: 12 }}>
-                <div
-                  style={{
-                    fontSize: '0.75rem',
-                    color: 'var(--muted)',
-                    marginBottom: 6,
-                    letterSpacing: '0.02em',
-                  }}
-                >
-                  {q.trim() ? 'Мои совпадения' : 'Мои блюда'}
-                </div>
-                <div className="preset-grid" style={{ marginTop: 0 }}>
-                  {myFoods.map((m) => (
-                    <button
-                      key={m.name}
-                      type="button"
-                      className="preset"
-                      onClick={() => applyMemory(m)}
-                      style={{ borderColor: 'rgb(61 214 140 / 0.35)' }}
-                    >
-                      <strong>{m.name}</strong>
-                      <span>
-                        <span className="portion-chip" style={{ marginRight: 6 }}>
-                          {m.portion}
-                          {m.count > 1 ? ` · ×${m.count}` : ''}
-                        </span>
-                        <span className="macro-tag macro-tag-kcal">
-                          <span className="tnum">{Math.round(m.macros.kcal)}</span> ккал
-                        </span>
-                      </span>
-                    </button>
-                  ))}
-                </div>
+          <div className="sheet sheet--picker" onClick={(e) => e.stopPropagation()}>
+            <div className="sheet-picker-head">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <h2>Еда</h2>
+                <CloseButton onClick={closeAll} />
               </div>
-            )}
 
-            <div className="preset-grid" style={{ marginTop: 0 }}>
-              {presets.map((p) => (
-                <button key={p.id} type="button" className="preset" onClick={() => apply(p.id)}>
-                  <strong>{p.name}</strong>
-                  <span>
-                    <span className="portion-chip" style={{ marginRight: 6 }}>
-                      {p.portion}
-                    </span>
-                    <span className="macro-tag macro-tag-kcal">
-                      <span className="tnum">{p.kcal}</span> ккал
-                    </span>
-                  </span>
-                </button>
-              ))}
+              <div className="chips">
+                {(Object.keys(MEAL_LABELS) as MealSlot[]).map((m) => (
+                  <button
+                    key={m}
+                    type="button"
+                    className={`chip${meal === m ? ' on' : ''}`}
+                    onClick={() => setMeal(m)}
+                  >
+                    {MEAL_LABELS[m]}
+                  </button>
+                ))}
+              </div>
+
+              <input
+                className="search"
+                placeholder={`Поиск среди ${FOOD_PRESETS.length} продуктов…`}
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                autoFocus
+              />
             </div>
-            {!q.trim() && (
-              <p style={{ marginTop: 8, color: 'var(--muted)', fontSize: '0.82rem' }}>
-                Выбери блюдо — откроется окно с граммовкой
-              </p>
-            )}
-            {q.trim() && !presets.length && !myFoods.length && (
-              <p className="empty" style={{ padding: 12 }}>
-                Ничего не найдено
-              </p>
-            )}
 
-            <div className="btn-row">
+            <div className="sheet-picker-list">
+              {myFoods.length > 0 && (
+                <div style={{ marginBottom: 12 }}>
+                  <div
+                    style={{
+                      fontSize: '0.75rem',
+                      color: 'var(--muted)',
+                      marginBottom: 6,
+                      letterSpacing: '0.02em',
+                    }}
+                  >
+                    {q.trim() ? 'Мои совпадения' : 'Мои блюда'}
+                  </div>
+                  <div className="preset-grid" style={{ marginTop: 0 }}>
+                    {myFoods.map((m) => (
+                      <button
+                        key={m.name}
+                        type="button"
+                        className="preset"
+                        onClick={() => applyMemory(m)}
+                        style={{ borderColor: 'rgb(61 214 140 / 0.35)' }}
+                      >
+                        <strong>{m.name}</strong>
+                        <span>
+                          <span className="portion-chip" style={{ marginRight: 6 }}>
+                            {m.portion}
+                            {m.count > 1 ? ` · ×${m.count}` : ''}
+                          </span>
+                          <span className="macro-tag macro-tag-kcal">
+                            <span className="tnum">{Math.round(m.macros.kcal)}</span> ккал
+                          </span>
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="preset-grid" style={{ marginTop: 0 }}>
+                {presets.map((p) => (
+                  <button key={p.id} type="button" className="preset" onClick={() => apply(p.id)}>
+                    <strong>{p.name}</strong>
+                    <span>
+                      <span className="portion-chip" style={{ marginRight: 6 }}>
+                        {p.portion}
+                      </span>
+                      <span className="macro-tag macro-tag-kcal">
+                        <span className="tnum">{p.kcal}</span> ккал
+                      </span>
+                    </span>
+                  </button>
+                ))}
+              </div>
+              {!q.trim() && (
+                <p style={{ marginTop: 8, color: 'var(--muted)', fontSize: '0.82rem' }}>
+                  Выбери блюдо — откроется окно с граммовкой
+                </p>
+              )}
+              {q.trim() && !presets.length && !myFoods.length && (
+                <p className="empty" style={{ padding: 12 }}>
+                  Ничего не найдено
+                </p>
+              )}
+            </div>
+
+            <div className="sheet-picker-foot">
               <button type="button" className="secondary" style={{ width: '100%' }} onClick={openCustom}>
                 Своё блюдо
               </button>
