@@ -259,10 +259,14 @@ export function saveStore(store: Store): void {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(store))
 }
 
+/** Локальный «день» в приложении начинается в 4:00, а не в полночь */
+export const DAY_ROLLOVER_HOUR = 4
+
 export function todayKey(d = new Date()): string {
-  const y = d.getFullYear()
-  const m = String(d.getMonth() + 1).padStart(2, '0')
-  const day = String(d.getDate()).padStart(2, '0')
+  const shifted = new Date(d.getTime() - DAY_ROLLOVER_HOUR * 60 * 60 * 1000)
+  const y = shifted.getFullYear()
+  const m = String(shifted.getMonth() + 1).padStart(2, '0')
+  const day = String(shifted.getDate()).padStart(2, '0')
   return `${y}-${m}-${day}`
 }
 
