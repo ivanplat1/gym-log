@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { CloseButton } from './IconButtons'
 import { effectiveGoals } from '../lib/nutritionGoals'
 import { weightDelta, weightSeries } from '../lib/weightStats'
+import { formatBodyWeightKg } from '../lib/bodyWeight'
 import { macrosForDay, todayKey, weightKgForDate, type Store } from '../lib/storage'
 
 function shiftDate(date: string, delta: number): string {
@@ -194,7 +195,7 @@ export function NutritionStatsSheet({
           </div>
           <p style={{ margin: '8px 0 0', color: 'var(--muted)', fontSize: '0.78rem' }}>
             {goals.trainingDay ? 'День тренировки' : 'День отдыха'} · BMR{' '}
-            <span className="tnum">{goals.bmr}</span> · вес <span className="tnum">{weight}</span> кг
+            <span className="tnum">{goals.bmr}</span> · вес <span className="tnum">{formatBodyWeightKg(weight)}</span>
           </p>
         </div>
 
@@ -217,8 +218,8 @@ export function NutritionStatsSheet({
                     color: totalWeightDelta <= 0 ? 'var(--green)' : 'var(--muted)',
                   }}
                 >
-                  {totalWeightDelta > 0 ? '+' : ''}
-                  {totalWeightDelta} кг
+                  {totalWeightDelta > 0 ? '+' : totalWeightDelta < 0 ? '−' : ''}
+                  {formatBodyWeightKg(Math.abs(totalWeightDelta))}
                 </span>
               )}
             </div>

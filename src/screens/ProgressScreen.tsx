@@ -13,6 +13,7 @@ import {
   type TrackedExercise,
 } from '../lib/progressStats'
 import { weightDelta, weightSeries } from '../lib/weightStats'
+import { formatBodyWeightKg } from '../lib/bodyWeight'
 
 type Metric = 'primary' | 'e1rm' | 'volume'
 
@@ -250,8 +251,10 @@ export function ProgressScreen() {
           <div className="progress-card-head">
             <h2>Вес тела</h2>
             <span className="tnum muted">
-              {store.profile.weightKg} кг
-              {weightChange != null ? ` · Δ ${weightChange > 0 ? '+' : ''}${weightChange} кг` : ''}
+              {formatBodyWeightKg(store.profile.weightKg)}
+              {weightChange != null
+                ? ` · Δ ${weightChange > 0 ? '+' : weightChange < 0 ? '−' : ''}${formatBodyWeightKg(Math.abs(weightChange))}`
+                : ''}
             </span>
           </div>
           <LineChart
