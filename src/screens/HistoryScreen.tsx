@@ -14,7 +14,12 @@ import {
 import { useStore } from '../lib/store'
 import { addCustomExercise, type LoggedSet, type SessionExercise, type WorkoutSession } from '../lib/storage'
 import { exerciseColor, buildExerciseColorMap, type ExerciseColor } from '../lib/exerciseColors'
-import { formatLoggedSet, isBodyweightExercise } from '../lib/workoutFormat'
+import {
+  formatExerciseSets,
+  formatLoggedSet,
+  isBodyweightExercise,
+  stepperRowClass,
+} from '../lib/workoutFormat'
 
 function exerciseCardStyle(color: ExerciseColor): CSSProperties {
   return {
@@ -340,7 +345,13 @@ function SessionDetail({
                         />
                       )}
                       {ex.timed ? (
-                        <>
+                        <div
+                          className={`set-edit-steppers${
+                            isDistanceCardio(ex.exerciseId, store.customExercises ?? [])
+                              ? ' set-edit-steppers--cardio'
+                              : ''
+                          }`}
+                        >
                           <TimedDurationStepper
                             exerciseId={ex.exerciseId}
                             durationSec={set.durationSec ?? 0}
@@ -355,7 +366,7 @@ function SessionDetail({
                               onChangeMeters={(v) => updateSet(ex.key, i, { distanceM: v })}
                             />
                           )}
-                        </>
+                        </div>
                       ) : (
                         <Stepper
                           label="повт"
@@ -381,7 +392,7 @@ function SessionDetail({
                   {addKey === ex.key ? (
                     <div className="set-edit-add">
                       <div
-                        className={`stepper-row compact${!ex.timed && !bw ? '' : ' single'}`}
+                        className={stepperRowClass(ex, store.customExercises ?? [])}
                       >
                         {!ex.timed && !bw && (
                           <Stepper
@@ -545,30 +556,33 @@ export function HistoryScreen() {
                     {volume > 0 ? ` · ${Math.round(volume)} кг` : ''}
                   </span>
                 </div>
-                <div className="journal-exercise-chips">
+                <ul className="journal-exercise-list">
                   {s.exercises.map((ex) => {
                     const color = exerciseColor(ex.exerciseId, colorMap)
+                    const bw = exerciseBodyweight(ex)
                     return (
-                      <span
+                      <li
                         key={ex.key}
-                        className="journal-ex-chip"
+                        className="journal-exercise-preview"
                         style={{
                           borderColor: color.border,
                           background: color.bg,
-                          color: color.accent,
                         }}
                       >
-                        {ex.name}
-                        {ex.sets.length > 0 && (
-                          <span className="tnum" style={{ opacity: 0.75 }}>
-                            {' '}
-                            · {ex.sets.length}
-                          </span>
-                        )}
-                      </span>
+                        <span className="journal-exercise-preview-name" style={{ color: color.accent }}>
+                          {ex.name}
+                        </span>
+                        <span className="journal-exercise-preview-sets tnum">
+                          {formatExerciseSets(ex.sets, {
+                            timed: ex.timed,
+                            bodyweight: bw,
+                            exerciseId: ex.exerciseId,
+                          })}
+                        </span>
+                      </li>
                     )
                   })}
-                </div>
+                </ul>
               </button>
             )
           })}

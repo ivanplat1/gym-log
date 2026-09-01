@@ -386,6 +386,29 @@ select {
   min-width: 0;
 }
 
+.set-edit-steppers {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  gap: 6px;
+}
+
+.set-edit-steppers--cardio {
+  flex-direction: column;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.set-edit-steppers--cardio .stepper,
+.set-edit-steppers--cardio .distance-stepper {
+  width: 100%;
+}
+
+.distance-stepper {
+  flex: 1;
+  min-width: 0;
+}
+
 .set-edit-row .tile-remove {
   margin-bottom: 6px;
 }
@@ -398,14 +421,14 @@ select {
 
 .logged-sets {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  flex-direction: column;
+  gap: 6px;
   padding: 10px 14px 12px;
   border-top: 1px solid var(--hairline);
 }
 
 .logged-set {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 7px;
   min-height: 34px;
@@ -448,6 +471,18 @@ select {
 .stepper-row.single {
   grid-template-columns: 1fr;
   justify-items: center;
+}
+
+.stepper-row--cardio {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.stepper-row--cardio .stepper,
+.stepper-row--cardio .distance-stepper {
+  width: 100%;
 }
 
 .stepper {
@@ -557,6 +592,12 @@ select {
   font-size: 0.82rem;
   font-weight: 650;
   color: var(--ink);
+}
+
+.ghost--auth {
+  border-color: rgb(201 162 39 / 0.45);
+  background: rgb(201 162 39 / 0.12);
+  color: rgb(214 185 95);
 }
 
 .primary {
@@ -1441,22 +1482,35 @@ select {
   font-size: 0.8rem;
 }
 
-.journal-exercise-chips {
-  display: flex;
-  flex-wrap: wrap;
+.journal-exercise-list {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: grid;
   gap: 6px;
-  margin-top: 10px;
 }
 
-.journal-ex-chip {
-  display: inline-flex;
-  align-items: center;
-  padding: 5px 10px;
-  border-radius: 999px;
+.journal-exercise-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 8px 10px;
+  border-radius: 12px;
   border: 1px solid;
+}
+
+.journal-exercise-preview-name {
+  font-size: 0.82rem;
+  font-weight: 750;
+  line-height: 1.25;
+}
+
+.journal-exercise-preview-sets {
   font-size: 0.78rem;
-  font-weight: 650;
-  line-height: 1.2;
+  font-weight: 600;
+  color: var(--muted);
+  line-height: 1.35;
+  word-break: break-word;
 }
 
 .journal-exercise {

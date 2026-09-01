@@ -12,7 +12,7 @@ export function DistanceStepper({
 }) {
   const cfg = getDistanceStepperConfig()
   return (
-    <div style={{ flex: 1 }}>
+    <div className="distance-stepper">
       <Stepper
         label={cfg.label}
         value={meters}

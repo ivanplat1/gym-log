@@ -20,7 +20,7 @@ import {
   type LoggedSet,
   type SessionExercise,
 } from '../lib/storage'
-import { formatLoggedSet, isBodyweightExercise } from '../lib/workoutFormat'
+import { formatLoggedSet, isBodyweightExercise, stepperRowClass } from '../lib/workoutFormat'
 
 const REST_KEY = 'gym-log:rest-sec'
 
@@ -327,7 +327,7 @@ export function WorkoutScreen() {
               {open && (
                 <div className="tile-body">
                   <div
-                    className={`stepper-row compact${!ex.timed && !bw ? '' : ' single'}`}
+                    className={stepperRowClass(ex, store.customExercises ?? [])}
                   >
                     {!ex.timed && !bw && (
                       <Stepper
