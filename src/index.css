@@ -1220,6 +1220,22 @@ select {
   transform: scale(0.96);
 }
 
+.icon-btn-plus {
+  border-color: rgb(61 214 140 / 0.35);
+  background: rgb(61 214 140 / 0.12);
+  color: #3dd68c;
+}
+
+.icon-btn-plus:active:not(:disabled) {
+  transform: scale(0.96);
+  background: rgb(61 214 140 / 0.2);
+}
+
+.icon-btn-plus:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
 .icon-btn-danger {
   border-color: rgb(255 107 90 / 0.35);
   background: rgb(255 107 90 / 0.12);

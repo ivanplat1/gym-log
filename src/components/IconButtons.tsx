@@ -26,6 +26,14 @@ export function IconClose(props: SVGProps<SVGSVGElement>) {
   )
 }
 
+export function IconPlus(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden {...props}>
+      <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+    </svg>
+  )
+}
+
 export function CloseButton({
   className = '',
   ...props
@@ -33,6 +41,22 @@ export function CloseButton({
   return (
     <button type="button" className={`icon-btn icon-btn-close ${className}`.trim()} aria-label="Закрыть" {...props}>
       <IconClose />
+    </button>
+  )
+}
+
+export function PlusButton({
+  className = '',
+  ...props
+}: ButtonHTMLAttributes<HTMLButtonElement>) {
+  return (
+    <button
+      type="button"
+      className={`icon-btn icon-btn-plus ${className}`.trim()}
+      aria-label="Добавить своё упражнение"
+      {...props}
+    >
+      <IconPlus />
     </button>
   )
 }

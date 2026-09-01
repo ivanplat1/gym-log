@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
-import { EXERCISES, getExercise } from '../data/exercises'
+import { EXERCISES, getExercise, type MuscleGroup } from '../data/exercises'
 import { ExercisePicker } from '../components/ExercisePicker'
 import { IconTrash } from '../components/IconButtons'
 import { RestTimer } from '../components/RestTimer'
 import { Stepper } from '../components/Stepper'
 import { useStore } from '../lib/store'
 import {
+  addCustomExercise,
   createSession,
   lastSetsForExercise,
   type LoggedSet,
@@ -93,8 +94,8 @@ export function WorkoutScreen() {
     setTimerOn(false)
   }
 
-  const addExercise = (id: string) => {
-    const ex = getExercise(id)
+  const addExercise = (id: string, custom = store.customExercises ?? []) => {
+    const ex = getExercise(id, custom)
     if (!ex || !session) return
     const existing = session.exercises.find((e) => e.exerciseId === id)
     if (existing) {
@@ -113,6 +114,12 @@ export function WorkoutScreen() {
     setSession({ ...session, exercises: [...session.exercises, item] })
     setActiveKey(item.key)
     setPicker(false)
+  }
+
+  const addCustom = (name: string, group: MuscleGroup) => {
+    const { store: next, exercise } = addCustomExercise(store, name, group)
+    setStore(next)
+    addExercise(exercise.id, next.customExercises ?? [])
   }
 
   const logSet = () => {
@@ -341,7 +348,9 @@ export function WorkoutScreen() {
       {picker && (
         <ExercisePicker
           onPick={addExercise}
+          onAddCustom={addCustom}
           onClose={() => setPicker(false)}
+          customExercises={store.customExercises ?? []}
           excludeIds={session.exercises.map((e) => e.exerciseId)}
         />
       )}
