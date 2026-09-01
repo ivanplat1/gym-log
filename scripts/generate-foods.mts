@@ -1,5 +1,5 @@
 /**
- * Generates ~1000 food presets for gym-log.
+ * Generates ~11k food presets for gym-log.
  * Run: npx tsx scripts/generate-foods.mts
  */
 import { writeFileSync } from 'node:fs'
@@ -1324,6 +1324,259 @@ const extraPortions: [string, string, string, number, number, number, number][] 
 ]
 extraPortions.forEach(([id, n, por, k, p, c, f]) => add(id, n, por, k, p, c, f))
 
+// ——— Julienne + mass combo expansion (~10k presets) ———
+add('julienne-chicken', 'Жюльен с курицей', '150 г', 240, 18, 6, 16)
+add('julienne-mushroom', 'Жюльен с грибами', '150 г', 190, 7, 5, 15)
+
+type M = { k: number; p: number; c: number; f: number }
+
+function scaleM(m: M, grams: number): M {
+  const x = grams / 100
+  return { k: m.k * x, p: m.p * x, c: m.c * x, f: m.f * x }
+}
+
+function sumM(...parts: M[]): M {
+  return parts.reduce(
+    (a, b) => ({ k: a.k + b.k, p: a.p + b.p, c: a.c + b.c, f: a.f + b.f }),
+    { k: 0, p: 0, c: 0, f: 0 },
+  )
+}
+
+const comboPortions = [120, 150, 180, 200, 250, 300]
+
+/** Номинатив + макросы на 100 г */
+const garnishes: [string, string, M][] = [
+  ['rice', 'Рис', { k: 130, p: 2.7, c: 28, f: 0.3 }],
+  ['rice-brown', 'Рис бурый', { k: 112, p: 2.5, c: 23, f: 0.8 }],
+  ['buckwheat', 'Гречка', { k: 110, p: 4, c: 21, f: 0.7 }],
+  ['pasta', 'Макароны', { k: 132, p: 4.5, c: 26, f: 0.8 }],
+  ['pasta-whole', 'Паста цельнозерновая', { k: 124, p: 5, c: 25, f: 1 }],
+  ['potato', 'Картофель', { k: 87, p: 2, c: 20, f: 0.1 }],
+  ['potato-mash', 'Пюре', { k: 106, p: 2, c: 16, f: 4 }],
+  ['quinoa', 'Киноа', { k: 120, p: 4.4, c: 21, f: 1.9 }],
+  ['bulgur', 'Булгур', { k: 83, p: 3, c: 19, f: 0.2 }],
+  ['couscous', 'Кускус', { k: 112, p: 3.8, c: 23, f: 0.2 }],
+  ['pearl', 'Перловка', { k: 109, p: 3, c: 24, f: 0.4 }],
+  ['millet', 'Пшёнка', { k: 90, p: 2.7, c: 19, f: 0.8 }],
+  ['barley', 'Ячневая каша', { k: 95, p: 2.5, c: 20, f: 0.5 }],
+  ['corn-grits', 'Кукурузная каша', { k: 90, p: 2, c: 20, f: 0.5 }],
+  ['oatmeal', 'Овсянка', { k: 72, p: 2.5, c: 13, f: 1.5 }],
+  ['lentil', 'Чечевица', { k: 116, p: 9, c: 20, f: 0.4 }],
+  ['chickpea', 'Нут', { k: 164, p: 8.9, c: 27, f: 2.6 }],
+  ['beans', 'Фасоль', { k: 127, p: 8.7, c: 22, f: 0.5 }],
+  ['cabbage-stew', 'Тушёная капуста', { k: 45, p: 2, c: 7, f: 1.5 }],
+  ['veg-mix', 'Овощное рагу', { k: 60, p: 2, c: 8, f: 2 }],
+  ['noodles', 'Лапша', { k: 138, p: 4.5, c: 25, f: 1.7 }],
+  ['noodles-rice', 'Рисовая лапша', { k: 110, p: 1, c: 25, f: 0.2 }],
+  ['spelt', 'Спельта', { k: 130, p: 5, c: 26, f: 1 }],
+  ['polenta', 'Полента', { k: 85, p: 2, c: 18, f: 0.5 }],
+  ['sweet-potato', 'Батат', { k: 90, p: 2, c: 21, f: 0.1 }],
+  ['bread-base', 'Хлеб', { k: 250, p: 8, c: 48, f: 2 }],
+  ['lavash-base', 'Лаваш', { k: 280, p: 9, c: 56, f: 2 }],
+  ['rice-noodles', 'Лапша рисовая', { k: 110, p: 1, c: 25, f: 0.2 }],
+  ['soba-base', 'Соба', { k: 100, p: 5, c: 20, f: 0.2 }],
+  ['gnocchi-base', 'Ньокки', { k: 140, p: 3.5, c: 28, f: 1 }],
+  ['farro-base', 'Фарро', { k: 120, p: 5, c: 25, f: 1 }],
+  ['freekeh-base', 'Фрике', { k: 110, p: 4, c: 22, f: 1 }],
+  ['amaranth-base', 'Амарант', { k: 100, p: 4, c: 18, f: 2 }],
+  ['wild-rice', 'Дикий рис', { k: 100, p: 4, c: 21, f: 0.3 }],
+  ['rice-jasmine', 'Рис жасмин', { k: 130, p: 2.5, c: 28, f: 0.3 }],
+  ['rice-basmati', 'Рис басмати', { k: 120, p: 3, c: 25, f: 0.4 }],
+  ['grechka-milk', 'Гречка на молоке', { k: 120, p: 4.5, c: 20, f: 3 }],
+  ['rice-milk', 'Рис на молоке', { k: 100, p: 3.5, c: 15, f: 3 }],
+  ['semolina-base', 'Манная каша', { k: 100, p: 3, c: 16, f: 2.5 }],
+]
+
+/** Творительный падеж для «с …» */
+const proteinsCombo: [string, string, M][] = [
+  ['chicken-breast', 'курицей', { k: 165, p: 31, c: 0, f: 3.6 }],
+  ['chicken-thigh', 'куриным бедром', { k: 177, p: 24, c: 0, f: 8 }],
+  ['chicken-fillet', 'куриным филе', { k: 110, p: 23, c: 0, f: 1.2 }],
+  ['turkey-breast', 'индейкой', { k: 135, p: 29, c: 0, f: 2 }],
+  ['turkey-ground', 'фаршем индейки', { k: 150, p: 20, c: 0, f: 8 }],
+  ['beef-lean', 'говядиной', { k: 187, p: 26, c: 0, f: 9 }],
+  ['beef-stew-m', 'тушёной говядиной', { k: 232, p: 24, c: 0, f: 15 }],
+  ['pork-lean', 'свининой', { k: 242, p: 27, c: 0, f: 14 }],
+  ['pork-stew-m', 'тушёной свининой', { k: 250, p: 22, c: 0, f: 18 }],
+  ['mince-beef', 'говяжьим фаршем', { k: 176, p: 20, c: 0, f: 10 }],
+  ['mince-pork', 'свиным фаршем', { k: 260, p: 16, c: 0, f: 21 }],
+  ['mince-chicken', 'куриным фаршем', { k: 143, p: 20, c: 0, f: 7 }],
+  ['mince-mixed', 'смешанным фаршем', { k: 220, p: 17, c: 0, f: 16 }],
+  ['lamb', 'бараниной', { k: 209, p: 25, c: 0, f: 12 }],
+  ['veal', 'телятиной', { k: 144, p: 28, c: 0, f: 3 }],
+  ['rabbit', 'кроликом', { k: 156, p: 25, c: 0, f: 6 }],
+  ['salmon', 'лососем', { k: 208, p: 20, c: 0, f: 13 }],
+  ['trout', 'форелью', { k: 119, p: 20, c: 0, f: 4 }],
+  ['cod', 'треской', { k: 82, p: 18, c: 0, f: 0.7 }],
+  ['pollock', 'минтаем', { k: 72, p: 16, c: 0, f: 0.9 }],
+  ['tuna', 'тунцом', { k: 144, p: 23, c: 0, f: 5 }],
+  ['hake', 'хеком', { k: 86, p: 17, c: 0, f: 1.5 }],
+  ['mackerel', 'скумбрией', { k: 191, p: 18, c: 0, f: 13 }],
+  ['shrimp', 'креветками', { k: 99, p: 24, c: 0.2, f: 0.3 }],
+  ['squid', 'кальмаром', { k: 100, p: 18, c: 3, f: 1.5 }],
+  ['mussel', 'мидиями', { k: 86, p: 12, c: 3.5, f: 2 }],
+  ['crab', 'крабом', { k: 90, p: 18, c: 0, f: 1.5 }],
+  ['tofu', 'тофу', { k: 76, p: 8, c: 2, f: 4.5 }],
+  ['tempeh', 'темпе', { k: 193, p: 19, c: 9, f: 11 }],
+  ['seitan', 'сейтаном', { k: 140, p: 25, c: 6, f: 2 }],
+  ['egg', 'яйцом', { k: 155, p: 13, c: 1.1, f: 11 }],
+  ['cottage', 'творогом', { k: 121, p: 17, c: 3, f: 5 }],
+  ['ham', 'ветчиной', { k: 180, p: 20, c: 2, f: 10 }],
+  ['sausage', 'сосисками', { k: 220, p: 11, c: 2, f: 18 }],
+  ['bacon', 'беконом', { k: 540, p: 17, c: 1, f: 52 }],
+  ['liver-chicken', 'куриной печенью', { k: 140, p: 20, c: 1.5, f: 6 }],
+  ['liver-beef', 'говяжьей печенью', { k: 127, p: 20, c: 4, f: 3.6 }],
+  ['mushroom', 'грибами', { k: 27, p: 4.3, c: 1, f: 1 }],
+  ['cheese', 'сыром', { k: 363, p: 23, c: 1, f: 30 }],
+  ['feta', 'фетой', { k: 265, p: 15, c: 4, f: 21 }],
+  ['mozzarella', 'моцареллой', { k: 280, p: 22, c: 2, f: 20 }],
+]
+
+for (const [gid, gname, gm] of garnishes.slice(0, 37)) {
+  for (const [pid, pname, pm] of proteinsCombo.slice(0, 36)) {
+    for (const pg of comboPortions) {
+      const proteinG = Math.round(pg * 0.38)
+      const sideG = pg - proteinG
+      const m = sumM(scaleM(gm, sideG), scaleM(pm, proteinG))
+      const name = `${gname} с ${pname}`
+      add(`mix-${gid}-${pid}-${pg}`, `${name} (${pg} г)`, `${pg} г`, m.k, m.p, m.c, m.f)
+    }
+  }
+}
+
+const cookStyles: [string, string, number][] = [
+  ['', '', 1],
+  [' гриль', '-grill', 1.02],
+  [' запечённое', '-bake', 1.05],
+  [' тушёное', '-stew', 1.08],
+  [' жареное', '-fry', 1.18],
+  [' на пару', '-steam', 0.95],
+]
+
+const soloProteins: [string, string, M][] = [
+  ['chicken-breast', 'Куриная грудка', { k: 165, p: 31, c: 0, f: 3.6 }],
+  ['chicken-thigh', 'Куриное бедро', { k: 177, p: 24, c: 0, f: 8 }],
+  ['turkey-breast', 'Индейка грудка', { k: 135, p: 29, c: 0, f: 2 }],
+  ['beef-lean', 'Говядина постная', { k: 187, p: 26, c: 0, f: 9 }],
+  ['pork-lean', 'Свинина постная', { k: 242, p: 27, c: 0, f: 14 }],
+  ['salmon', 'Лосось', { k: 208, p: 20, c: 0, f: 13 }],
+  ['trout', 'Форель', { k: 119, p: 20, c: 0, f: 4 }],
+  ['cod', 'Треска', { k: 82, p: 18, c: 0, f: 0.7 }],
+  ['tuna', 'Тунец', { k: 144, p: 23, c: 0, f: 5 }],
+  ['shrimp', 'Креветки', { k: 99, p: 24, c: 0.2, f: 0.3 }],
+  ['tofu', 'Тофу', { k: 76, p: 8, c: 2, f: 4.5 }],
+  ['mince-beef', 'Фарш говяжий', { k: 176, p: 20, c: 0, f: 10 }],
+  ['mince-chicken', 'Фарш куриный', { k: 143, p: 20, c: 0, f: 7 }],
+  ['lamb', 'Баранина', { k: 209, p: 25, c: 0, f: 12 }],
+  ['veal', 'Телятина', { k: 144, p: 28, c: 0, f: 3 }],
+  ['mackerel', 'Скумбрия', { k: 191, p: 18, c: 0, f: 13 }],
+  ['pollock', 'Минтай', { k: 72, p: 16, c: 0, f: 0.9 }],
+  ['cottage', 'Творог 5%', { k: 121, p: 17, c: 3, f: 5 }],
+  ['egg', 'Яйцо', { k: 155, p: 13, c: 1.1, f: 11 }],
+  ['ham', 'Ветчина', { k: 180, p: 20, c: 2, f: 10 }],
+]
+
+const soloPortions = [100, 150, 200]
+
+for (const [pid, pname, pm] of soloProteins.slice(0, 15)) {
+  for (const [slabel, ssuffix, mult] of cookStyles) {
+    for (const g of soloPortions) {
+      const m = scaleM(pm, g)
+      const name = `${pname}${slabel}`
+      add(`solo-${pid}${ssuffix}-${g}`, `${name} (${g} г)`, `${g} г`, m.k * mult, m.p * mult, m.c * mult, m.f * mult)
+    }
+  }
+}
+
+const saladBases: [string, string, M][] = [
+  ['lettuce', 'Салат', { k: 15, p: 1.4, c: 2.5, f: 0.2 }],
+  ['cabbage', 'Капустный салат', { k: 27, p: 1.8, c: 5, f: 0.1 }],
+  ['veg', 'Овощной салат', { k: 35, p: 1.5, c: 6, f: 0.5 }],
+  ['greek-base', 'Греческий салат', { k: 90, p: 3, c: 4, f: 7 }],
+  ['caesar-base', 'Цезарь', { k: 130, p: 6, c: 5, f: 10 }],
+  ['coleslaw-base', 'Коулслоу', { k: 120, p: 2, c: 10, f: 9 }],
+  ['vinaigrette-base', 'Винегрет', { k: 60, p: 1.5, c: 8, f: 2.5 }],
+  ['tabbouleh-base', 'Табуле', { k: 140, p: 4, c: 18, f: 6 }],
+]
+
+const saladProteins: [string, string, M][] = [
+  ['chicken', 'курицей', { k: 165, p: 31, c: 0, f: 3.6 }],
+  ['turkey', 'индейкой', { k: 135, p: 29, c: 0, f: 2 }],
+  ['beef', 'говядиной', { k: 187, p: 26, c: 0, f: 9 }],
+  ['salmon', 'лососем', { k: 208, p: 20, c: 0, f: 13 }],
+  ['tuna', 'тунцом', { k: 144, p: 23, c: 0, f: 5 }],
+  ['shrimp', 'креветками', { k: 99, p: 24, c: 0.2, f: 0.3 }],
+  ['egg', 'яйцом', { k: 155, p: 13, c: 1.1, f: 11 }],
+  ['feta', 'фетой', { k: 265, p: 15, c: 4, f: 21 }],
+  ['tofu', 'тофу', { k: 76, p: 8, c: 2, f: 4.5 }],
+  ['ham', 'ветчиной', { k: 180, p: 20, c: 2, f: 10 }],
+]
+
+for (const [bid, bname, bm] of saladBases) {
+  for (const [pid, pname, pm] of saladProteins) {
+    for (const g of [150, 200, 250, 300]) {
+      const protG = Math.round(g * 0.35)
+      const baseG = g - protG
+      const m = sumM(scaleM(bm, baseG), scaleM(pm, protG))
+      const name = `${bname} с ${pname}`
+      add(`salad-${bid}-${pid}-${g}`, `${name} (${g} г)`, `${g} г`, m.k, m.p, m.c, m.f)
+    }
+  }
+}
+
+const soupBases: [string, string, M][] = [
+  ['chicken', 'Куриный суп', { k: 40, p: 5, c: 2, f: 1.5 }],
+  ['beef', 'Говяжий суп', { k: 45, p: 5, c: 2, f: 2 }],
+  ['veg', 'Овощной суп', { k: 30, p: 1, c: 5, f: 0.5 }],
+  ['mushroom', 'Грибной суп', { k: 37, p: 1.5, c: 4, f: 1.5 }],
+  ['fish', 'Рыбный суп', { k: 35, p: 4, c: 2, f: 1 }],
+  ['tomato', 'Томатный суп', { k: 43, p: 1, c: 6, f: 1.5 }],
+  ['pumpkin', 'Тыквенный суп', { k: 53, p: 1, c: 6, f: 2.5 }],
+  ['lentil', 'Чечевичный суп', { k: 63, p: 4, c: 8, f: 1.5 }],
+  ['pea', 'Гороховый суп', { k: 60, p: 3.5, c: 7, f: 1.5 }],
+  ['cream', 'Крем-суп', { k: 60, p: 1.5, c: 5, f: 3.5 }],
+]
+
+const soupAdds: [string, string, M][] = [
+  ['plain', '', { k: 0, p: 0, c: 0, f: 0 }],
+  ['noodles', ' с лапшой', { k: 45, p: 1.5, c: 8, f: 0.5 }],
+  ['rice', ' с рисом', { k: 40, p: 1, c: 8, f: 0.2 }],
+  ['potato', ' с картофелем', { k: 35, p: 0.8, c: 7, f: 0.1 }],
+  ['meat', ' с мясом', { k: 55, p: 6, c: 1, f: 3 }],
+  ['cream-top', ' со сливками', { k: 50, p: 1, c: 2, f: 4 }],
+]
+
+for (const [bid, bname, bm] of soupBases) {
+  for (const [aid, alabel, am] of soupAdds) {
+    for (const ml of [250, 300, 350, 400]) {
+      const m = sumM(scaleM(bm, ml * 0.9), scaleM(am, ml * 0.1))
+      const name = `${bname}${alabel}`
+      add(`soup-${bid}-${aid}-${ml}`, `${name} (${ml} мл)`, `${ml} мл`, m.k, m.p, m.c, m.f)
+    }
+  }
+}
+
+// Порции для сотен базовых продуктов (per 100g)
+const bulkPer100: [string, string, M][] = [
+  ...poultry.map(([id, n, k, p, c, f]) => [id, n, { k, p, c, f }] as [string, string, M]),
+  ...meats.map(([id, n, k, p, c, f]) => [id, n, { k, p, c, f }] as [string, string, M]),
+  ...fish.map(([id, n, k, p, c, f]) => [id, n, { k, p, c, f }] as [string, string, M]),
+  ...veg.map(([id, n, k, p, c, f]) => [id, n, { k, p, c, f }] as [string, string, M]),
+  ...fruits.map(([id, n, k, p, c, f]) => [id, n, { k, p, c, f }] as [string, string, M]),
+  ...nuts.map(([id, n, k, p, c, f]) => [id, n, { k, p, c, f }] as [string, string, M]),
+  ...dairy100.map(([id, n, k, p, c, f]) => [id, n, { k, p, c, f }] as [string, string, M]),
+  ...grainsCooked.map(([id, n, k, p, c, f]) => [id, n, { k, p, c, f }] as [string, string, M]),
+]
+
+const bulkPortions = [50, 75, 100, 125, 150, 175, 200, 250]
+
+for (const [id, name, m] of bulkPer100.slice(0, 130)) {
+  for (const g of bulkPortions) {
+    const scaled = scaleM(m, g)
+    add(`bulk-${id}-${g}`, `${name} (${g} г)`, `${g} г`, scaled.k, scaled.p, scaled.c, scaled.f)
+  }
+}
+
 const out = `export interface FoodPreset {
   id: string
   name: string
@@ -1334,9 +1587,6 @@ const out = `export interface FoodPreset {
   carbs: number
   fat: number
 }
-
-/** Пресеты продуктов и блюд — быстрый ввод (~${rows.length}) */
-export const FOOD_PRESETS: FoodPreset[] = ${JSON.stringify(rows, null, 2)}
 
 export type MealSlot = 'breakfast' | 'lunch' | 'dinner' | 'snack'
 
@@ -1357,5 +1607,6 @@ export function mealByTime(d = new Date()): MealSlot {
 }
 `
 
+writeFileSync(new URL('../src/data/foodPresets.json', import.meta.url), JSON.stringify(rows))
 writeFileSync(new URL('../src/data/foods.ts', import.meta.url), out)
 console.log('wrote', rows.length, 'presets')

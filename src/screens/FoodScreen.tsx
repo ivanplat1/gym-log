@@ -1,8 +1,9 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Brand } from '../components/Brand'
 import { CloseButton, EditButton, TrashButton } from '../components/IconButtons'
 import { NutritionStatsSheet } from '../components/NutritionStatsSheet'
-import { FOOD_PRESETS, MEAL_LABELS, mealByTime, type MealSlot } from '../data/foods'
+import { MEAL_LABELS, mealByTime, type FoodPreset, type MealSlot } from '../data/foods'
+import { loadFoodPresets } from '../data/loadFoodPresets'
 import { useStore } from '../lib/store'
 import {
   formatAmountLabel,
@@ -165,12 +166,19 @@ export function FoodScreen() {
   const weighGramsInput = useInputEndCursor(weighGramsText)
   const burnInput = useInputEndCursor(burnText)
 
+  const [foodPresets, setFoodPresets] = useState<FoodPreset[]>([])
+
+  useEffect(() => {
+    void loadFoodPresets().then(setFoodPresets)
+  }, [])
+
   const amount = Number(amountText.replace(',', '.')) || 0
 
   const presets = useMemo(() => {
+    if (!foodPresets.length) return []
     const query = q.trim()
-    return searchFoodPresets(FOOD_PRESETS, query, query ? 80 : 40)
-  }, [q])
+    return searchFoodPresets(foodPresets, query, query ? 80 : 40)
+  }, [foodPresets, q])
 
   const myFoods = useMemo(
     () => suggestFoodMemory(store.foodMemory ?? [], q, q.trim() ? 8 : 12),
@@ -219,7 +227,7 @@ export function FoodScreen() {
 
   const apply = (id: string) => {
     setEditingId(null)
-    const p = FOOD_PRESETS.find((x) => x.id === id)
+    const p = foodPresets.find((x) => x.id === id)
     if (!p) return
     const { mode, baseAmount: base } = resolveScaleMode(p.portion)
     const macros: MacroSet = {
@@ -854,7 +862,11 @@ export function FoodScreen() {
 
               <input
                 className="search"
-                placeholder={`Поиск среди ${FOOD_PRESETS.length} продуктов…`}
+                placeholder={
+                  foodPresets.length
+                    ? `Поиск среди ${foodPresets.length} продуктов…`
+                    : 'Загрузка базы продуктов…'
+                }
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
                 autoFocus
