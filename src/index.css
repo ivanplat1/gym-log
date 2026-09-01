@@ -183,6 +183,24 @@ select {
   line-height: 1.4;
 }
 
+.page-head-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.page-head-top .brand {
+  margin-bottom: 0;
+}
+
+.page-head-action {
+  flex-shrink: 0;
+  padding: 6px 10px;
+  font-size: 0.88rem;
+}
+
 /* dock */
 .dock {
   position: fixed;
@@ -871,6 +889,18 @@ select {
   justify-content: space-between;
   gap: 10px;
   padding: 10px 0 8px;
+  width: 100%;
+  border: none;
+  background: none;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.meal-chevron {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1;
 }
 
 .meal-label {

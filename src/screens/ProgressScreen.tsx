@@ -1,13 +1,17 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useStore } from '../lib/store'
+import type { ExerciseTrackKind } from '../lib/workoutFormat'
 import {
   exerciseSeries,
+  primaryMetricValue,
   trackedExercises,
   volumeSeries,
   weeklyVolume,
+  type ExercisePoint,
+  type TrackedExercise,
 } from '../lib/progressStats'
 
-type Metric = 'maxWeight' | 'e1rm' | 'volume'
+type Metric = 'primary' | 'e1rm' | 'volume'
 
 function BarChart({
   labels,
@@ -152,19 +156,54 @@ function LineChart({
   )
 }
 
-const METRIC_LABELS: Record<Metric, string> = {
-  maxWeight: 'Макс. вес',
-  e1rm: 'Оценка 1ПМ',
-  volume: 'Объём',
+function metricValue(point: ExercisePoint, metric: Metric): number {
+  if (metric === 'volume') return point.volume
+  if (metric === 'e1rm') return point.e1rm
+  return primaryMetricValue(point)
+}
+
+function metricUnit(kind: ExerciseTrackKind, metric: Metric): string {
+  if (metric === 'volume') return kind === 'reps' ? ' повт' : kind === 'timed' ? ' с' : ''
+  if (metric === 'e1rm') return ''
+  if (kind === 'timed') return 'с'
+  if (kind === 'reps') return ''
+  return ''
+}
+
+function metricLabels(kind: ExerciseTrackKind): { key: Metric; label: string }[] {
+  if (kind === 'reps') {
+    return [
+      { key: 'primary', label: 'Макс. повторы' },
+      { key: 'volume', label: 'Сумма повт.' },
+    ]
+  }
+  if (kind === 'timed') {
+    return [
+      { key: 'primary', label: 'Макс. время' },
+    ]
+  }
+  return [
+    { key: 'primary', label: 'Макс. вес' },
+    { key: 'e1rm', label: 'Оценка 1ПМ' },
+    { key: 'volume', label: 'Объём' },
+  ]
+}
+
+function bestLabel(ex: TrackedExercise): string {
+  if (ex.kind === 'reps') return `лучший ${ex.bestBest} повт.`
+  if (ex.kind === 'timed') return `лучший ${ex.bestBest} с`
+  return `лучший ${ex.bestBest} кг`
 }
 
 export function ProgressScreen() {
   const { store } = useStore()
   const exercises = useMemo(() => trackedExercises(store.sessions), [store.sessions])
   const [exerciseId, setExerciseId] = useState<string>('')
-  const [metric, setMetric] = useState<Metric>('maxWeight')
+  const [metric, setMetric] = useState<Metric>('primary')
 
   const activeId = exerciseId || exercises[0]?.exerciseId || ''
+  const active = exercises.find((e) => e.exerciseId === activeId)
+  const activeKind = active?.kind ?? 'weight'
 
   const sessions = useMemo(() => volumeSeries(store.sessions), [store.sessions])
   const weeks = useMemo(() => weeklyVolume(store.sessions, 8), [store.sessions])
@@ -173,10 +212,15 @@ export function ProgressScreen() {
     [store.sessions, activeId],
   )
 
-  const active = exercises.find((e) => e.exerciseId === activeId)
-  const exValues = exPoints.map((p) => p[metric])
+  useEffect(() => {
+    setMetric('primary')
+  }, [activeId])
+
+  const exValues = exPoints.map((p) => metricValue(p, metric))
   const delta =
     exValues.length >= 2 ? Math.round((exValues[exValues.length - 1] - exValues[0]) * 10) / 10 : null
+  const unit = metricUnit(activeKind, metric)
+  const chips = metricLabels(activeKind)
 
   return (
     <>
@@ -185,7 +229,7 @@ export function ProgressScreen() {
           <i>G</i> gym-log
         </div>
         <h1>Прогресс</h1>
-        <p>Объём тренировок и сила по упражнениям</p>
+        <p>Сила и повторы по каждому упражнению</p>
       </header>
 
       {!sessions.length ? (
@@ -194,8 +238,60 @@ export function ProgressScreen() {
         <div className="stack">
           <section className="glass progress-card">
             <div className="progress-card-head">
-              <h2>Объём за сессию</h2>
-              <span className="tnum muted">кг · последние {sessions.length}</span>
+              <h2>Упражнение</h2>
+              {active && (
+                <span className="tnum muted">
+                  {bestLabel(active)}
+                  {delta != null ? ` · Δ ${delta > 0 ? '+' : ''}${delta}${unit}` : ''}
+                </span>
+              )}
+            </div>
+
+            {!exercises.length ? (
+              <p className="empty" style={{ padding: 12 }}>
+                Нет данных по упражнениям
+              </p>
+            ) : (
+              <>
+                <select
+                  className="progress-select"
+                  value={activeId}
+                  onChange={(e) => setExerciseId(e.target.value)}
+                >
+                  {exercises.map((ex) => (
+                    <option key={ex.exerciseId} value={ex.exerciseId}>
+                      {ex.name} · {ex.sessions} сес.
+                    </option>
+                  ))}
+                </select>
+
+                <div className="chips" style={{ marginTop: 10, marginBottom: 8 }}>
+                  {chips.map(({ key, label }) => (
+                    <button
+                      key={key}
+                      type="button"
+                      className={`chip${metric === key ? ' on' : ''}`}
+                      onClick={() => setMetric(key)}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+
+                <LineChart
+                  labels={exPoints.map((p) => p.label)}
+                  values={exValues}
+                  color="#3dd68c"
+                  unit={unit}
+                />
+              </>
+            )}
+          </section>
+
+          <section className="glass progress-card">
+            <div className="progress-card-head">
+              <h2>Общий объём</h2>
+              <span className="tnum muted">кг · все упражнения</span>
             </div>
             <BarChart
               labels={sessions.map((s) => s.label)}
@@ -221,58 +317,6 @@ export function ProgressScreen() {
                 </span>
               ))}
             </div>
-          </section>
-
-          <section className="glass progress-card">
-            <div className="progress-card-head">
-              <h2>Упражнение</h2>
-              {active && (
-                <span className="tnum muted">
-                  лучший {active.bestMax} кг
-                  {delta != null ? ` · Δ ${delta > 0 ? '+' : ''}${delta}` : ''}
-                </span>
-              )}
-            </div>
-
-            {!exercises.length ? (
-              <p className="empty" style={{ padding: 12 }}>
-                Нет упражнений с весом
-              </p>
-            ) : (
-              <>
-                <select
-                  className="progress-select"
-                  value={activeId}
-                  onChange={(e) => setExerciseId(e.target.value)}
-                >
-                  {exercises.map((ex) => (
-                    <option key={ex.exerciseId} value={ex.exerciseId}>
-                      {ex.name} · {ex.sessions} сес.
-                    </option>
-                  ))}
-                </select>
-
-                <div className="chips" style={{ marginTop: 10, marginBottom: 8 }}>
-                  {(Object.keys(METRIC_LABELS) as Metric[]).map((key) => (
-                    <button
-                      key={key}
-                      type="button"
-                      className={`chip${metric === key ? ' on' : ''}`}
-                      onClick={() => setMetric(key)}
-                    >
-                      {METRIC_LABELS[key]}
-                    </button>
-                  ))}
-                </div>
-
-                <LineChart
-                  labels={exPoints.map((p) => p.label)}
-                  values={exValues}
-                  color="#3dd68c"
-                  unit={metric === 'volume' ? '' : ''}
-                />
-              </>
-            )}
           </section>
         </div>
       )}
