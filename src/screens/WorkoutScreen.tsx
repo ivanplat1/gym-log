@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
-import { EXERCISES, getExercise, type MuscleGroup } from '../data/exercises'
+import { EXERCISES, getExercise, type Exercise, type MuscleGroup } from '../data/exercises'
 import { ExercisePicker } from '../components/ExercisePicker'
 import { IconTrash } from '../components/IconButtons'
 import { RestTimer } from '../components/RestTimer'
 import { Stepper } from '../components/Stepper'
+import { TimedDurationStepper } from '../components/TimedDurationStepper'
+import { getTimedStepperConfig } from '../lib/cardio'
 import { useStore } from '../lib/store'
 import {
   addCustomExercise,
@@ -24,14 +26,17 @@ function suggestFromLast(
   last: LoggedSet[] | null,
   timed: boolean,
   bodyweight: boolean,
+  exerciseId: string,
+  custom: Exercise[],
 ) {
+  const timedCfg = getTimedStepperConfig(exerciseId, custom)
   if (!last?.length) {
-    if (timed) return { weight: 0, reps: 30 }
+    if (timed) return { weight: 0, reps: timedCfg.defaultSeconds }
     if (bodyweight) return { weight: 0, reps: 10 }
     return { weight: 20, reps: 10 }
   }
   const latest = last[last.length - 1]
-  if (timed) return { weight: 0, reps: latest.durationSec ?? 30 }
+  if (timed) return { weight: 0, reps: latest.durationSec ?? timedCfg.defaultSeconds }
   if (bodyweight) return { weight: 0, reps: latest.reps ?? 10 }
   return { weight: latest.weight ?? 20, reps: latest.reps ?? 10 }
 }
@@ -78,7 +83,7 @@ export function WorkoutScreen() {
     if (!active) return
     const last = lastSetsForExercise(store.sessions, active.exerciseId)
     const bw = exerciseBodyweight(active)
-    const s = suggestFromLast(last, active.timed, bw)
+    const s = suggestFromLast(last, active.timed, bw, active.exerciseId, store.customExercises ?? [])
     setWeight(s.weight)
     setReps(s.reps)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -254,7 +259,7 @@ export function WorkoutScreen() {
           const bw = exerciseBodyweight(ex)
           const last = lastSetsForExercise(store.sessions, ex.exerciseId)
           const lastSummary = last?.length
-            ? `Прошлый: ${last.map((s) => formatLoggedSet(s, { timed: ex.timed, bodyweight: bw })).join('  ')}`
+            ? `Прошлый: ${last.map((s) => formatLoggedSet(s, { timed: ex.timed, bodyweight: bw, exerciseId: ex.exerciseId })).join('  ')}`
             : 'Первый раз'
           return (
             <div key={ex.key} className="tile glass">
@@ -287,7 +292,7 @@ export function WorkoutScreen() {
                   {ex.sets.map((s, i) => (
                     <span key={i} className="logged-set">
                       <i>{i + 1}</i>
-                      {formatLoggedSet(s, { timed: ex.timed, bodyweight: bw })}
+                      {formatLoggedSet(s, { timed: ex.timed, bodyweight: bw, exerciseId: ex.exerciseId })}
                     </span>
                   ))}
                 </div>
@@ -309,15 +314,25 @@ export function WorkoutScreen() {
                         onChange={setWeight}
                       />
                     )}
-                    <Stepper
-                      label={ex.timed ? 'сек' : 'повт'}
-                      value={reps}
-                      step={ex.timed ? 5 : 1}
-                      min={1}
-                      compact
-                      editable={!ex.timed && bw}
-                      onChange={setReps}
-                    />
+                    {ex.timed ? (
+                      <TimedDurationStepper
+                        exerciseId={ex.exerciseId}
+                        durationSec={reps}
+                        customExercises={store.customExercises ?? []}
+                        compact
+                        onChangeSec={setReps}
+                      />
+                    ) : (
+                      <Stepper
+                        label="повт"
+                        value={reps}
+                        step={1}
+                        min={1}
+                        compact
+                        editable={bw}
+                        onChange={setReps}
+                      />
+                    )}
                   </div>
                   {!ex.timed && bw && (
                     <p className="meta" style={{ margin: '0 0 8px', textAlign: 'center' }}>

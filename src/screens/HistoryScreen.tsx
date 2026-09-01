@@ -3,6 +3,8 @@ import { getExercise, type MuscleGroup } from '../data/exercises'
 import { ExercisePicker } from '../components/ExercisePicker'
 import { IconTrash } from '../components/IconButtons'
 import { Stepper } from '../components/Stepper'
+import { TimedDurationStepper } from '../components/TimedDurationStepper'
+import { getTimedStepperConfig } from '../lib/cardio'
 import { useStore } from '../lib/store'
 import { addCustomExercise, type LoggedSet, type SessionExercise, type WorkoutSession } from '../lib/storage'
 import { formatLoggedSet, isBodyweightExercise } from '../lib/workoutFormat'
@@ -142,9 +144,10 @@ function SessionDetail({
   const openAddSet = (ex: SessionExercise) => {
     const bw = exerciseBodyweight(ex)
     const last = ex.sets[ex.sets.length - 1]
+    const timedCfg = getTimedStepperConfig(ex.exerciseId, store.customExercises ?? [])
     if (ex.timed) {
       setWeight(0)
-      setReps(last?.durationSec ?? 30)
+      setReps(last?.durationSec ?? timedCfg.defaultSeconds)
     } else if (bw) {
       setWeight(0)
       setReps(last?.reps ?? 10)
@@ -229,7 +232,7 @@ function SessionDetail({
           const bw = exerciseBodyweight(ex)
           const open = editing && ex.key === activeKey
           const summary = ex.sets.length
-            ? ex.sets.map((s) => formatLoggedSet(s, { timed: ex.timed, bodyweight: bw })).join('  ·  ')
+            ? ex.sets.map((s) => formatLoggedSet(s, { timed: ex.timed, bodyweight: bw, exerciseId: ex.exerciseId })).join('  ·  ')
             : 'нет подходов'
           return (
             <div key={ex.key} className="tile glass">
@@ -284,21 +287,25 @@ function SessionDetail({
                           onChange={(v) => updateSet(ex.key, i, { weight: v })}
                         />
                       )}
-                      <Stepper
-                        label={ex.timed ? 'сек' : 'повт'}
-                        value={ex.timed ? (set.durationSec ?? 0) : (set.reps ?? 0)}
-                        step={ex.timed ? 5 : 1}
-                        min={1}
-                        compact
-                        editable={!ex.timed && bw}
-                        onChange={(v) =>
-                          updateSet(
-                            ex.key,
-                            i,
-                            ex.timed ? { durationSec: v } : { reps: v },
-                          )
-                        }
-                      />
+                      {ex.timed ? (
+                        <TimedDurationStepper
+                          exerciseId={ex.exerciseId}
+                          durationSec={set.durationSec ?? 0}
+                          customExercises={store.customExercises ?? []}
+                          compact
+                          onChangeSec={(v) => updateSet(ex.key, i, { durationSec: v })}
+                        />
+                      ) : (
+                        <Stepper
+                          label="повт"
+                          value={set.reps ?? 0}
+                          step={1}
+                          min={1}
+                          compact
+                          editable={bw}
+                          onChange={(v) => updateSet(ex.key, i, { reps: v })}
+                        />
+                      )}
                       <button
                         type="button"
                         className="tile-remove"
@@ -326,15 +333,25 @@ function SessionDetail({
                             onChange={setWeight}
                           />
                         )}
-                        <Stepper
-                          label={ex.timed ? 'сек' : 'повт'}
-                          value={reps}
-                          step={ex.timed ? 5 : 1}
-                          min={1}
-                          compact
-                          editable={!ex.timed && bw}
-                          onChange={setReps}
-                        />
+                        {ex.timed ? (
+                          <TimedDurationStepper
+                            exerciseId={ex.exerciseId}
+                            durationSec={reps}
+                            customExercises={store.customExercises ?? []}
+                            compact
+                            onChangeSec={setReps}
+                          />
+                        ) : (
+                          <Stepper
+                            label="повт"
+                            value={reps}
+                            step={1}
+                            min={1}
+                            compact
+                            editable={bw}
+                            onChange={setReps}
+                          />
+                        )}
                       </div>
                       <div className="btn-row btn-row--split" style={{ marginTop: 8 }}>
                         <button
