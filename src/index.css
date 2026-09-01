@@ -328,6 +328,49 @@ select {
   padding: 12px 14px 14px;
 }
 
+.session-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.set-edit-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.set-edit-row:last-of-type {
+  border-bottom: none;
+}
+
+.set-edit-num {
+  width: 22px;
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--muted);
+  padding-bottom: 10px;
+  flex-shrink: 0;
+}
+
+.set-edit-row .stepper {
+  flex: 1;
+  min-width: 0;
+}
+
+.set-edit-row .tile-remove {
+  margin-bottom: 6px;
+}
+
+.set-edit-add {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--hairline);
+}
+
 .logged-sets {
   display: flex;
   flex-wrap: wrap;
