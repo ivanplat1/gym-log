@@ -2,10 +2,14 @@ import { useState, type FormEvent } from 'react'
 
 export function LoginScreen({
   onLogin,
+  onCancel,
+  compact = false,
 }: {
   onLogin: (username: string, password: string) => Promise<void>
+  onCancel?: () => void
+  compact?: boolean
 }) {
-  const [username, setUsername] = useState('ivan')
+  const [username, setUsername] = useState('ivpl')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
@@ -24,17 +28,27 @@ export function LoginScreen({
   }
 
   return (
-    <div className="app-shell">
-      <div className="app-main" style={{ maxWidth: 420 }}>
-        <header className="page-head">
-          <div className="brand">
-            <i>G</i> gym-log
-          </div>
-          <h1>Вход</h1>
-          <p>Данные хранятся на сервере. Логин и пароль — твои.</p>
+    <div className={compact ? undefined : 'app-shell'}>
+      <div className={compact ? undefined : 'app-main'} style={compact ? undefined : { maxWidth: 420 }}>
+        <header className="page-head" style={compact ? { marginBottom: 12 } : undefined}>
+          {!compact && (
+            <div className="brand">
+              <i>G</i> gym-log
+            </div>
+          )}
+          <h1 style={compact ? { fontSize: '1.35rem' } : undefined}>Вход</h1>
+          <p>
+            {compact
+              ? 'После входа данные синхронизируются на сервер. Можно закрыть и остаться гостем.'
+              : 'Данные хранятся на сервере. Логин и пароль — твои.'}
+          </p>
         </header>
 
-        <form className="glass" style={{ padding: 18, borderRadius: 18 }} onSubmit={submit}>
+        <form
+          className={compact ? undefined : 'glass'}
+          style={compact ? undefined : { padding: 18, borderRadius: 18 }}
+          onSubmit={submit}
+        >
           <div className="field" style={{ marginBottom: 12 }}>
             <label>Логин</label>
             <input
@@ -60,6 +74,16 @@ export function LoginScreen({
           <button type="submit" className="primary" style={{ width: '100%' }} disabled={busy}>
             {busy ? 'Вход…' : 'Войти'}
           </button>
+          {onCancel && (
+            <button
+              type="button"
+              className="ghost"
+              style={{ width: '100%', marginTop: 8 }}
+              onClick={onCancel}
+            >
+              Остаться гостем
+            </button>
+          )}
         </form>
       </div>
     </div>

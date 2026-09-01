@@ -1,4 +1,6 @@
 import { useMemo, useState } from 'react'
+import { CloseButton, TrashButton } from '../components/IconButtons'
+import { NutritionStatsSheet } from '../components/NutritionStatsSheet'
 import { FOOD_PRESETS, MEAL_LABELS, mealByTime, type MealSlot } from '../data/foods'
 import { useStore } from '../lib/store'
 import {
@@ -56,14 +58,15 @@ export function FoodScreen() {
   const goalsToday = effectiveGoals(store, date)
 
   const [goalsOpen, setGoalsOpen] = useState(false)
+  const [statsOpen, setStatsOpen] = useState(false)
   const [open, setOpen] = useState(false)
   const [detailOpen, setDetailOpen] = useState(false)
   const [meal, setMeal] = useState<MealSlot>(() => mealByTime())
   const [name, setName] = useState('')
   const [q, setQ] = useState('')
 
-  const openSheet = () => {
-    setMeal(mealByTime())
+  const openSheet = (slot?: MealSlot) => {
+    setMeal(slot ?? mealByTime())
     setOpen(true)
   }
 
@@ -130,7 +133,6 @@ export function FoodScreen() {
 
   const openCustom = () => {
     resetForm()
-    setMeal(mealByTime())
     setOpen(true)
     setDetailOpen(true)
   }
@@ -318,7 +320,7 @@ export function FoodScreen() {
         </div>
       </div>
 
-      <button type="button" className="primary" style={{ width: '100%' }} onClick={openSheet}>
+      <button type="button" className="primary" style={{ width: '100%', marginTop: 10 }} onClick={() => openSheet()}>
         + Добавить еду
       </button>
 
@@ -352,32 +354,46 @@ export function FoodScreen() {
         return (
           <div key={slot} className="meal glass" style={{ marginTop: 12 }}>
             <div className="meal-title">
-              <span>{MEAL_LABELS[slot]}</span>
-              <span className="tnum">{items.length ? `${Math.round(mealKcal)} ккал` : 'пусто'}</span>
+              <span className="meal-label">{MEAL_LABELS[slot]}</span>
+              <span className="meal-title-right">
+                {items.length > 0 && (
+                  <span className="tnum meal-kcal">{Math.round(mealKcal)} ккал</span>
+                )}
+                <button
+                  type="button"
+                  className="meal-add"
+                  aria-label={`Добавить в ${MEAL_LABELS[slot]}`}
+                  onClick={() => openSheet(slot)}
+                >
+                  +
+                </button>
+              </span>
             </div>
             {items.map((f) => (
               <div key={f.id} className="food-row">
                 <div>
                   <strong>{f.name}</strong>
                   <div className="meta">
-                    {f.portion || 'порция'} · Б{f.protein} У{f.carbs} Ж{f.fat}
+                    <span className="portion-chip">{f.portion || 'порция'}</span>
+                    <span className="macro-tags">
+                      <span className="macro-tag macro-tag-kcal">
+                        <span className="tnum">{Math.round(f.kcal)}</span> ккал
+                      </span>
+                      <span className="macro-tag macro-tag-p">
+                        Б <span className="tnum">{f.protein}</span>
+                      </span>
+                      <span className="macro-tag macro-tag-c">
+                        У <span className="tnum">{f.carbs}</span>
+                      </span>
+                      <span className="macro-tag macro-tag-f">
+                        Ж <span className="tnum">{f.fat}</span>
+                      </span>
+                    </span>
                   </div>
                 </div>
-                <div style={{ textAlign: 'right' }}>
-                  <div className="tnum" style={{ fontWeight: 750 }}>
-                    {Math.round(f.kcal)}
-                  </div>
-                  <button type="button" className="ghost" style={{ marginTop: 4 }} onClick={() => remove(f.id)}>
-                    ✕
-                  </button>
-                </div>
+                <TrashButton onClick={() => remove(f.id)} />
               </div>
             ))}
-            {!items.length && (
-              <div style={{ padding: '8px 0 4px', color: 'var(--muted)', fontSize: '0.85rem' }}>
-                Ничего не записано
-              </div>
-            )}
           </div>
         )
       })}
@@ -450,6 +466,17 @@ export function FoodScreen() {
         )}
       </section>
 
+      <button
+        type="button"
+        className="secondary"
+        style={{ width: '100%', marginTop: 14, marginBottom: 8 }}
+        onClick={() => setStatsOpen(true)}
+      >
+        Статистика по дням
+      </button>
+
+      {statsOpen && <NutritionStatsSheet store={store} onClose={() => setStatsOpen(false)} />}
+
       {open && (
         <div
           className="sheet-bg"
@@ -460,9 +487,7 @@ export function FoodScreen() {
           <div className="sheet" onClick={(e) => e.stopPropagation()}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <h2>Еда</h2>
-              <button type="button" className="ghost" onClick={closeAll}>
-                Закрыть
-              </button>
+              <CloseButton onClick={closeAll} />
             </div>
 
             <div className="chips">
@@ -487,7 +512,7 @@ export function FoodScreen() {
             />
 
             {myFoods.length > 0 && (
-              <div style={{ marginTop: 10 }}>
+              <div style={{ marginBottom: 12 }}>
                 <div
                   style={{
                     fontSize: '0.75rem',
@@ -498,7 +523,7 @@ export function FoodScreen() {
                 >
                   {q.trim() ? 'Мои совпадения' : 'Мои блюда'}
                 </div>
-                <div className="preset-grid">
+                <div className="preset-grid" style={{ marginTop: 0 }}>
                   {myFoods.map((m) => (
                     <button
                       key={m.name}
@@ -509,8 +534,13 @@ export function FoodScreen() {
                     >
                       <strong>{m.name}</strong>
                       <span>
-                        {m.portion} · {Math.round(m.macros.kcal)} ккал
-                        {m.count > 1 ? ` · ×${m.count}` : ''}
+                        <span className="portion-chip" style={{ marginRight: 6 }}>
+                          {m.portion}
+                          {m.count > 1 ? ` · ×${m.count}` : ''}
+                        </span>
+                        <span className="macro-tag macro-tag-kcal">
+                          <span className="tnum">{Math.round(m.macros.kcal)}</span> ккал
+                        </span>
                       </span>
                     </button>
                   ))}
@@ -518,12 +548,17 @@ export function FoodScreen() {
               </div>
             )}
 
-            <div className="preset-grid" style={{ marginTop: myFoods.length ? 12 : 0 }}>
+            <div className="preset-grid" style={{ marginTop: 0 }}>
               {presets.map((p) => (
                 <button key={p.id} type="button" className="preset" onClick={() => apply(p.id)}>
                   <strong>{p.name}</strong>
                   <span>
-                    {p.portion} · {p.kcal} ккал
+                    <span className="portion-chip" style={{ marginRight: 6 }}>
+                      {p.portion}
+                    </span>
+                    <span className="macro-tag macro-tag-kcal">
+                      <span className="tnum">{p.kcal}</span> ккал
+                    </span>
                   </span>
                 </button>
               ))}
@@ -561,9 +596,7 @@ export function FoodScreen() {
                 ← Назад
               </button>
               <h2 style={{ margin: 0, fontSize: '1.15rem' }}>{name.trim() || 'Порция'}</h2>
-              <button type="button" className="ghost" onClick={closeAll}>
-                ✕
-              </button>
+              <CloseButton onClick={closeAll} />
             </div>
 
             <div className="chips" style={{ marginTop: 8 }}>
@@ -666,20 +699,36 @@ export function FoodScreen() {
                 }}
               >
                 <div>
-                  <div style={{ fontSize: '0.68rem', color: 'var(--muted)' }}>ККАЛ</div>
-                  <strong className="tnum">{displayMacros.kcal}</strong>
+                  <div className="macro-preview-label-kcal" style={{ fontSize: '0.68rem' }}>
+                    ККАЛ
+                  </div>
+                  <strong className="tnum" style={{ color: '#f0b429' }}>
+                    {displayMacros.kcal}
+                  </strong>
                 </div>
                 <div>
-                  <div style={{ fontSize: '0.68rem', color: 'var(--muted)' }}>Б</div>
-                  <strong className="tnum">{displayMacros.protein}</strong>
+                  <div className="macro-preview-label-p" style={{ fontSize: '0.68rem' }}>
+                    Б
+                  </div>
+                  <strong className="tnum" style={{ color: '#3dd68c' }}>
+                    {displayMacros.protein}
+                  </strong>
                 </div>
                 <div>
-                  <div style={{ fontSize: '0.68rem', color: 'var(--muted)' }}>У</div>
-                  <strong className="tnum">{displayMacros.carbs}</strong>
+                  <div className="macro-preview-label-c" style={{ fontSize: '0.68rem' }}>
+                    У
+                  </div>
+                  <strong className="tnum" style={{ color: '#6ea8fe' }}>
+                    {displayMacros.carbs}
+                  </strong>
                 </div>
                 <div>
-                  <div style={{ fontSize: '0.68rem', color: 'var(--muted)' }}>Ж</div>
-                  <strong className="tnum">{displayMacros.fat}</strong>
+                  <div className="macro-preview-label-f" style={{ fontSize: '0.68rem' }}>
+                    Ж
+                  </div>
+                  <strong className="tnum" style={{ color: '#ff6b5a' }}>
+                    {displayMacros.fat}
+                  </strong>
                 </div>
               </div>
 

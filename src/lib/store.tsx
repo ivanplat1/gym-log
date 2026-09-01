@@ -141,7 +141,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     try {
       await apiLogout()
     } finally {
+      // остаёмся гостем: UI и localStorage, без синка на сервер
       setUsername(null)
+      setSyncError(null)
+      setSyncing(false)
     }
   }, [serverMode])
 

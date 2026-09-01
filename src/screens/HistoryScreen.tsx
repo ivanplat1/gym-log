@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useStore } from '../lib/store'
 import type { WorkoutSession } from '../lib/storage'
+import { formatLoggedSet, isBodyweightExercise } from '../lib/workoutFormat'
 
 function SessionDetail({
   session,
@@ -51,7 +52,10 @@ function SessionDetail({
               {ex.sets.length
                 ? ex.sets
                     .map((s) =>
-                      ex.timed ? `${s.durationSec ?? 0}с` : `${s.weight ?? 0}×${s.reps ?? 0}`,
+                      formatLoggedSet(s, {
+                        timed: ex.timed,
+                        bodyweight: ex.bodyweight ?? isBodyweightExercise(ex.exerciseId),
+                      }),
                     )
                     .join('  ·  ')
                 : 'нет подходов'}
