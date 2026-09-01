@@ -38,6 +38,26 @@ nginx -t && systemctl reload nginx
 
 Смена пароля: удали `/data/users.json` в volume (или осторожно `docker compose down -v`) и перезапусти с новым `AUTH_PASSWORD`.
 
+### Автодеплой (GitHub Actions)
+
+После merge в `main` VPS обновляется сам (workflow `.github/workflows/deploy-vps.yml`), **если** в репозитории заданы secrets:
+
+| Secret | Пример |
+|---|---|
+| `VPS_HOST` | `128.140.50.104` |
+| `VPS_USER` | `root` |
+| `VPS_SSH_KEY` | приватный ключ `ed25519` |
+
+Одноразово на сервере:
+
+```bash
+ssh-keygen -t ed25519 -f gym-log-deploy -N ""
+ssh root@128.140.50.104 "bash /opt/gym-log/deploy/setup-github-deploy.sh \"$(cat gym-log-deploy.pub)\""
+# приватный ключ: cat gym-log-deploy → GitHub Secret VPS_SSH_KEY
+```
+
+Ручной деплой (если нужен): `bash deploy/update-vps.sh` на VPS или кнопка **Run workflow** → Deploy VPS.
+
 ## GitHub Pages
 
 https://ivanplat1.github.io/gym-log/  
