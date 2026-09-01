@@ -82,7 +82,7 @@ export function Shell() {
           {loggedIn ? (
             <button
               type="button"
-              className="ghost"
+              className="ghost ghost--auth"
               style={{ padding: '4px 10px', marginLeft: 'auto' }}
               onClick={() => void logout()}
             >
@@ -91,7 +91,7 @@ export function Shell() {
           ) : serverMode ? (
             <button
               type="button"
-              className="ghost"
+              className="ghost ghost--auth"
               style={{ padding: '4px 10px', marginLeft: 'auto' }}
               onClick={() => setLoginOpen(true)}
             >

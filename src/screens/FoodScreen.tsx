@@ -86,7 +86,9 @@ export function FoodScreen() {
   const [name, setName] = useState('')
   const [q, setQ] = useState('')
   const foodSheetBgRef = useRef<HTMLDivElement>(null)
+  const burnSheetBgRef = useRef<HTMLDivElement>(null)
   useVisualViewportSheet(foodSheetBgRef)
+  useVisualViewportSheet(burnSheetBgRef)
 
   const openSheet = (slot?: MealSlot) => {
     setMeal(slot ?? mealByTime())
@@ -390,40 +392,50 @@ export function FoodScreen() {
       </button>
 
       {burnOpen && (
-        <div className="sheet-bg" role="dialog" aria-modal onClick={() => setBurnOpen(false)}>
-          <div className="sheet" onClick={(e) => e.stopPropagation()}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h2>Активные калории</h2>
-              <CloseButton onClick={() => setBurnOpen(false)} />
+        <div
+          ref={burnSheetBgRef}
+          className="sheet-bg"
+          role="dialog"
+          aria-modal
+          onClick={() => setBurnOpen(false)}
+        >
+          <div className="sheet sheet--picker" onClick={(e) => e.stopPropagation()}>
+            <div className="sheet-picker-head">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <h2>Активные калории</h2>
+                <CloseButton onClick={() => setBurnOpen(false)} />
+              </div>
+              <p style={{ margin: '8px 0 0', color: 'var(--muted)', fontSize: '0.85rem' }}>
+                Сожжённые ккал за сегодня (ходьба, быт, Apple Watch — что не попало в кардио в зале).
+              </p>
             </div>
-            <p style={{ margin: '8px 0 0', color: 'var(--muted)', fontSize: '0.85rem' }}>
-              Сожжённые ккал за сегодня (ходьба, быт, Apple Watch — что не попало в кардио в зале).
-            </p>
-            <div className="field" style={{ marginTop: 14 }}>
-              <label>Ккал</label>
-              <input
-                type="number"
-                min={0}
-                inputMode="numeric"
-                value={burnText}
-                onChange={(e) => setBurnText(e.target.value)}
-                placeholder="350"
-                autoFocus
-              />
-            </div>
-            <div className="btn-row" style={{ marginTop: 14 }}>
-              <button
-                type="button"
-                className="primary"
-                style={{ width: '100%' }}
-                onClick={() => {
-                  const kcal = Number(burnText.replace(',', '.')) || 0
-                  setStore((s) => setManualBurnKcal(s, date, kcal))
-                  setBurnOpen(false)
-                }}
-              >
-                Сохранить
-              </button>
+            <div className="sheet-picker-foot">
+              <div className="field">
+                <label>Ккал</label>
+                <input
+                  type="number"
+                  min={0}
+                  inputMode="numeric"
+                  value={burnText}
+                  onChange={(e) => setBurnText(e.target.value)}
+                  placeholder="350"
+                  autoFocus
+                />
+              </div>
+              <div className="btn-row" style={{ marginTop: 14 }}>
+                <button
+                  type="button"
+                  className="primary"
+                  style={{ width: '100%' }}
+                  onClick={() => {
+                    const kcal = Number(burnText.replace(',', '.')) || 0
+                    setStore((s) => setManualBurnKcal(s, date, kcal))
+                    setBurnOpen(false)
+                  }}
+                >
+                  Сохранить
+                </button>
+              </div>
             </div>
           </div>
         </div>
