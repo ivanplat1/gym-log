@@ -330,7 +330,7 @@ function SessionDetail({
                           onChange={setReps}
                         />
                       </div>
-                      <div className="btn-row" style={{ marginTop: 8 }}>
+                      <div className="btn-row btn-row--split" style={{ marginTop: 8 }}>
                         <button
                           type="button"
                           className="secondary"
@@ -365,7 +365,7 @@ function SessionDetail({
 
       {editing && (
         <>
-          <div className="btn-row">
+          <div className="btn-row btn-row--split">
             <button type="button" className="secondary" onClick={() => setPicker(true)}>
               + Упражнение
             </button>

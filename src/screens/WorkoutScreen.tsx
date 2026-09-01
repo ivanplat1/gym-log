@@ -214,8 +214,8 @@ export function WorkoutScreen() {
           ))}
         </div>
 
-        <div className="btn-row">
-          <button type="button" className="primary" style={{ width: '100%' }} onClick={start}>
+        <div className="btn-row btn-row--split">
+          <button type="button" className="primary" onClick={start}>
             Начать тренировку
           </button>
         </div>
@@ -329,7 +329,7 @@ export function WorkoutScreen() {
 
       {!session.exercises.length && <div className="empty">Добавь упражнение из списка</div>}
 
-      <div className="btn-row">
+      <div className="btn-row btn-row--split">
         <button type="button" className="secondary" onClick={() => setPicker(true)}>
           + Упражнение
         </button>
