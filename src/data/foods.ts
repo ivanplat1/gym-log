@@ -12043,6 +12043,24 @@ export const FOOD_PRESETS: FoodPreset[] = [
     "protein": 16,
     "carbs": 38,
     "fat": 14
+  },
+  {
+    "id": "julienne-chicken",
+    "name": "Жюльен с курицей",
+    "portion": "150 г",
+    "kcal": 240,
+    "protein": 18,
+    "carbs": 6,
+    "fat": 16
+  },
+  {
+    "id": "julienne-mushroom",
+    "name": "Жюльен с грибами",
+    "portion": "150 г",
+    "kcal": 190,
+    "protein": 7,
+    "carbs": 5,
+    "fat": 15
   }
 ]
 
