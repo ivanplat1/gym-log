@@ -263,12 +263,16 @@ export function FoodScreen() {
       </header>
 
       <div className="macro-card glass">
-        <div className="rings">
-          <svg viewBox="0 0 88 88" aria-hidden>
-            <circle cx="44" cy="44" r="36" fill="none" stroke="#2a2a2a" strokeWidth="7" />
-            <Ring value={totals.kcal} max={goalsToday.kcal} color="#f0b429" cx={44} cy={44} r={36} stroke={7} />
-            <circle cx="44" cy="44" r="26" fill="none" stroke="#2a2a2a" strokeWidth="6" />
-            <Ring value={totals.protein} max={goalsToday.protein} color="#3dd68c" cx={44} cy={44} r={26} stroke={6} />
+        <div className="rings rings--quad">
+          <svg viewBox="0 0 96 96" aria-hidden>
+            <circle cx="48" cy="48" r="42" fill="none" stroke="#2a2a2a" strokeWidth="3" />
+            <Ring value={totals.kcal} max={goalsToday.kcal} color="#f0b429" cx={48} cy={48} r={42} stroke={3} />
+            <circle cx="48" cy="48" r="35" fill="none" stroke="#2a2a2a" strokeWidth="3" />
+            <Ring value={totals.protein} max={goalsToday.protein} color="#3dd68c" cx={48} cy={48} r={35} stroke={3} />
+            <circle cx="48" cy="48" r="28" fill="none" stroke="#2a2a2a" strokeWidth="3" />
+            <Ring value={totals.carbs} max={goalsToday.carbs} color="#6ea8fe" cx={48} cy={48} r={28} stroke={3} />
+            <circle cx="48" cy="48" r="21" fill="none" stroke="#2a2a2a" strokeWidth="3" />
+            <Ring value={totals.fat} max={goalsToday.fat} color="#ff6b5a" cx={48} cy={48} r={21} stroke={3} />
           </svg>
           <div className="center">
             <b className="tnum">{Math.round(totals.kcal)}</b>
@@ -294,6 +298,24 @@ export function FoodScreen() {
             </span>
             <strong className="tnum">
               {Math.round(totals.protein)} / {goalsToday.protein}г
+            </strong>
+          </div>
+          <div className="macro-line">
+            <span>
+              <i className="dot" style={{ background: '#6ea8fe' }} />
+              Углев.
+            </span>
+            <strong className="tnum">
+              {Math.round(totals.carbs)} / {goalsToday.carbs}г
+            </strong>
+          </div>
+          <div className="macro-line">
+            <span>
+              <i className="dot" style={{ background: '#ff6b5a' }} />
+              Жиры
+            </span>
+            <strong className="tnum">
+              {Math.round(totals.fat)} / {goalsToday.fat}г
             </strong>
           </div>
           <p style={{ margin: '6px 0 0', color: 'var(--muted)', fontSize: '0.75rem' }}>
@@ -335,7 +357,7 @@ export function FoodScreen() {
       {(Object.keys(MEAL_LABELS) as MealSlot[]).map((slot) => {
         const items = today.filter((f) => f.meal === slot)
         const mealKcal = items.reduce((n, f) => n + f.kcal, 0)
-        const expanded = mealOpen[slot] ?? items.length > 0
+        const expanded = mealOpen[slot] ?? false
         return (
           <div key={slot} className="meal glass" style={{ marginTop: 12 }}>
             <button
@@ -392,6 +414,12 @@ export function FoodScreen() {
                         </span>
                         <span className="macro-tag macro-tag-p">
                           Б <span className="tnum">{f.protein}</span>
+                        </span>
+                        <span className="macro-tag macro-tag-c">
+                          У <span className="tnum">{f.carbs}</span>
+                        </span>
+                        <span className="macro-tag macro-tag-f">
+                          Ж <span className="tnum">{f.fat}</span>
                         </span>
                       </span>
                     </div>
@@ -452,11 +480,13 @@ export function FoodScreen() {
                 }}
               />
             </div>
-            <div className="span2" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8 }}>
+            <div className="span2" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
               {(
                 [
                   ['Ккал', goalsToday.kcal],
                   ['Б', goalsToday.protein],
+                  ['У', goalsToday.carbs],
+                  ['Ж', goalsToday.fat],
                 ] as const
               ).map(([label, value]) => (
                 <div key={label} style={{ textAlign: 'center' }}>
@@ -701,7 +731,7 @@ export function FoodScreen() {
                   padding: '12px 14px',
                   borderRadius: 14,
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(2, 1fr)',
+                  gridTemplateColumns: 'repeat(4, 1fr)',
                   gap: 8,
                   textAlign: 'center',
                 }}
@@ -722,6 +752,22 @@ export function FoodScreen() {
                     {displayMacros.protein}
                   </strong>
                 </div>
+                <div>
+                  <div className="macro-preview-label-c" style={{ fontSize: '0.68rem' }}>
+                    У
+                  </div>
+                  <strong className="tnum" style={{ color: '#6ea8fe' }}>
+                    {displayMacros.carbs}
+                  </strong>
+                </div>
+                <div>
+                  <div className="macro-preview-label-f" style={{ fontSize: '0.68rem' }}>
+                    Ж
+                  </div>
+                  <strong className="tnum" style={{ color: '#ff6b5a' }}>
+                    {displayMacros.fat}
+                  </strong>
+                </div>
               </div>
 
               {!manualMacros ? (
@@ -731,7 +777,7 @@ export function FoodScreen() {
                   style={{ gridColumn: '1 / -1' }}
                   onClick={enableManual}
                 >
-                  Править ккал / белок вручную
+                  Править ккал / БЖУ вручную
                 </button>
               ) : (
                 <>
@@ -742,6 +788,14 @@ export function FoodScreen() {
                   <div className="field">
                     <label>Белок</label>
                     <input type="number" value={protein} onChange={(e) => setProtein(e.target.value)} />
+                  </div>
+                  <div className="field">
+                    <label>Углеводы</label>
+                    <input type="number" value={carbs} onChange={(e) => setCarbs(e.target.value)} />
+                  </div>
+                  <div className="field">
+                    <label>Жиры</label>
+                    <input type="number" value={fat} onChange={(e) => setFat(e.target.value)} />
                   </div>
                 </>
               )}
