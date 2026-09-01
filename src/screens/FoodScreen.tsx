@@ -11,6 +11,7 @@ import {
   type ScaleMode,
 } from '../lib/foodPortion'
 import { effectiveGoals } from '../lib/nutritionGoals'
+import { cardioBurnForDay } from '../lib/cardio'
 import { suggestFoodMemory, type FoodMemoryItem } from '../lib/foodMemory'
 import { searchFoodPresets } from '../lib/foodSearch'
 import { useVisualViewportSheet } from '../lib/useVisualViewportSheet'
@@ -58,6 +59,18 @@ export function FoodScreen() {
   const totals = macrosForDay(store.foods, date)
   const today = store.foods.filter((f) => f.date === date)
   const goalsToday = effectiveGoals(store, date)
+  const cardioBurn = useMemo(
+    () =>
+      cardioBurnForDay(
+        store.sessions,
+        store.activeSession,
+        date,
+        store.profile.weightKg,
+        store.customExercises ?? [],
+      ),
+    [store.sessions, store.activeSession, store.profile.weightKg, store.customExercises, date],
+  )
+  const kcalBudget = goalsToday.kcal + cardioBurn
 
   const [goalsOpen, setGoalsOpen] = useState(false)
   const [statsOpen, setStatsOpen] = useState(false)
@@ -266,7 +279,7 @@ export function FoodScreen() {
         <div className="rings rings--quad">
           <svg viewBox="0 0 96 96" aria-hidden>
             <circle cx="48" cy="48" r="42" fill="none" stroke="#2a2a2a" strokeWidth="3" />
-            <Ring value={totals.kcal} max={goalsToday.kcal} color="#f0b429" cx={48} cy={48} r={42} stroke={3} />
+            <Ring value={totals.kcal} max={kcalBudget} color="#f0b429" cx={48} cy={48} r={42} stroke={3} />
             <circle cx="48" cy="48" r="35" fill="none" stroke="#2a2a2a" strokeWidth="3" />
             <Ring value={totals.protein} max={goalsToday.protein} color="#3dd68c" cx={48} cy={48} r={35} stroke={3} />
             <circle cx="48" cy="48" r="28" fill="none" stroke="#2a2a2a" strokeWidth="3" />
@@ -277,7 +290,7 @@ export function FoodScreen() {
           <div className="center">
             <b className="tnum">{Math.round(totals.kcal)}</b>
             <span className="tnum" style={{ fontSize: '0.65rem', opacity: 0.75 }}>
-              / {goalsToday.kcal}
+              / {kcalBudget}
             </span>
           </div>
         </div>
@@ -288,9 +301,18 @@ export function FoodScreen() {
               Ккал
             </span>
             <strong className="tnum">
-              {Math.round(totals.kcal)} / {goalsToday.kcal}
+              {Math.round(totals.kcal)} / {kcalBudget}
             </strong>
           </div>
+          {cardioBurn > 0 && (
+            <p style={{ margin: 0, fontSize: '0.78rem', color: 'var(--muted)' }}>
+              Цель {goalsToday.kcal} +{' '}
+              <span className="tnum" style={{ color: '#ff9f43' }}>
+                {cardioBurn}
+              </span>{' '}
+              кардио
+            </p>
+          )}
           <div className="macro-line">
             <span>
               <i className="dot" style={{ background: '#3dd68c' }} />
@@ -320,8 +342,14 @@ export function FoodScreen() {
           </div>
           <p style={{ margin: '6px 0 0', color: 'var(--muted)', fontSize: '0.75rem' }}>
             {goalsToday.trainingDay
-              ? `Тренировка · цель ${goalsToday.kcal} ккал`
-              : `Отдых · цель ${goalsToday.kcal} ккал`}
+              ? `Тренировка · бюджет ${kcalBudget} ккал`
+              : `Отдых · бюджет ${kcalBudget} ккал`}
+            {cardioBurn > 0 && (
+              <>
+                {' '}
+                · сожжено кардио ~<span className="tnum">{cardioBurn}</span>
+              </>
+            )}
           </p>
         </div>
       </div>

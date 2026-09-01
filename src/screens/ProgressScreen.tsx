@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { isCardioExercise } from '../lib/cardio'
 import { useStore } from '../lib/store'
 import type { ExerciseTrackKind } from '../lib/workoutFormat'
 import {
@@ -156,21 +157,25 @@ function LineChart({
   )
 }
 
-function metricValue(point: ExercisePoint, metric: Metric): number {
+function metricValue(point: ExercisePoint, metric: Metric, exerciseId?: string): number {
   if (metric === 'volume') return point.volume
   if (metric === 'e1rm') return point.e1rm
-  return primaryMetricValue(point)
+  const v = primaryMetricValue(point)
+  if (point.kind === 'timed' && exerciseId && isCardioExercise(exerciseId)) {
+    return Math.round(v / 60)
+  }
+  return v
 }
 
-function metricUnit(kind: ExerciseTrackKind, metric: Metric): string {
+function metricUnit(kind: ExerciseTrackKind, metric: Metric, exerciseId?: string): string {
   if (metric === 'volume') return kind === 'reps' ? ' повт' : kind === 'timed' ? ' с' : ''
   if (metric === 'e1rm') return ''
-  if (kind === 'timed') return 'с'
+  if (kind === 'timed') return exerciseId && isCardioExercise(exerciseId) ? ' мин' : 'с'
   if (kind === 'reps') return ''
   return ''
 }
 
-function metricLabels(kind: ExerciseTrackKind): { key: Metric; label: string }[] {
+function metricLabels(kind: ExerciseTrackKind, exerciseId?: string): { key: Metric; label: string }[] {
   if (kind === 'reps') {
     return [
       { key: 'primary', label: 'Макс. повторы' },
@@ -179,7 +184,10 @@ function metricLabels(kind: ExerciseTrackKind): { key: Metric; label: string }[]
   }
   if (kind === 'timed') {
     return [
-      { key: 'primary', label: 'Макс. время' },
+      {
+        key: 'primary',
+        label: exerciseId && isCardioExercise(exerciseId) ? 'Макс. время (мин)' : 'Макс. время',
+      },
     ]
   }
   return [
@@ -191,7 +199,10 @@ function metricLabels(kind: ExerciseTrackKind): { key: Metric; label: string }[]
 
 function bestLabel(ex: TrackedExercise): string {
   if (ex.kind === 'reps') return `лучший ${ex.bestBest} повт.`
-  if (ex.kind === 'timed') return `лучший ${ex.bestBest} с`
+  if (ex.kind === 'timed') {
+    if (isCardioExercise(ex.exerciseId)) return `лучший ${Math.round(ex.bestBest / 60)} мин`
+    return `лучший ${ex.bestBest} с`
+  }
   return `лучший ${ex.bestBest} кг`
 }
 
@@ -216,11 +227,11 @@ export function ProgressScreen() {
     setMetric('primary')
   }, [activeId])
 
-  const exValues = exPoints.map((p) => metricValue(p, metric))
+  const exValues = exPoints.map((p) => metricValue(p, metric, activeId))
   const delta =
     exValues.length >= 2 ? Math.round((exValues[exValues.length - 1] - exValues[0]) * 10) / 10 : null
-  const unit = metricUnit(activeKind, metric)
-  const chips = metricLabels(activeKind)
+  const unit = metricUnit(activeKind, metric, activeId)
+  const chips = metricLabels(activeKind, activeId)
 
   return (
     <>
