@@ -725,6 +725,11 @@ select {
   overscroll-behavior: contain;
 }
 
+.sheet-picker-foot {
+  flex: 0 0 auto;
+  padding-top: 8px;
+}
+
 .sheet h2 {
   margin: 0;
   font-family: var(--font-display);
