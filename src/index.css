@@ -634,6 +634,36 @@ select {
   animation: slide-up 0.28s ease;
 }
 
+.sheet--picker {
+  display: flex;
+  flex-direction: column;
+  height: min(88dvh, 100%);
+  max-height: 100%;
+  overflow: hidden;
+  padding-bottom: calc(12px + var(--safe-b));
+}
+
+.sheet-picker-head {
+  flex: 0 0 auto;
+}
+
+.sheet-picker-head .search {
+  margin-top: 12px;
+}
+
+.sheet-picker-head .chips {
+  margin-bottom: 0;
+}
+
+.sheet-picker-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  margin-top: 8px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
 .sheet h2 {
   margin: 0;
   font-family: var(--font-display);
