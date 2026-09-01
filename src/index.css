@@ -151,7 +151,6 @@ select {
   font-weight: 800;
   letter-spacing: -0.04em;
   font-size: 0.82rem;
-  text-transform: uppercase;
   color: var(--muted);
 }
 
