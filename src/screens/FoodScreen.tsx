@@ -7,6 +7,7 @@ import { loadFoodPresets } from '../data/loadFoodPresets'
 import { useStore } from '../lib/store'
 import {
   formatAmountLabel,
+  gramPortionStep,
   parsePortionCount,
   parsePortionGrams,
   resolveScaleMode,
@@ -173,6 +174,7 @@ export function FoodScreen() {
   }, [])
 
   const amount = Number(amountText.replace(',', '.')) || 0
+  const gramStep = scaleMode === 'grams' ? gramPortionStep(baseAmount) : 1
 
   const presets = useMemo(() => {
     if (!foodPresets.length) return []
@@ -994,9 +996,9 @@ export function FoodScreen() {
                   <button
                     type="button"
                     className="glass-btn"
-                    aria-label={scaleMode === 'grams' ? 'Минус 10 г' : 'Минус 1'}
+                    aria-label={scaleMode === 'grams' ? `Минус ${gramStep} г` : 'Минус 1'}
                     style={{ width: 48, height: 48, borderRadius: 999, fontSize: '1.35rem' }}
-                    onClick={() => bump(scaleMode === 'grams' ? -10 : -1)}
+                    onClick={() => bump(scaleMode === 'grams' ? -gramStep : -1)}
                   >
                     −
                   </button>
@@ -1031,9 +1033,9 @@ export function FoodScreen() {
                   <button
                     type="button"
                     className="glass-btn"
-                    aria-label={scaleMode === 'grams' ? 'Плюс 10 г' : 'Плюс 1'}
+                    aria-label={scaleMode === 'grams' ? `Плюс ${gramStep} г` : 'Плюс 1'}
                     style={{ width: 48, height: 48, borderRadius: 999, fontSize: '1.35rem' }}
-                    onClick={() => bump(scaleMode === 'grams' ? 10 : 1)}
+                    onClick={() => bump(scaleMode === 'grams' ? gramStep : 1)}
                   >
                     +
                   </button>
