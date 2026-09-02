@@ -72,3 +72,8 @@ export function formatAmountLabel(mode: ScaleMode, amount: number): string {
   const rounded = Math.round(amount * 100) / 100
   return `${rounded} шт`
 }
+
+/** Шаг +/- для граммов: 100, если стандартная порция > 400 г/мл */
+export function gramPortionStep(baseAmount: number): number {
+  return baseAmount > 400 ? 100 : 10
+}
