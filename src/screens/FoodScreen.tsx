@@ -575,7 +575,7 @@ export function FoodScreen() {
                 {MEAL_LABELS[slot]}
                 {!expanded && items.length > 0 && (
                   <span className="meta tnum" style={{ marginLeft: 8, fontSize: '0.78rem', fontWeight: 600 }}>
-                    {items.length} · {Math.round(mealKcal)} ккал
+                    {Math.round(mealKcal)} ккал
                   </span>
                 )}
               </span>
