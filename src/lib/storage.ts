@@ -270,6 +270,27 @@ export function todayKey(d = new Date()): string {
   return `${y}-${m}-${day}`
 }
 
+/** Сдвиг календарного ключа YYYY-MM-DD (без учёта rollover) */
+export function shiftDayKey(date: string, delta: number): string {
+  const d = new Date(`${date}T12:00:00`)
+  d.setDate(d.getDate() + delta)
+  const y = d.getFullYear()
+  const m = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return `${y}-${m}-${day}`
+}
+
+export function formatDayLabel(date: string, today = todayKey()): string {
+  const yesterday = shiftDayKey(today, -1)
+  if (date === today) return 'Сегодня'
+  if (date === yesterday) return 'Вчера'
+  return new Date(`${date}T12:00:00`).toLocaleDateString('ru-RU', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+  })
+}
+
 export function emptySet(timed: boolean): LoggedSet {
   return {
     weight: null,

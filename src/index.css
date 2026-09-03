@@ -1034,6 +1034,10 @@ select {
   margin: 14px 0 12px;
 }
 
+.food-day-nav {
+  margin: 0 0 12px;
+}
+
 .nutrition-day-nav .ghost {
   width: 42px;
   height: 42px;

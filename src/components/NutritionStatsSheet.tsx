@@ -3,26 +3,7 @@ import { CloseButton } from './IconButtons'
 import { effectiveGoals } from '../lib/nutritionGoals'
 import { weightDelta, weightSeries } from '../lib/weightStats'
 import { formatBodyWeightKg } from '../lib/bodyWeight'
-import { macrosForDay, todayKey, weightKgForDate, type Store } from '../lib/storage'
-
-function shiftDate(date: string, delta: number): string {
-  const d = new Date(`${date}T12:00:00`)
-  d.setDate(d.getDate() + delta)
-  return todayKey(d)
-}
-
-function formatDayLabel(date: string): string {
-  const d = new Date(`${date}T12:00:00`)
-  const today = todayKey()
-  const yesterday = shiftDate(today, -1)
-  if (date === today) return 'Сегодня'
-  if (date === yesterday) return 'Вчера'
-  return d.toLocaleDateString('ru-RU', {
-    weekday: 'short',
-    day: 'numeric',
-    month: 'short',
-  })
-}
+import { formatDayLabel, macrosForDay, shiftDayKey, todayKey, weightKgForDate, type Store } from '../lib/storage'
 
 function deltaLabel(eaten: number, goal: number, unit = ''): { text: string; tone: 'ok' | 'over' | 'under' | 'empty' } {
   if (goal <= 0) return { text: '—', tone: 'empty' }
@@ -149,7 +130,7 @@ export function NutritionStatsSheet({
 
   const week = useMemo(() => {
     return Array.from({ length: 7 }, (_, i) => {
-      const d = shiftDate(today, -6 + i)
+      const d = shiftDayKey(today, -6 + i)
       const t = macrosForDay(store.foods, d)
       const g = effectiveGoals(store, d)
       return { date: d, eaten: t.kcal, goal: g.kcal, delta: Math.round(t.kcal - g.kcal) }
@@ -165,7 +146,7 @@ export function NutritionStatsSheet({
         </div>
 
         <div className="nutrition-day-nav">
-          <button type="button" className="ghost" onClick={() => setDate((d) => shiftDate(d, -1))}>
+          <button type="button" className="ghost" onClick={() => setDate((d) => shiftDayKey(d, -1))}>
             ‹
           </button>
           <div className="nutrition-day-label">
@@ -176,7 +157,7 @@ export function NutritionStatsSheet({
             type="button"
             className="ghost"
             disabled={date >= today}
-            onClick={() => setDate((d) => shiftDate(d, 1))}
+            onClick={() => setDate((d) => shiftDayKey(d, 1))}
           >
             ›
           </button>
