@@ -21,7 +21,7 @@ import { suggestFoodMemory, type FoodMemoryItem } from '../lib/foodMemory'
 import { searchFoodPresets } from '../lib/foodSearch'
 import { useVisualViewportSheet } from '../lib/useVisualViewportSheet'
 import { useInputEndCursor } from '../lib/inputEndCursor'
-import { addFoodEntry, logWeight, macrosForDay, setManualBurnKcal, todayKey, updateFoodEntry, weightKgForDate, type FoodEntry } from '../lib/storage'
+import { addFoodEntry, formatDayLabel, logWeight, macrosForDay, setManualBurnKcal, shiftDayKey, todayKey, updateFoodEntry, weightKgForDate, type FoodEntry } from '../lib/storage'
 import {
   bodyWeightFromParts,
   formatBodyWeightGramsInput,
@@ -67,9 +67,11 @@ const GRAM_QUICK = [50, 100, 150, 200, 250]
 
 export function FoodScreen() {
   const { store, setStore } = useStore()
-  const date = todayKey()
+  const today = todayKey()
+  const [date, setDate] = useState(today)
+  const isToday = date === today
   const totals = macrosForDay(store.foods, date)
-  const today = store.foods.filter((f) => f.date === date)
+  const dayFoods = store.foods.filter((f) => f.date === date)
   const goalsToday = effectiveGoals(store, date)
   const weightToday = weightKgForDate(store.weightHistory ?? [], store.profile, date)
   const cardioBurn = useMemo(
@@ -367,8 +369,30 @@ export function FoodScreen() {
       <header className="page-head">
         <Brand />
         <h1>Питание</h1>
-        <p>Дневник на сегодня — пресет + граммовка, ккал пересчитаются.</p>
+        <p>
+          {isToday
+            ? 'Дневник на сегодня — пресет + граммовка, ккал пересчитаются.'
+            : `Дневник за ${formatDayLabel(date, today)} — можно править прошлые дни.`}
+        </p>
       </header>
+
+      <div className="nutrition-day-nav food-day-nav">
+        <button type="button" className="ghost" onClick={() => setDate((d) => shiftDayKey(d, -1))}>
+          ‹
+        </button>
+        <div className="nutrition-day-label">
+          <strong>{formatDayLabel(date, today)}</strong>
+          <span className="tnum">{date}</span>
+        </div>
+        <button
+          type="button"
+          className="ghost"
+          disabled={date >= today}
+          onClick={() => setDate((d) => shiftDayKey(d, 1))}
+        >
+          ›
+        </button>
+      </div>
 
       <div className="macro-card glass">
         <div className="rings rings--quad">
@@ -496,7 +520,8 @@ export function FoodScreen() {
                 <CloseButton onClick={() => setBurnOpen(false)} />
               </div>
               <p style={{ margin: '8px 0 0', color: 'var(--muted)', fontSize: '0.85rem' }}>
-                Сожжённые ккал за сегодня (ходьба, быт, Apple Watch — что не попало в кардио в зале).
+                Сожжённые ккал за {isToday ? 'сегодня' : formatDayLabel(date, today)} (ходьба, быт, Apple Watch — что
+                не попало в кардио в зале).
               </p>
             </div>
             <div className="sheet-picker-foot">
@@ -558,7 +583,7 @@ export function FoodScreen() {
       )}
 
       {(Object.keys(MEAL_LABELS) as MealSlot[]).map((slot) => {
-        const items = today.filter((f) => f.meal === slot)
+        const items = dayFoods.filter((f) => f.meal === slot)
         const mealKcal = items.reduce((n, f) => n + f.kcal, 0)
         const expanded = mealOpen[slot] ?? false
         return (
