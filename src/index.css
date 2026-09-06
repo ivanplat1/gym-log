@@ -35,16 +35,18 @@
   На html — тот же тайл как fallback под overscroll.
 */
 html {
-  background-color: #1c1812;
+  /* цвет как низ градиента — при overscroll снизу нет «обрыва» */
+  background-color: #0c0909;
   background-image:
     repeating-linear-gradient(
       125deg,
       rgb(255 255 255 / 0.045) 0 1px,
       transparent 1px 8px
     ),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
-  background-size: auto, 160px 160px;
-  background-repeat: repeat;
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E"),
+    linear-gradient(165deg, #1c1812 0%, #10140f 45%, #0c0909 100%);
+  background-size: auto, 160px 160px, 100% 100%;
+  background-repeat: repeat, repeat, no-repeat;
 }
 
 html,
