@@ -30,21 +30,21 @@
 }
 
 /*
-  Один рельеф на весь экран: слой только на body::before (fixed).
-  Раньше atmosphere был и на html, и на ::before — в контенте
-  градиенты удваивались, а в status bar оставался плоский #1c1812.
+  Один рельеф на весь экран: .app-atmosphere ровно по viewport.
+  Нельзя раздувать слой и cover — якоря градиентов уезжают вверх,
+  и у края остаётся плоский #1c1812 без «рельефа».
 */
 :root {
   --atmosphere:
-    radial-gradient(120% 55% at 50% -8%, rgb(240 180 41 / 0.42), transparent 52%),
-    radial-gradient(80% 70% at -5% -5%, rgb(240 180 41 / 0.55), transparent 60%),
-    radial-gradient(75% 65% at 105% -5%, rgb(61 214 140 / 0.42), transparent 58%),
-    radial-gradient(55% 48% at 85% 105%, rgb(255 107 90 / 0.3), transparent 58%),
+    radial-gradient(100% 48% at 50% 0%, rgb(240 180 41 / 0.4), transparent 58%),
+    radial-gradient(72% 58% at 0% 0%, rgb(240 180 41 / 0.52), transparent 60%),
+    radial-gradient(68% 54% at 100% 0%, rgb(61 214 140 / 0.4), transparent 58%),
+    radial-gradient(55% 48% at 85% 100%, rgb(255 107 90 / 0.3), transparent 58%),
     radial-gradient(40% 35% at 50% 42%, rgb(255 255 255 / 0.045), transparent 70%),
     repeating-linear-gradient(
       125deg,
-      rgb(255 255 255 / 0.045) 0 1px,
-      transparent 1px 10px
+      rgb(255 255 255 / 0.05) 0 1px,
+      transparent 1px 9px
     ),
     linear-gradient(165deg, #1c1812 0%, #10140f 45%, #0c0909 100%);
 }
@@ -57,7 +57,7 @@ body,
 }
 
 html {
-  /* только fallback под overscroll / theme-color; рельеф — на ::before */
+  /* overscroll / theme-color fallback — без второго atmosphere */
   background-color: #1c1812;
   background-image: none;
 }
@@ -79,28 +79,25 @@ body {
   overflow-x: clip;
 }
 
-/* единый рельеф: fixed DOM-слой, уходит под notch / status bar / overscroll */
+/* единый рельеф: ровно viewport (в т.ч. под translucent status bar) */
 .app-atmosphere {
   position: fixed;
+  inset: 0;
   z-index: 0;
   pointer-events: none;
-  top: calc(-1 * env(safe-area-inset-top, 0px) - 12vmax);
-  right: -12vmax;
-  bottom: calc(-1 * env(safe-area-inset-bottom, 0px) - 12vmax);
-  left: -12vmax;
   background-color: #1c1812;
   background-image: var(--atmosphere);
   background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center top;
+  background-size: 100% 100%;
+  background-position: 0 0;
 }
 
 .app-atmosphere::after {
   content: '';
   position: absolute;
   inset: 0;
-  opacity: 0.55;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  opacity: 0.7;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.65'/%3E%3C/svg%3E");
   mix-blend-mode: soft-light;
 }
 
