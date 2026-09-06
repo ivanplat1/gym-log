@@ -1,8 +1,16 @@
 import { useEffect, type RefObject } from 'react'
 
-/** Подгоняет fixed-оверлей под видимую область, когда открыта клавиатура на телефоне. */
-export function useVisualViewportSheet(ref: RefObject<HTMLElement | null>) {
+/**
+ * Подгоняет fixed-оверлей под visualViewport (клавиатура на телефоне).
+ * `active` обязателен: пока sheet не в DOM, ref.current === null,
+ * и эффект без `active` больше не перезапустится.
+ */
+export function useVisualViewportSheet(
+  ref: RefObject<HTMLElement | null>,
+  active = true,
+) {
   useEffect(() => {
+    if (!active) return
     const el = ref.current
     const vv = window.visualViewport
     if (!el || !vv) return
@@ -29,5 +37,5 @@ export function useVisualViewportSheet(ref: RefObject<HTMLElement | null>) {
       el.style.removeProperty('bottom')
       el.style.removeProperty('right')
     }
-  }, [ref])
+  }, [ref, active])
 }

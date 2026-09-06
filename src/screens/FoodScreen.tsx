@@ -110,9 +110,11 @@ export function FoodScreen() {
   const [name, setName] = useState('')
   const [q, setQ] = useState('')
   const foodSheetBgRef = useRef<HTMLDivElement>(null)
+  const detailSheetBgRef = useRef<HTMLDivElement>(null)
   const burnSheetBgRef = useRef<HTMLDivElement>(null)
-  useVisualViewportSheet(foodSheetBgRef)
-  useVisualViewportSheet(burnSheetBgRef)
+  useVisualViewportSheet(foodSheetBgRef, open)
+  useVisualViewportSheet(detailSheetBgRef, detailOpen)
+  useVisualViewportSheet(burnSheetBgRef, burnOpen)
 
   const openSheet = (slot?: MealSlot) => {
     setEditingId(null)
@@ -976,12 +978,13 @@ export function FoodScreen() {
 
       {detailOpen && (
         <div
+          ref={detailSheetBgRef}
           className="sheet-bg sheet-bg-stack"
           role="dialog"
           aria-modal
           onClick={() => setDetailOpen(false)}
         >
-          <div className="sheet" onClick={(e) => e.stopPropagation()}>
+          <div className="sheet sheet--detail" onClick={(e) => e.stopPropagation()}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               {editingId ? (
                 <span style={{ width: 72 }} aria-hidden />
