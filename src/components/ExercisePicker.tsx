@@ -6,6 +6,7 @@ import {
   type MuscleGroup,
 } from '../data/exercises'
 import { useVisualViewportSheet } from '../lib/useVisualViewportSheet'
+import { useBodyScrollLock } from '../lib/useBodyScrollLock'
 import { CloseButton, PlusButton } from './IconButtons'
 
 export function ExercisePicker({
@@ -24,7 +25,8 @@ export function ExercisePicker({
   const [q, setQ] = useState('')
   const [group, setGroup] = useState<MuscleGroup | 'all'>('all')
   const sheetBgRef = useRef<HTMLDivElement>(null)
-  useVisualViewportSheet(sheetBgRef)
+  useVisualViewportSheet(sheetBgRef, true)
+  useBodyScrollLock(true)
 
   const list = useMemo(
     () => searchExercises(q, group, customExercises).filter((e) => !excludeIds.includes(e.id)),

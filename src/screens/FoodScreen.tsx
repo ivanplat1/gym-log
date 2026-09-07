@@ -20,6 +20,7 @@ import { cardioBurnForDay } from '../lib/cardio'
 import { suggestFoodMemory, type FoodMemoryItem } from '../lib/foodMemory'
 import { searchFoodPresets } from '../lib/foodSearch'
 import { useVisualViewportSheet } from '../lib/useVisualViewportSheet'
+import { useBodyScrollLock } from '../lib/useBodyScrollLock'
 import { useInputEndCursor } from '../lib/inputEndCursor'
 import { addFoodEntry, formatDayLabel, logWeight, macrosForDay, setManualBurnKcal, shiftDayKey, todayKey, updateFoodEntry, weightKgForDate, type FoodEntry } from '../lib/storage'
 import {
@@ -115,6 +116,7 @@ export function FoodScreen() {
   useVisualViewportSheet(foodSheetBgRef, open)
   useVisualViewportSheet(detailSheetBgRef, detailOpen)
   useVisualViewportSheet(burnSheetBgRef, burnOpen)
+  useBodyScrollLock(open || detailOpen || burnOpen || statsOpen)
 
   const openSheet = (slot?: MealSlot) => {
     setEditingId(null)

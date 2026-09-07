@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { CloseButton } from './IconButtons'
+import { useBodyScrollLock } from '../lib/useBodyScrollLock'
 import { effectiveGoals } from '../lib/nutritionGoals'
 import { weightDelta, weightSeries } from '../lib/weightStats'
 import { formatBodyWeightKg } from '../lib/bodyWeight'
@@ -116,6 +117,7 @@ export function NutritionStatsSheet({
   store: Store
   onClose: () => void
 }) {
+  useBodyScrollLock(true)
   const [date, setDate] = useState(() => todayKey())
   const today = todayKey()
   const totals = useMemo(() => macrosForDay(store.foods, date), [store.foods, date])
