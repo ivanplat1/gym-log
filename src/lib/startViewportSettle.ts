@@ -1,7 +1,6 @@
 /**
  * iOS: fixed ICB часто короче экрана на safe-area-inset-top —
- * под body торчит html (тёмно-фиолетовый в debug).
- * Пишем --frame-bleed-b и растягиваем body вниз.
+ * под body торчит фон html. Растягиваем html/body на innerH+safeT.
  */
 export function startViewportSettle() {
   const root = document.documentElement
@@ -18,20 +17,18 @@ export function startViewportSettle() {
   }
 
   const sync = () => {
-    root.style.removeProperty('height')
     body.style.removeProperty('height')
 
-    const safeT = readSafeTop()
-    // Зазор на скрине был ≈ safeT (62px при innerH=812).
-    const bleed = Math.max(safeT, 0)
-    root.style.setProperty('--frame-bleed-b', `${bleed}px`)
-    root.style.setProperty('--safe-t-px', `${safeT}px`)
-
     const vv = window.visualViewport
-    root.style.setProperty(
-      '--app-height',
-      `${Math.round(Math.max(window.innerHeight, vv?.height ?? 0) + bleed)}px`,
-    )
+    const safeT = readSafeTop()
+    const bleed = Math.max(safeT, 0)
+    const frame = Math.round(Math.max(window.innerHeight, vv?.height ?? 0) + bleed)
+
+    root.style.setProperty('--frame-bleed-b', `${bleed}px`)
+    root.style.setProperty('--app-height', `${frame}px`)
+    // html должен быть не короче body, иначе overflow:hidden клипает низ
+    root.style.height = `${frame}px`
+    root.style.minHeight = `${frame}px`
   }
 
   sync()

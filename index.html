@@ -26,9 +26,13 @@
       }
       body {
         position: fixed;
-        inset: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: calc(-1 * env(safe-area-inset-top, 0px));
         width: 100%;
         height: auto;
+        transform: translate3d(0, 0, 0);
       }
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -42,22 +46,6 @@
   <body>
     <div class="app-atmosphere" aria-hidden="true"></div>
     <div id="root"></div>
-    <div id="layout-debug" aria-hidden="true">
-      <div class="layout-debug-legend">
-        <b>DEBUG LAYOUT</b>
-        <span class="dbg-note">тёмно-фиол. под safe-b = html gap</span>
-        <div><i class="dbg-swatch dbg-html"></i> html</div>
-        <div><i class="dbg-swatch dbg-body"></i> body</div>
-        <div><i class="dbg-swatch dbg-atm"></i> atmosphere</div>
-        <div><i class="dbg-swatch dbg-root"></i> #root</div>
-        <div><i class="dbg-swatch dbg-shell"></i> app-shell (scroll)</div>
-        <div><i class="dbg-swatch dbg-main"></i> app-main</div>
-        <div><i class="dbg-swatch dbg-dock"></i> dock</div>
-        <div><i class="dbg-swatch dbg-safe-t"></i> safe-top</div>
-        <div><i class="dbg-swatch dbg-safe-b"></i> safe-bottom</div>
-        <pre id="layout-debug-metrics"></pre>
-      </div>
-    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
