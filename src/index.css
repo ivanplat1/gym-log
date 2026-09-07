@@ -20,6 +20,9 @@
   --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
   --safe-b: env(safe-area-inset-bottom, 0px);
   --safe-t: env(safe-area-inset-top, 0px);
+  --vv-height: 100dvh;
+  --vv-offset-top: 0px;
+  --vv-bottom-gap: 0px;
   color-scheme: dark;
 }
 
@@ -30,9 +33,10 @@
 }
 
 /*
-  html/body: #1c1812 (в safe-area iOS часто виден только color, без image).
-  .app-atmosphere: fixed + border-bottom = safe-area — фон красится и под home indicator
-  (content-box + transparent border; background-clip: border-box).
+  html/body: #1c1812.
+  .app-atmosphere / .dock: привязка к visualViewport (--vv-*),
+  иначе после холодного старта iOS держит fixed «приподнятым».
+  Safe-area снизу — тонкий border + .app-safe-bottom (без лишних +16px).
 */
 :root {
   --atmosphere:
@@ -60,6 +64,7 @@ html,
 body,
 #root {
   min-height: 100%;
+  min-height: 100svh;
   min-height: 100dvh;
 }
 
@@ -70,12 +75,14 @@ body {
   background-color: #1c1812;
   background-image: none;
   -webkit-font-smoothing: antialiased;
+  min-height: 100svh;
   min-height: 100dvh;
 }
 
 #root {
   position: relative;
   z-index: 1;
+  min-height: 100svh;
   min-height: 100dvh;
   background: transparent;
   overflow-x: clip;
@@ -86,13 +93,13 @@ body {
   z-index: 0;
   pointer-events: none;
   box-sizing: content-box;
-  top: 0;
+  top: var(--vv-offset-top, 0px);
   right: 0;
-  bottom: 0;
   left: 0;
-  /* выносим отрисовку в home-indicator: иначе там только плоский #1c1812 */
-  border-bottom: calc(constant(safe-area-inset-bottom) + 16px) solid transparent;
-  border-bottom: calc(env(safe-area-inset-bottom, 0px) + 16px) solid transparent;
+  bottom: auto;
+  height: var(--vv-height, 100dvh);
+  border-bottom: constant(safe-area-inset-bottom) solid transparent;
+  border-bottom: env(safe-area-inset-bottom, 0px) solid transparent;
   background-color: #1c1812;
   background-image: var(--atmosphere);
   background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
@@ -105,25 +112,23 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  /* ::after в padding-box; дотягиваем noise в border/safe-area */
-  bottom: calc(-1 * constant(safe-area-inset-bottom) - 16px);
-  bottom: calc(-1 * env(safe-area-inset-bottom, 0px) - 16px);
+  bottom: calc(-1 * constant(safe-area-inset-bottom));
+  bottom: calc(-1 * env(safe-area-inset-bottom, 0px));
   opacity: 0.55;
   background-image: var(--atmosphere-noise);
   background-size: 160px 160px;
   background-repeat: repeat;
 }
 
-/* Дубль текстуры ровно в home-indicator (на случай если border-clip обрежут) */
 .app-safe-bottom {
   position: fixed;
   z-index: 0;
   pointer-events: none;
   left: 0;
   right: 0;
-  bottom: 0;
-  height: calc(constant(safe-area-inset-bottom) + 16px);
-  height: calc(env(safe-area-inset-bottom, 0px) + 16px);
+  bottom: var(--vv-bottom-gap, 0px);
+  height: constant(safe-area-inset-bottom);
+  height: env(safe-area-inset-bottom, 0px);
   background-color: #1c1812;
   background-image:
     repeating-linear-gradient(
@@ -149,7 +154,9 @@ body {
 .app-shell {
   position: relative;
   z-index: 1;
+  min-height: 100svh;
   min-height: 100dvh;
+  min-height: var(--vv-height, 100dvh);
   padding: max(1.1rem, var(--safe-t)) 16px calc(6.5rem + var(--safe-b));
   background: transparent;
 }
@@ -322,7 +329,7 @@ select {
   position: fixed;
   z-index: 40;
   left: 50%;
-  bottom: calc(12px + var(--safe-b));
+  bottom: calc(12px + var(--safe-b) + var(--vv-bottom-gap, 0px));
   transform: translateX(-50%);
   width: min(480px, calc(100% - 20px));
   display: grid;
@@ -783,7 +790,7 @@ body:has(.sheet-bg) .dock {
   z-index: 50;
   left: 12px;
   right: 12px;
-  bottom: calc(5.6rem + var(--safe-b));
+  bottom: calc(5.6rem + var(--safe-b) + var(--vv-bottom-gap, 0px));
   width: auto;
   max-width: 480px;
   margin-inline: auto;
