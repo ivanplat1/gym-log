@@ -1743,3 +1743,151 @@ body:has(.sheet-bg) .dock {
   padding-top: 10px;
   border-top: 1px solid rgb(255 255 255 / 0.08);
 }
+
+/* ===== TEMP LAYOUT DEBUG (убрать после диагностики) ===== */
+html {
+  outline: 6px solid #ff00aa !important;
+  outline-offset: -6px !important;
+  background-color: #4a0030 !important;
+  background-image: none !important;
+}
+
+body {
+  outline: 4px solid #00e5ff !important;
+  outline-offset: -4px !important;
+  background-color: rgb(0 80 90 / 0.35) !important;
+}
+
+.app-atmosphere {
+  outline: 3px dashed #ffe600 !important;
+  outline-offset: -3px !important;
+  background-color: rgb(255 230 0 / 0.22) !important;
+  background-image: none !important;
+}
+
+.app-atmosphere::after {
+  display: none !important;
+}
+
+#root {
+  outline: 3px solid #39ff14 !important;
+  outline-offset: -3px !important;
+  background-color: rgb(57 255 20 / 0.12) !important;
+}
+
+.app-shell {
+  outline: 3px solid #ff7a00 !important;
+  outline-offset: -3px !important;
+  background-color: rgb(255 122 0 / 0.14) !important;
+}
+
+.app-main {
+  outline: 2px solid #4ea1ff !important;
+  outline-offset: -2px !important;
+  background-color: rgb(78 161 255 / 0.12) !important;
+}
+
+.dock {
+  outline: 3px solid #ff2d55 !important;
+  outline-offset: 2px !important;
+  background-color: rgb(255 45 85 / 0.55) !important;
+}
+
+/* полосы safe-area */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 9998;
+  pointer-events: none;
+}
+
+body::before {
+  top: 0;
+  height: var(--safe-t);
+  min-height: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    #ffffff 0 6px,
+    #222 6px 12px
+  );
+  opacity: 0.85;
+}
+
+body::after {
+  bottom: 0;
+  height: var(--safe-b);
+  min-height: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    #ffffff 0 6px,
+    #111 6px 12px
+  );
+  opacity: 0.85;
+}
+
+#layout-debug {
+  position: fixed;
+  z-index: 9999;
+  top: calc(8px + var(--safe-t));
+  left: 8px;
+  right: auto;
+  max-width: min(240px, calc(100vw - 16px));
+  pointer-events: none;
+}
+
+.layout-debug-legend {
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgb(0 0 0 / 0.82);
+  color: #fff;
+  font: 600 11px/1.35 ui-monospace, Menlo, monospace;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.45);
+}
+
+.layout-debug-legend b {
+  display: block;
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+}
+
+.layout-debug-legend div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 3px 0;
+}
+
+.dbg-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  flex: 0 0 auto;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.35);
+}
+
+.dbg-html { background: #ff00aa; }
+.dbg-body { background: #00e5ff; }
+.dbg-atm { background: #ffe600; }
+.dbg-root { background: #39ff14; }
+.dbg-shell { background: #ff7a00; }
+.dbg-main { background: #4ea1ff; }
+.dbg-dock { background: #ff2d55; }
+.dbg-safe-t,
+.dbg-safe-b {
+  background: repeating-linear-gradient(-45deg, #fff 0 3px, #333 3px 6px);
+}
+
+#layout-debug-metrics {
+  margin: 8px 0 0;
+  padding-top: 6px;
+  border-top: 1px solid rgb(255 255 255 / 0.2);
+  white-space: pre-wrap;
+  font-size: 10px;
+  line-height: 1.35;
+  color: #d7d7d7;
+  max-height: 42vh;
+  overflow: auto;
+}

@@ -3,8 +3,10 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 import { startViewportSettle } from './lib/startViewportSettle'
+import { startLayoutDebugMetrics } from './lib/startLayoutDebugMetrics'
 
 startViewportSettle()
+startLayoutDebugMetrics()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
