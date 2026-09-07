@@ -21,6 +21,7 @@ export function startLayoutDebugMetrics() {
       `innerH=${window.innerHeight} screenH=${window.screen?.height ?? '—'}`,
       `vvH=${Math.round(vv?.height ?? 0)} off=${Math.round(vv?.offsetTop ?? 0)}`,
       `safeT=${safeT} safeB=${safeB}`,
+      `bleedB=${cs.getPropertyValue('--frame-bleed-b').trim() || '—'}`,
       `bodyH=${getComputedStyle(document.body).height}`,
       `bodyStyleH=${document.body.style.height || '(css)'}`,
       line('atm', document.querySelector('.app-atmosphere')),

@@ -20,6 +20,8 @@
   --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
   --safe-b: env(safe-area-inset-bottom, 0px);
   --safe-t: env(safe-area-inset-top, 0px);
+  /* iOS: ICB короче экрана ≈ на safe-top → щель html снизу */
+  --frame-bleed-b: env(safe-area-inset-top, 0px);
   color-scheme: dark;
 }
 
@@ -30,8 +32,9 @@
 }
 
 /*
-  Fixed-frame: html/body/#root = экран, скролл только в .app-shell.
-  Так iOS не «приподнимает» fixed-док на холодном старте.
+  Fixed-frame: body растянут на экран + bleed вниз (--frame-bleed-b ≈ safe-top),
+  transform создаёт containing block для fixed (док едет вместе с рамкой).
+  Скролл только в .app-shell.
 */
 :root {
   --atmosphere:
@@ -51,8 +54,6 @@
 
 html {
   height: 100%;
-  height: 100dvh;
-  height: 100lvh;
   height: -webkit-fill-available;
   background-color: #1c1812;
   background-image: var(--atmosphere);
@@ -63,11 +64,16 @@ html {
 body {
   margin: 0;
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  /* добиваем тёмно-фиолетовую щель html под safe-bottom */
+  bottom: calc(-1 * var(--frame-bleed-b, 0px));
   width: 100%;
-  /* высота только от inset:0 — не height:vv/dvh (иначе щель снизу) */
   height: auto;
   overflow: hidden;
+  /* fixed-потомки (док) позиционируются от body, не от короткого ICB */
+  transform: translate3d(0, 0, 0);
   font-family: var(--font);
   color: var(--ink);
   background-color: #1c1812;
@@ -1851,6 +1857,13 @@ body::after {
   display: block;
   margin-bottom: 6px;
   letter-spacing: 0.04em;
+}
+
+.layout-debug-legend .dbg-note {
+  display: block;
+  margin: 0 0 6px;
+  color: #ffb4e6;
+  font-weight: 600;
 }
 
 .layout-debug-legend div {
