@@ -85,11 +85,8 @@ body {
   position: fixed;
   z-index: 0;
   pointer-events: none;
-  top: 0;
-  right: 0;
-  /* уходим ниже layout viewport — home indicator / safe-area */
-  bottom: calc(-1 * env(safe-area-inset-bottom, 0px) - 80px);
-  left: 0;
+  /* ровно viewport: bleed по bottom сдвигал градиент вверх → «чёрная» полоса под доком */
+  inset: 0;
   background-color: #1c1812;
   background-image: var(--atmosphere);
   background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
