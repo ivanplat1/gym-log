@@ -30,9 +30,9 @@
 }
 
 /*
-  iOS: ICB короче screen (~safe-top). Body ниже на --bottom-gap,
-  фон на всю высоту, #root только ICB — контент не «уездает».
-  transform: fixed-док привязан к низу body (не viewport).
+  iOS: ICB (innerH) короче screen (~safe-top). Док/контент только в ICB.
+  Щель под ICB красит html (min-height = ICB + --bottom-gap) — без
+  удлинения body/transform, иначе fixed-док уезжает в CLIP-зону.
 */
 :root {
   --atmosphere:
@@ -48,44 +48,42 @@
     radial-gradient(40% 35% at 50% 42%, rgb(255 255 255 / 0.04), transparent 70%),
     linear-gradient(165deg, #1c1812 0%, #15120e 55%, #12100e 100%);
   --atmosphere-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
-  /* щель под коротким ICB ≈ safe-top (62px при innerH=812 / screenH=874) */
+  /* screenH − innerH ≈ safe-top (62 @ 812/874) */
   --bottom-gap: env(safe-area-inset-top, 0px);
 }
 
 html {
-  height: 100%;
-  height: 100dvh;
-  height: -webkit-fill-available;
+  min-height: 100%;
+  min-height: 100dvh;
+  min-height: -webkit-fill-available;
+  /* тянем canvas под ICB — body остаётся inset:0 */
+  min-height: calc(100dvh + var(--bottom-gap));
+  height: calc(100% + var(--bottom-gap));
+  height: calc(100dvh + var(--bottom-gap));
   background-color: #1c1812;
   background-image: var(--atmosphere);
   background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
-  overflow: hidden;
+  overflow: visible;
 }
 
 body {
   margin: 0;
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  inset: 0;
   width: 100%;
-  /* опускаем низ frame в полоску под ICB */
-  height: calc(100% + var(--bottom-gap));
+  height: auto;
   overflow: hidden;
   font-family: var(--font);
   color: var(--ink);
-  background-color: #1c1812;
+  background-color: transparent;
   background-image: none;
   -webkit-font-smoothing: antialiased;
-  /* fixed потомки (док) считаются от body, не от ICB */
-  transform: translate3d(0, 0, 0);
 }
 
 #root {
   position: relative;
   z-index: 1;
-  /* контент остаётся в ICB — не растягиваем на gap */
-  height: calc(100% - var(--bottom-gap));
+  height: 100%;
   overflow: hidden;
   background: transparent;
 }
@@ -118,9 +116,7 @@ body {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: contain;
-  /* док частично ушёл в gap — меньше паддинг под таббар */
-  padding: max(1.1rem, var(--safe-t)) 16px
-    calc(6.5rem + var(--safe-b) - var(--bottom-gap));
+  padding: max(1.1rem, var(--safe-t)) 16px calc(6.5rem + var(--safe-b));
   background: transparent;
 }
 
@@ -129,97 +125,6 @@ body {
   z-index: 1;
   width: min(520px, 100%);
   margin: 0 auto;
-}
-
-/* === layout debug (html.debug-layout) === */
-html.debug-layout .app-atmosphere {
-  outline: 3px solid rgb(0 255 0 / 0.9);
-  outline-offset: -3px;
-}
-
-html.debug-layout #root {
-  outline: 3px solid rgb(0 220 255 / 0.95);
-  outline-offset: -3px;
-  background: rgb(0 220 255 / 0.06);
-}
-
-html.debug-layout .app-shell {
-  outline: 2px dashed rgb(255 200 0 / 0.8);
-  outline-offset: -2px;
-}
-
-html.debug-layout .dock {
-  outline: 3px solid magenta !important;
-  outline-offset: 2px;
-  z-index: 10050 !important;
-  /* чтобы было видно, не под чем-то */
-  box-shadow:
-    0 0 0 4px rgb(255 0 255 / 0.35),
-    var(--shadow) !important;
-}
-
-html.debug-layout .debug-gap {
-  position: absolute;
-  z-index: 10040;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: var(--bottom-gap);
-  background: rgb(255 40 40 / 0.55);
-  color: #fff;
-  font: 700 11px/1 var(--font);
-  display: grid;
-  place-items: center;
-  pointer-events: none;
-  letter-spacing: 0.08em;
-}
-
-html.debug-layout .debug-root-box,
-html.debug-layout .debug-body-box {
-  position: absolute;
-  z-index: 10030;
-  pointer-events: none;
-  inset: 0;
-}
-
-html.debug-layout .debug-body-box {
-  border: 2px solid rgb(80 255 120 / 0.85);
-}
-
-html.debug-layout .debug-root-box {
-  /* совпадает с #root по высоте через JS не нужно — рисуем полоску низа root */
-  inset: auto 0 0 0;
-  height: 0;
-}
-
-html.debug-layout .debug-dock-probe {
-  position: fixed;
-  z-index: 10045;
-  left: 0;
-  right: 0;
-  background: rgb(255 180 0 / 0.5);
-  color: #000;
-  font: 700 10px/1.2 var(--font);
-  text-align: center;
-  pointer-events: none;
-}
-
-html.debug-layout .debug-hud {
-  position: fixed;
-  z-index: 10100;
-  top: max(8px, env(safe-area-inset-top, 0px));
-  left: 8px;
-  right: 8px;
-  max-height: 42%;
-  overflow: auto;
-  padding: 8px 10px;
-  border-radius: 10px;
-  background: rgb(0 0 0 / 0.82);
-  color: #9ef;
-  font: 600 10px/1.35 ui-monospace, Menlo, monospace;
-  white-space: pre-wrap;
-  pointer-events: none;
-  border: 1px solid rgb(0 220 255 / 0.4);
 }
 
 
@@ -383,7 +288,7 @@ select {
   position: fixed;
   z-index: 40;
   left: 50%;
-  /* низ body уже в gap — обычный safe-b, без отдельной закраски */
+  /* строго в ICB — не ниже innerH (см. CLIP dockBottom>812) */
   bottom: calc(12px + var(--safe-b));
   transform: translateX(-50%);
   width: min(480px, calc(100% - 20px));

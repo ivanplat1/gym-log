@@ -1,6 +1,6 @@
 /**
- * --bottom-gap ≈ safe-top: насколько опустить низ body под короткий ICB.
- * Фон (.app-atmosphere) тянется на всю высоту body; #root остаётся ICB.
+ * --bottom-gap ≈ screenH − innerH ≈ safe-top.
+ * Удлиняет только html (фон в щель под ICB). Body/док остаются в ICB.
  */
 export function startViewportSettle() {
   const root = document.documentElement
@@ -17,11 +17,19 @@ export function startViewportSettle() {
   }
 
   const sync = () => {
-    root.style.removeProperty('height')
-    root.style.removeProperty('min-height')
     body.style.removeProperty('height')
+    body.style.removeProperty('transform')
     const safeT = readSafeTop()
-    root.style.setProperty('--bottom-gap', `${Math.max(safeT, 0)}px`)
+    const gap = Math.max(
+      safeT,
+      Math.round((screen.height || 0) - (window.innerHeight || 0)),
+      0,
+    )
+    root.style.setProperty('--bottom-gap', `${gap}px`)
+    // явная высота html = ICB + gap (screen), фон закрывает полоску
+    const h = Math.round(window.innerHeight + gap)
+    root.style.setProperty('min-height', `${h}px`)
+    root.style.setProperty('height', `${h}px`)
   }
 
   sync()
