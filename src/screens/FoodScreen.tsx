@@ -988,13 +988,6 @@ export function FoodScreen() {
         >
           <div className="sheet sheet--detail" onClick={(e) => e.stopPropagation()}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              {editingId ? (
-                <span style={{ width: 72 }} aria-hidden />
-              ) : (
-                <button type="button" className="ghost" onClick={() => setDetailOpen(false)}>
-                  ← Назад
-                </button>
-              )}
               <h2 style={{ margin: 0, fontSize: '1.15rem' }}>
                 {editingId ? 'Редактировать' : name.trim() || 'Порция'}
               </h2>
