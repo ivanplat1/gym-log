@@ -1,23 +1,38 @@
 /**
- * Сбрасывает ошибочные inline-height и не трогает safe-top bleed
- * (bleed + transform уводили док слишком низко).
+ * Подтверждает --bottom-gap (щель под ICB ≈ safe-top) для .app-safe-bottom.
+ * Не двигает док / не удлиняет body.
  */
 export function startViewportSettle() {
   const root = document.documentElement
   const body = document.body
 
+  const readSafeTop = () => {
+    const probe = document.createElement('div')
+    probe.style.cssText =
+      'position:absolute;visibility:hidden;pointer-events:none;height:env(safe-area-inset-top,0px)'
+    body.appendChild(probe)
+    const px = parseFloat(getComputedStyle(probe).height) || 0
+    probe.remove()
+    return px
+  }
+
   const sync = () => {
     root.style.removeProperty('height')
     root.style.removeProperty('min-height')
     body.style.removeProperty('height')
-    root.style.removeProperty('--frame-bleed-b')
-    root.style.removeProperty('--app-height')
+    const safeT = readSafeTop()
+    root.style.setProperty('--bottom-gap', `${Math.max(safeT, 0)}px`)
   }
 
   sync()
-
+  window.addEventListener('resize', sync)
+  window.visualViewport?.addEventListener('resize', sync)
   window.addEventListener('pageshow', sync)
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') sync()
+  })
+  requestAnimationFrame(() => {
+    sync()
+    window.setTimeout(sync, 300)
   })
 }
