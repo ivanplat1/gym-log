@@ -85,7 +85,7 @@ body {
   z-index: 0;
   pointer-events: none;
   inset: 0;
-  top: calc(-1 * env(safe-area-inset-top, 0px) - 64px);
+  top: -64px;
   right: -10vmax;
   bottom: calc(-1 * env(safe-area-inset-bottom, 0px) - 10vmax);
   left: -10vmax;
