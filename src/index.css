@@ -30,9 +30,9 @@
 }
 
 /*
-  html — рельеф для status bar / overscroll.
-  .app-atmosphere — fixed непрозрачный слой (фон не едет со скроллом).
-  Без 100lvh / --app-frame: они раздували документ → чёрная полоса снизу.
+  html — рельеф БЕЗ attachment:fixed (на iOS fixed-фон часто не красит
+  bottom safe-area → чёрная полоса под доком).
+  .app-atmosphere — непрозрачный position:fixed на весь layout viewport.
 */
 :root {
   --atmosphere:
@@ -54,7 +54,6 @@ html {
   background-color: #1c1812;
   background-image: var(--atmosphere);
   background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
-  background-attachment: fixed;
 }
 
 html,
@@ -68,7 +67,7 @@ body {
   margin: 0;
   font-family: var(--font);
   color: var(--ink);
-  background-color: transparent;
+  background-color: #1c1812;
   background-image: none;
   -webkit-font-smoothing: antialiased;
   min-height: 100dvh;
@@ -86,11 +85,11 @@ body {
   position: fixed;
   z-index: 0;
   pointer-events: none;
-  inset: 0;
-  top: calc(-1 * env(safe-area-inset-top, 0px) - 48px);
-  right: -10vmax;
-  bottom: calc(-1 * env(safe-area-inset-bottom, 0px) - 10vmax);
-  left: -10vmax;
+  top: 0;
+  right: 0;
+  /* уходим ниже layout viewport — home indicator / safe-area */
+  bottom: calc(-1 * env(safe-area-inset-bottom, 0px) - 80px);
+  left: 0;
   background-color: #1c1812;
   background-image: var(--atmosphere);
   background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
