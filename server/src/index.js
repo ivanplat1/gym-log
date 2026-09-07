@@ -46,6 +46,38 @@ function writeJson(file, value) {
   fs.renameSync(tmp, file)
 }
 
+function storeHasUserData(store) {
+  if (!store || typeof store !== 'object') return false
+  return (
+    (store.sessions?.length ?? 0) > 0 ||
+    (store.foods?.length ?? 0) > 0 ||
+    (store.foodMemory?.length ?? 0) > 0 ||
+    (store.weightHistory?.length ?? 0) > 0 ||
+    (store.health?.length ?? 0) > 0 ||
+    (store.customExercises?.length ?? 0) > 0 ||
+    !!store.activeSession
+  )
+}
+
+function backupStoreFile() {
+  if (!fs.existsSync(STORE_FILE)) return
+  try {
+    const stamp = new Date().toISOString().replace(/[:.]/g, '-')
+    const bak = path.join(DATA_DIR, `store.bak-${stamp}.json`)
+    fs.copyFileSync(STORE_FILE, bak)
+    const keep = 10
+    const old = fs
+      .readdirSync(DATA_DIR)
+      .filter((f) => f.startsWith('store.bak-') && f.endsWith('.json'))
+      .sort()
+    for (const f of old.slice(0, Math.max(0, old.length - keep))) {
+      fs.unlinkSync(path.join(DATA_DIR, f))
+    }
+  } catch (err) {
+    console.warn('[store] backup failed', err)
+  }
+}
+
 function ensureUser() {
   const users = readJson(USERS_FILE, null)
   if (users?.username && users?.passwordHash) return users
@@ -123,6 +155,16 @@ api.put('/store', requireAuth, (req, res) => {
   if (!store || typeof store !== 'object') {
     return res.status(400).json({ error: 'store required' })
   }
+  const existing = readJson(STORE_FILE, null)
+  // не даём пустому клиенту затереть живые данные
+  if (storeHasUserData(existing) && !storeHasUserData(store)) {
+    console.warn('[store] refused empty overwrite of non-empty store')
+    return res.status(409).json({
+      error: 'refuse_empty_overwrite',
+      message: 'Пустой store не может заменить существующие данные',
+    })
+  }
+  if (existing) backupStoreFile()
   writeJson(STORE_FILE, store)
   res.json({ ok: true, savedAt: new Date().toISOString() })
 })

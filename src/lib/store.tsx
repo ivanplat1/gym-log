@@ -22,6 +22,19 @@ function resolveApiBase(): string {
 
 const API_BASE = resolveApiBase()
 
+function storeHasUserData(s: Store | null | undefined): boolean {
+  if (!s || typeof s !== 'object') return false
+  return (
+    (s.sessions?.length ?? 0) > 0 ||
+    (s.foods?.length ?? 0) > 0 ||
+    (s.foodMemory?.length ?? 0) > 0 ||
+    (s.weightHistory?.length ?? 0) > 0 ||
+    (s.health?.length ?? 0) > 0 ||
+    (s.customExercises?.length ?? 0) > 0 ||
+    !!s.activeSession
+  )
+}
+
 interface StoreCtx {
   store: Store
   setStore: Dispatch<SetStateAction<Store>>
@@ -53,26 +66,44 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [serverMode, setServerMode] = useState(false)
   const [syncing, setSyncing] = useState(false)
   const [syncError, setSyncError] = useState<string | null>(null)
+  /** Не пушим на сервер, пока не закончилась гидрация сессии */
+  const [hydrateDone, setHydrateDone] = useState(false)
   const skipNextUpload = useRef(false)
   const saveTimer = useRef<number | null>(null)
+  const storeRef = useRef(store)
+  storeRef.current = store
 
   const hydrateFromServer = useCallback(async () => {
+    setHydrateDone(false)
     const { store: remote } = await apiGetStore<Store>()
     const local = loadStore()
+    const remoteHas = storeHasUserData(remote)
+    const localHas = storeHasUserData(local)
+
+    // Пустой remote не затирает непустой local — наоборот, заливаем local
+    if (remote && remoteHas) {
+      skipNextUpload.current = true
+      setStore(remote)
+      saveStore(remote)
+      setHydrateDone(true)
+      return
+    }
+
+    if (localHas) {
+      await apiPutStore(local)
+      skipNextUpload.current = true
+      setStore(local)
+      saveStore(local)
+      setHydrateDone(true)
+      return
+    }
+
     if (remote) {
       skipNextUpload.current = true
       setStore(remote)
       saveStore(remote)
-      return
     }
-    const hasLocal =
-      local.sessions.length > 0 ||
-      local.foods.length > 0 ||
-      (local.foodMemory?.length ?? 0) > 0
-    if (hasLocal) {
-      await apiPutStore(local)
-      setStore(local)
-    }
+    setHydrateDone(true)
   }, [])
 
   useEffect(() => {
@@ -83,6 +114,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       if (!online) {
         setServerMode(false)
         setUsername('local')
+        setHydrateDone(true)
         setAuthReady(true)
         return
       }
@@ -90,10 +122,14 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       try {
         const me = await apiMe()
         if (cancelled) return
-        setUsername(me.username)
         await hydrateFromServer()
+        if (cancelled) return
+        setUsername(me.username)
       } catch {
-        if (!cancelled) setUsername(null)
+        if (!cancelled) {
+          setUsername(null)
+          setHydrateDone(true)
+        }
       } finally {
         if (!cancelled) setAuthReady(true)
       }
@@ -105,17 +141,19 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     saveStore(store)
-    if (!serverMode || !username || username === 'local') return
+    if (!serverMode || !username || username === 'local' || !hydrateDone) return
     if (skipNextUpload.current) {
       skipNextUpload.current = false
       return
     }
+    // не затираем сервер пустым стором (гонка логина / свежий PWA)
+    if (!storeHasUserData(store)) return
     if (saveTimer.current) window.clearTimeout(saveTimer.current)
     saveTimer.current = window.setTimeout(async () => {
       setSyncing(true)
       setSyncError(null)
       try {
-        await apiPutStore(store)
+        await apiPutStore(storeRef.current)
       } catch (err) {
         setSyncError(err instanceof Error ? err.message : 'Ошибка синхронизации')
       } finally {
@@ -125,13 +163,14 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     return () => {
       if (saveTimer.current) window.clearTimeout(saveTimer.current)
     }
-  }, [store, username, serverMode])
+  }, [store, username, serverMode, hydrateDone])
 
   const login = useCallback(
     async (user: string, password: string) => {
       const me = await apiLogin(user, password)
-      setUsername(me.username)
+      // сначала гидрация, потом username — иначе PUT улетит с пустым local
       await hydrateFromServer()
+      setUsername(me.username)
     },
     [hydrateFromServer],
   )
@@ -143,6 +182,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     } finally {
       // остаёмся гостем: UI и localStorage, без синка на сервер
       setUsername(null)
+      setHydrateDone(true)
       setSyncError(null)
       setSyncing(false)
     }
