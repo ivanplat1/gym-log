@@ -30,11 +30,33 @@
 }
 
 /*
-  Фон FIXED. Слой в DOM (.app-atmosphere), не body::before —
-  так надёжнее дотягивается под status bar / notch.
+  Status bar (часы/заряд): iOS с black-translucent рисует фон КОРНЯ (html),
+  а не position:fixed — поэтому рельеф дублируем на html + .app-atmosphere.
 */
+:root {
+  --atmosphere:
+    repeating-linear-gradient(
+      125deg,
+      rgb(255 255 255 / 0.06) 0 1px,
+      transparent 1px 8px
+    ),
+    radial-gradient(120% 70% at 50% -5%, rgb(240 180 41 / 0.36), transparent 55%),
+    radial-gradient(80% 65% at -5% -5%, rgb(240 180 41 / 0.48), transparent 58%),
+    radial-gradient(75% 60% at 105% -5%, rgb(61 214 140 / 0.38), transparent 55%),
+    radial-gradient(55% 48% at 85% 105%, rgb(255 107 90 / 0.28), transparent 58%),
+    radial-gradient(40% 35% at 50% 42%, rgb(255 255 255 / 0.04), transparent 70%),
+    linear-gradient(165deg, #1c1812 0%, #10140f 45%, #0c0909 100%);
+  --atmosphere-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+
 html {
   background-color: #1c1812;
+  background-image: var(--atmosphere);
+  background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+  background-size: auto, auto, auto, auto, auto, auto, auto;
+  /* canvas html уходит под translucent status bar на iOS */
+  min-height: 100%;
+  min-height: 100dvh;
 }
 
 html,
@@ -48,7 +70,7 @@ body {
   margin: 0;
   font-family: var(--font);
   color: var(--ink);
-  background-color: #1c1812;
+  background: transparent;
   -webkit-font-smoothing: antialiased;
   min-height: 100dvh;
 }
@@ -65,24 +87,14 @@ body {
   position: fixed;
   z-index: 0;
   pointer-events: none;
-  /* сильно выше safe-area — закрыть ~1см полосу у status bar */
-  top: calc(-1 * env(safe-area-inset-top, 0px) - 48px - 12vmax);
-  right: -20vmax;
-  bottom: calc(-1 * env(safe-area-inset-bottom, 0px) - 12vmax);
-  left: -20vmax;
+  inset: 0;
+  top: calc(-1 * env(safe-area-inset-top, 0px) - 64px);
+  right: -10vmax;
+  bottom: calc(-1 * env(safe-area-inset-bottom, 0px) - 10vmax);
+  left: -10vmax;
   background-color: #1c1812;
-  background-image:
-    repeating-linear-gradient(
-      125deg,
-      rgb(255 255 255 / 0.06) 0 1px,
-      transparent 1px 8px
-    ),
-    radial-gradient(120% 70% at 50% -5%, rgb(240 180 41 / 0.36), transparent 55%),
-    radial-gradient(80% 65% at -5% -5%, rgb(240 180 41 / 0.48), transparent 58%),
-    radial-gradient(75% 60% at 105% -5%, rgb(61 214 140 / 0.38), transparent 55%),
-    radial-gradient(55% 48% at 85% 105%, rgb(255 107 90 / 0.28), transparent 58%),
-    radial-gradient(40% 35% at 50% 42%, rgb(255 255 255 / 0.04), transparent 70%),
-    linear-gradient(165deg, #1c1812 0%, #10140f 45%, #0c0909 100%);
+  background-image: var(--atmosphere);
+  background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
 }
 
 .app-atmosphere::after {
@@ -90,7 +102,7 @@ body {
   position: absolute;
   inset: 0;
   opacity: 0.55;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  background-image: var(--atmosphere-noise);
   background-size: 160px 160px;
   background-repeat: repeat;
 }
