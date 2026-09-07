@@ -24,10 +24,9 @@ import { useBodyScrollLock } from '../lib/useBodyScrollLock'
 import { useInputEndCursor } from '../lib/inputEndCursor'
 import { addFoodEntry, formatDayLabel, logWeight, macrosForDay, setManualBurnKcal, shiftDayKey, todayKey, updateFoodEntry, weightKgForDate, type FoodEntry } from '../lib/storage'
 import {
-  bodyWeightFromParts,
-  formatBodyWeightGramsInput,
+  formatBodyWeightInput,
   formatBodyWeightKg,
-  formatBodyWeightKgInput,
+  parseBodyWeightInput,
 } from '../lib/bodyWeight'
 
 function Ring({
@@ -95,13 +94,11 @@ export function FoodScreen() {
   const [goalsOpen, setGoalsOpen] = useState(false)
   const [weighOpen, setWeighOpen] = useState(false)
   const [weighDate, setWeighDate] = useState(() => todayKey())
-  const [weighKgText, setWeighKgText] = useState('')
-  const [weighGramsText, setWeighGramsText] = useState('')
+  const [weighText, setWeighText] = useState('')
   const [statsOpen, setStatsOpen] = useState(false)
 
   const setWeighFields = (kg: number) => {
-    setWeighKgText(formatBodyWeightKgInput(kg))
-    setWeighGramsText(formatBodyWeightGramsInput(kg))
+    setWeighText(formatBodyWeightInput(kg))
   }
   const [mealOpen, setMealOpen] = useState<Partial<Record<MealSlot, boolean>>>({})
   const [open, setOpen] = useState(false)
@@ -169,8 +166,7 @@ export function FoodScreen() {
   const [fat, setFat] = useState('')
 
   const amountInput = useInputEndCursor(amountText)
-  const weighKgInput = useInputEndCursor(weighKgText)
-  const weighGramsInput = useInputEndCursor(weighGramsText)
+  const weighInput = useInputEndCursor(weighText)
   const burnInput = useInputEndCursor(burnText)
 
   const [foodPresets, setFoodPresets] = useState<FoodPreset[]>([])
@@ -775,52 +771,28 @@ export function FoodScreen() {
                   setWeighDate(d)
                   const existing = (store.weightHistory ?? []).find((w) => w.date === d)
                   if (existing) setWeighFields(existing.weightKg)
-                  else {
-                    setWeighKgText('')
-                    setWeighGramsText('')
-                  }
+                  else setWeighText('')
                 }}
               />
             </div>
             <div className="field">
-              <label>Килограммы</label>
+              <label>Вес, кг</label>
               <input
-                type="number"
-                min={30}
-                max={250}
-                step={1}
-                inputMode="numeric"
-                value={weighKgText}
-                placeholder="76"
-                onChange={weighKgInput.wrapChange(setWeighKgText)}
-                onFocus={weighKgInput.onFocus}
-                onBlur={weighKgInput.onBlur}
-              />
-            </div>
-            <div className="field">
-              <label>Граммы</label>
-              <input
-                type="number"
-                min={0}
-                max={999}
-                step={1}
-                inputMode="numeric"
-                value={weighGramsText}
-                placeholder="350"
-                onChange={weighGramsInput.wrapChange(setWeighGramsText)}
-                onFocus={weighGramsInput.onFocus}
-                onBlur={weighGramsInput.onBlur}
+                type="text"
+                inputMode="decimal"
+                value={weighText}
+                placeholder="78,5"
+                onChange={weighInput.wrapChange(setWeighText)}
+                onFocus={weighInput.onFocus}
+                onBlur={weighInput.onBlur}
               />
             </div>
             <button
               type="button"
               className="primary span2"
               onClick={() => {
-                const kg = Number(weighKgText.replace(',', '.'))
-                const grams = Number(weighGramsText.replace(',', '.')) || 0
-                if (!Number.isFinite(kg) || kg <= 0) return
-                const w = bodyWeightFromParts(kg, grams)
-                if (w <= 0) return
+                const w = parseBodyWeightInput(weighText)
+                if (w == null || w < 30 || w > 250) return
                 setStore((s) => logWeight(s, weighDate, w))
                 setWeighFields(w)
               }}

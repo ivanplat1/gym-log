@@ -37,15 +37,9 @@ export function formatBodyWeightKg(kg: number): string {
   return `${whole},${dec} кг`
 }
 
-/** Значение для поля ввода кг (целая часть) */
-export function formatBodyWeightKgInput(kg: number): string {
-  if (!Number.isFinite(kg) || kg <= 0) return ''
-  return String(bodyWeightParts(kg).kg)
-}
-
-/** Значение для поля ввода граммов */
-export function formatBodyWeightGramsInput(kg: number): string {
-  if (!Number.isFinite(kg) || kg <= 0) return ''
-  const g = bodyWeightParts(kg).grams
-  return g > 0 ? String(g) : ''
+/** Значение для одного поля ввода: 78.5 → «78,5» */
+export function formatBodyWeightInput(kg: number): string {
+  const n = normalizeBodyWeightKg(kg)
+  if (n <= 0) return ''
+  return n.toFixed(3).replace(/\.?0+$/, '').replace('.', ',')
 }
