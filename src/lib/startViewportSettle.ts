@@ -1,6 +1,6 @@
 /**
- * Подтверждает --bottom-gap (щель под ICB ≈ safe-top) для .app-safe-bottom.
- * Не двигает док / не удлиняет body.
+ * --bottom-gap ≈ safe-top: насколько опустить низ body под короткий ICB.
+ * Фон (.app-atmosphere) тянется на всю высоту body; #root остаётся ICB.
  */
 export function startViewportSettle() {
   const root = document.documentElement
