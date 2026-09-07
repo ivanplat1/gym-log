@@ -30,9 +30,9 @@
 }
 
 /*
-  html — рельеф БЕЗ attachment:fixed (на iOS fixed-фон часто не красит
-  bottom safe-area → чёрная полоса под доком).
-  .app-atmosphere — непрозрачный position:fixed на весь layout viewport.
+  html/body: #1c1812 (в safe-area iOS часто виден только color, без image).
+  .app-atmosphere: fixed + border-bottom = safe-area — фон красится и под home indicator
+  (content-box + transparent border; background-clip: border-box).
 */
 :root {
   --atmosphere:
@@ -44,7 +44,7 @@
     radial-gradient(120% 70% at 50% -5%, rgb(240 180 41 / 0.36), transparent 55%),
     radial-gradient(80% 65% at -5% -5%, rgb(240 180 41 / 0.48), transparent 58%),
     radial-gradient(75% 60% at 105% -5%, rgb(61 214 140 / 0.38), transparent 55%),
-    radial-gradient(55% 48% at 85% 105%, rgb(255 107 90 / 0.28), transparent 58%),
+    radial-gradient(55% 48% at 85% 100%, rgb(255 107 90 / 0.28), transparent 58%),
     radial-gradient(40% 35% at 50% 42%, rgb(255 255 255 / 0.04), transparent 70%),
     linear-gradient(165deg, #1c1812 0%, #15120e 55%, #12100e 100%);
   --atmosphere-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
@@ -85,14 +85,58 @@ body {
   position: fixed;
   z-index: 0;
   pointer-events: none;
-  /* ровно viewport: bleed по bottom сдвигал градиент вверх → «чёрная» полоса под доком */
-  inset: 0;
+  box-sizing: content-box;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  /* выносим отрисовку в home-indicator: иначе там только плоский #1c1812 */
+  border-bottom: calc(constant(safe-area-inset-bottom) + 16px) solid transparent;
+  border-bottom: calc(env(safe-area-inset-bottom, 0px) + 16px) solid transparent;
   background-color: #1c1812;
   background-image: var(--atmosphere);
   background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+  background-origin: border-box;
+  background-clip: border-box;
+  -webkit-background-clip: border-box;
 }
 
 .app-atmosphere::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* ::after в padding-box; дотягиваем noise в border/safe-area */
+  bottom: calc(-1 * constant(safe-area-inset-bottom) - 16px);
+  bottom: calc(-1 * env(safe-area-inset-bottom, 0px) - 16px);
+  opacity: 0.55;
+  background-image: var(--atmosphere-noise);
+  background-size: 160px 160px;
+  background-repeat: repeat;
+}
+
+/* Дубль текстуры ровно в home-indicator (на случай если border-clip обрежут) */
+.app-safe-bottom {
+  position: fixed;
+  z-index: 0;
+  pointer-events: none;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: calc(constant(safe-area-inset-bottom) + 16px);
+  height: calc(env(safe-area-inset-bottom, 0px) + 16px);
+  background-color: #1c1812;
+  background-image:
+    repeating-linear-gradient(
+      125deg,
+      rgb(255 255 255 / 0.06) 0 1px,
+      transparent 1px 8px
+    ),
+    radial-gradient(80% 120% at 85% 0%, rgb(255 107 90 / 0.22), transparent 70%),
+    linear-gradient(180deg, #15120e 0%, #12100e 100%);
+  background-repeat: repeat, no-repeat, no-repeat;
+}
+
+.app-safe-bottom::after {
   content: '';
   position: absolute;
   inset: 0;
