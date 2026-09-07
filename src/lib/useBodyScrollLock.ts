@@ -1,14 +1,30 @@
 import { useEffect } from 'react'
 
-/** Блокирует скролл документа, пока открыта модалка (iOS иначе скроллит фон). */
+/**
+ * Блокирует скролл .app-shell (документ не скроллится — body fixed).
+ * Fallback на window, если shell ещё нет.
+ */
 export function useBodyScrollLock(locked: boolean) {
   useEffect(() => {
     if (!locked) return
 
+    const scroller =
+      (document.querySelector('.app-shell') as HTMLElement | null) ?? null
+
+    if (scroller) {
+      const prevOverflow = scroller.style.overflow
+      const prevTouch = scroller.style.touchAction
+      scroller.style.overflow = 'hidden'
+      scroller.style.touchAction = 'none'
+      return () => {
+        scroller.style.overflow = prevOverflow
+        scroller.style.touchAction = prevTouch
+      }
+    }
+
     const html = document.documentElement
     const body = document.body
     const scrollY = window.scrollY
-
     const prev = {
       htmlOverflow: html.style.overflow,
       bodyOverflow: body.style.overflow,
