@@ -30,40 +30,10 @@
 }
 
 /*
-  Один статичный рельеф: только .app-atmosphere (fixed).
-  Раньше тот же --atmosphere был и на html — при скролле
-  «второй фон» ехал за страницей, а fixed стоял на месте.
-  html/body: только #1c1812 (уходит под status bar на iOS).
+  Рельеф на html (canvas) — iOS status bar видит именно его.
+  background-attachment: fixed — один слой, без «второго» фона при скролле.
+  .app-atmosphere — только noise overlay (без повторных радиалов).
 */
-html {
-  background-color: #1c1812;
-  background-image: none;
-}
-
-html,
-body,
-#root {
-  min-height: 100%;
-  min-height: 100dvh;
-}
-
-body {
-  margin: 0;
-  font-family: var(--font);
-  color: var(--ink);
-  background: transparent;
-  -webkit-font-smoothing: antialiased;
-  min-height: 100dvh;
-}
-
-#root {
-  position: relative;
-  z-index: 1;
-  min-height: 100dvh;
-  background: transparent;
-  overflow-x: clip;
-}
-
 :root {
   --atmosphere:
     repeating-linear-gradient(
@@ -80,17 +50,48 @@ body {
   --atmosphere-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
 }
 
+html {
+  background-color: #1c1812;
+  background-image: var(--atmosphere);
+  background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+  background-attachment: fixed;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  min-height: 100dvh;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--ink);
+  background-color: transparent;
+  background-image: none;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+  min-height: 100dvh;
+  background: transparent;
+  overflow-x: clip;
+}
+
 .app-atmosphere {
   position: fixed;
   z-index: 0;
   pointer-events: none;
   inset: 0;
+  top: calc(-1 * env(safe-area-inset-top, 0px) - 48px);
   right: -10vmax;
   bottom: calc(-1 * env(safe-area-inset-bottom, 0px) - 10vmax);
   left: -10vmax;
-  background-color: #1c1812;
-  background-image: var(--atmosphere);
-  background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+  background: transparent;
 }
 
 .app-atmosphere::after {

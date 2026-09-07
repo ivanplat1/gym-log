@@ -14,10 +14,16 @@
     <meta name="apple-mobile-web-app-title" content="GymLog" />
     <meta name="description" content="GymLog — трекер тренировок и питания" />
     <style>
-      /* первый кадр до CSS-бандла: тот же тон, что верх атмосферы */
+      /* первый кадр до CSS: тёплый верх (как радиал атмосферы), не плоский чёрный */
       html,
       body {
         background-color: #1c1812;
+        background-image:
+          radial-gradient(120% 70% at 50% -5%, rgb(240 180 41 / 0.36), transparent 55%),
+          radial-gradient(80% 65% at -5% -5%, rgb(240 180 41 / 0.48), transparent 58%),
+          radial-gradient(75% 60% at 105% -5%, rgb(61 214 140 / 0.38), transparent 55%),
+          linear-gradient(165deg, #1c1812 0%, #10140f 45%, #0c0909 100%);
+        background-attachment: fixed;
       }
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
