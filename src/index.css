@@ -30,9 +30,9 @@
 }
 
 /*
-  Рельеф на html (canvas) — iOS status bar видит именно его.
-  background-attachment: fixed — один слой, без «второго» фона при скролле.
-  .app-atmosphere — только noise overlay (без повторных радиалов).
+  html — тот же рельеф (status bar / overscroll gap).
+  .app-atmosphere — непрозрачный fixed слой: не едет при оттяжке.
+  overscroll-behavior: none — гасит rubber-band, чтобы fixed не уезжал на iOS.
 */
 :root {
   --atmosphere:
@@ -55,6 +55,7 @@ html {
   background-image: var(--atmosphere);
   background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
   background-attachment: fixed;
+  overscroll-behavior: none;
 }
 
 html,
@@ -72,6 +73,7 @@ body {
   background-image: none;
   -webkit-font-smoothing: antialiased;
   min-height: 100dvh;
+  overscroll-behavior: none;
 }
 
 #root {
@@ -80,6 +82,7 @@ body {
   min-height: 100dvh;
   background: transparent;
   overflow-x: clip;
+  overscroll-behavior: none;
 }
 
 .app-atmosphere {
@@ -91,7 +94,9 @@ body {
   right: -10vmax;
   bottom: calc(-1 * env(safe-area-inset-bottom, 0px) - 10vmax);
   left: -10vmax;
-  background: transparent;
+  background-color: #1c1812;
+  background-image: var(--atmosphere);
+  background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
 }
 
 .app-atmosphere::after {
