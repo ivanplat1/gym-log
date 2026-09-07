@@ -52,6 +52,7 @@
 html {
   height: 100%;
   height: 100dvh;
+  height: 100lvh;
   height: -webkit-fill-available;
   background-color: #1c1812;
   background-image: var(--atmosphere);
@@ -64,9 +65,8 @@ body {
   position: fixed;
   inset: 0;
   width: 100%;
-  height: 100%;
-  height: 100dvh;
-  height: -webkit-fill-available;
+  /* высота только от inset:0 — не height:vv/dvh (иначе щель снизу) */
+  height: auto;
   overflow: hidden;
   font-family: var(--font);
   color: var(--ink);

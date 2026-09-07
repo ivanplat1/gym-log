@@ -18,10 +18,11 @@ export function startLayoutDebugMetrics() {
     const safeB = cs.getPropertyValue('--safe-b').trim() || envFallback('safe-area-inset-bottom')
 
     el.textContent = [
-      `innerH=${window.innerHeight}`,
+      `innerH=${window.innerHeight} screenH=${window.screen?.height ?? '—'}`,
       `vvH=${Math.round(vv?.height ?? 0)} off=${Math.round(vv?.offsetTop ?? 0)}`,
       `safeT=${safeT} safeB=${safeB}`,
-      `bodyH=${document.body.style.height || getComputedStyle(document.body).height}`,
+      `bodyH=${getComputedStyle(document.body).height}`,
+      `bodyStyleH=${document.body.style.height || '(css)'}`,
       line('atm', document.querySelector('.app-atmosphere')),
       line('root', document.getElementById('root')),
       line('shell', document.querySelector('.app-shell')),

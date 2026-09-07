@@ -1,17 +1,25 @@
 /**
- * Подгоняет высоту fixed-frame (html/body) под visualViewport.
- * На iOS 100dvh на старте врёт — пиксельная высота из VV стабильнее.
+ * Нельзя ставить html/body.style.height = visualViewport.height:
+ * на iOS VV часто НИЖЕ реального экрана (на safe-top), снизу остаётся
+ * щель с фоном html — «приподнятый» UI.
+ * Рамка = position:fixed; inset:0 + -webkit-fill-available.
  */
 export function startViewportSettle() {
   const root = document.documentElement
   const body = document.body
 
   const sync = () => {
-    const h = Math.round(window.visualViewport?.height ?? window.innerHeight)
-    const px = `${h}px`
-    root.style.height = px
-    body.style.height = px
-    root.style.setProperty('--app-height', px)
+    // сбрасываем ошибочный пиксельный height, если уже успели выставить
+    root.style.removeProperty('height')
+    body.style.removeProperty('height')
+
+    const vv = window.visualViewport
+    const full = Math.max(
+      window.innerHeight,
+      root.clientHeight,
+      Math.round((vv?.height ?? 0) + (vv?.offsetTop ?? 0)),
+    )
+    root.style.setProperty('--app-height', `${full}px`)
   }
 
   sync()
@@ -19,7 +27,6 @@ export function startViewportSettle() {
   window.addEventListener('resize', sync)
   window.visualViewport?.addEventListener('resize', sync)
   window.visualViewport?.addEventListener('scroll', sync)
-
   window.addEventListener('pageshow', sync)
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') sync()
