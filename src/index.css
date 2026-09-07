@@ -30,11 +30,13 @@
 }
 
 /*
-  html — тот же рельеф (status bar / overscroll gap).
-  .app-atmosphere — непрозрачный fixed слой: не едет при оттяжке.
-  overscroll-behavior: none — гасит rubber-band, чтобы fixed не уезжал на iOS.
+  html — тот же рельеф (status bar / зазор overscroll).
+  .app-atmosphere — непрозрачный fixed: фон стоит, оттяжка контента живая
+  (без overscroll-behavior: none).
+  Высота: max(lvh, --app-frame) + bleed — без чёрной полосы на первом кадре iOS.
 */
 :root {
+  --app-frame: 100dvh;
   --atmosphere:
     repeating-linear-gradient(
       125deg,
@@ -55,7 +57,10 @@ html {
   background-image: var(--atmosphere);
   background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
   background-attachment: fixed;
-  overscroll-behavior: none;
+  min-height: 100%;
+  min-height: 100dvh;
+  min-height: 100lvh;
+  min-height: -webkit-fill-available;
 }
 
 html,
@@ -63,6 +68,7 @@ body,
 #root {
   min-height: 100%;
   min-height: 100dvh;
+  min-height: -webkit-fill-available;
 }
 
 body {
@@ -73,27 +79,31 @@ body {
   background-image: none;
   -webkit-font-smoothing: antialiased;
   min-height: 100dvh;
-  overscroll-behavior: none;
+  min-height: -webkit-fill-available;
 }
 
 #root {
   position: relative;
   z-index: 1;
   min-height: 100dvh;
+  min-height: -webkit-fill-available;
   background: transparent;
   overflow-x: clip;
-  overscroll-behavior: none;
 }
 
 .app-atmosphere {
   position: fixed;
   z-index: 0;
   pointer-events: none;
-  inset: 0;
   top: calc(-1 * env(safe-area-inset-top, 0px) - 48px);
   right: -10vmax;
-  bottom: calc(-1 * env(safe-area-inset-bottom, 0px) - 10vmax);
   left: -10vmax;
+  bottom: auto;
+  /* lvh + JS --app-frame: перекрывает URL-bar / первый кадр iOS */
+  height: calc(
+    max(100lvh, 100dvh, var(--app-frame, 100dvh)) + env(safe-area-inset-top, 0px) +
+      env(safe-area-inset-bottom, 0px) + 48px + 12vmax
+  );
   background-color: #1c1812;
   background-image: var(--atmosphere);
   background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
@@ -113,6 +123,7 @@ body {
   position: relative;
   z-index: 1;
   min-height: 100dvh;
+  min-height: -webkit-fill-available;
   padding: max(1.1rem, var(--safe-t)) 16px calc(6.5rem + var(--safe-b));
   background: transparent;
 }
