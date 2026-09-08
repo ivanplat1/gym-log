@@ -1440,28 +1440,34 @@ body:has(.sheet-bg) .dock {
   grid-column: 1 / -1;
 }
 
-/* дата + вес в одну линию: iOS date иначе выталкивает вес вниз */
-.weigh-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1.65fr) minmax(0, 0.85fr);
-  gap: 10px;
-  align-items: end;
+/* равные колонки; minmax(0) чтобы iOS date не раздувал сетку / не налазил */
+.weigh-form {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
 }
 
-.weigh-row .field {
+.weigh-form > .field {
   min-width: 0;
 }
 
-.weigh-row input[type='date'] {
-  min-width: 0;
+.weigh-form > .field input {
+  height: 44px;
+  min-height: 44px;
+  box-sizing: border-box;
+  font-size: 16px;
+  line-height: 1.2;
+  padding: 10px 12px;
+}
+
+.weigh-form input[type='date'] {
   max-width: 100%;
-  font-size: 0.9rem;
-  padding-inline: 10px;
+  overflow: hidden;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
-.weigh-row input[inputmode='decimal'] {
+.weigh-form input[inputmode='decimal'] {
   font-variant-numeric: tabular-nums;
-  text-align: right;
 }
 
 .field label {
