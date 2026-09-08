@@ -759,7 +759,7 @@ export function FoodScreen() {
         </button>
 
         {weighOpen && (
-          <div className="form-grid glass" style={{ padding: 14, borderRadius: 18, marginTop: 10 }}>
+          <div className="form-grid glass weigh-form" style={{ padding: 14, borderRadius: 18, marginTop: 10 }}>
             <div className="field">
               <label>Дата</label>
               <input
