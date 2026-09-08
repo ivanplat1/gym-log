@@ -760,32 +760,34 @@ export function FoodScreen() {
 
         {weighOpen && (
           <div className="form-grid glass" style={{ padding: 14, borderRadius: 18, marginTop: 10 }}>
-            <div className="field">
-              <label>Дата</label>
-              <input
-                type="date"
-                value={weighDate}
-                max={date}
-                onChange={(e) => {
-                  const d = e.target.value
-                  setWeighDate(d)
-                  const existing = (store.weightHistory ?? []).find((w) => w.date === d)
-                  if (existing) setWeighFields(existing.weightKg)
-                  else setWeighText('')
-                }}
-              />
-            </div>
-            <div className="field">
-              <label>Вес, кг</label>
-              <input
-                type="text"
-                inputMode="decimal"
-                value={weighText}
-                placeholder="78,5"
-                onChange={weighInput.wrapChange(setWeighText)}
-                onFocus={weighInput.onFocus}
-                onBlur={weighInput.onBlur}
-              />
+            <div className="weigh-row span2">
+              <div className="field">
+                <label>Дата</label>
+                <input
+                  type="date"
+                  value={weighDate}
+                  max={date}
+                  onChange={(e) => {
+                    const d = e.target.value
+                    setWeighDate(d)
+                    const existing = (store.weightHistory ?? []).find((w) => w.date === d)
+                    if (existing) setWeighFields(existing.weightKg)
+                    else setWeighText('')
+                  }}
+                />
+              </div>
+              <div className="field">
+                <label>Вес, кг</label>
+                <input
+                  type="text"
+                  inputMode="decimal"
+                  value={weighText}
+                  placeholder="78,5"
+                  onChange={weighInput.wrapChange(setWeighText)}
+                  onFocus={weighInput.onFocus}
+                  onBlur={weighInput.onBlur}
+                />
+              </div>
             </div>
             <button
               type="button"
